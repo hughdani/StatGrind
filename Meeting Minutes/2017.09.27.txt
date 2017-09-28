@@ -1,0 +1,55 @@
+Date of Meeting: 27/09/2017
+Time: 2:00 pm
+Location: Online
+
+Attendance: Adam Koza, Brian Quach, Daniel Hugh, Darius Asri, Kevin Choi
+Absent:
+
+===============================================================================
+
+Agenda: Administrative, TA Interview 1, Client Requirements, Ideas for Features, Platform for Project 
+
+Discussion Items / Actions / Decision
+
+Administrative
+- no issue with time change for TA interview from 6pm to 5pm so far
+- first meeting minutes
+	- rotation for meeting minutes begins
+
+
+TA Interview 1
+- dicussion on how to prepare for questions
+	- be familiarized with the team argument and client needs
+- Brian and Kevin will not be able to stay long
+
+
+Client Requirements
+- want modular design
+	- options/settings to toggle features
+
+
+Ideas for Features
+- achievement system
+	- tie achievements with final grade 
+		- give bonus marks based on achievements
+	- instructor can customize achievements, set description, grade, etc
+- leaderboard system
+- gamification 
+	- team system
+	- class average
+	- class goal
+	- individual grades
+	- dynamic progress tracking
+	- currency
+- need to schedule meeting with client to get opinion on ideas
+
+
+Platform for Project
+- Java or Python as everyone is familiar with the language
+	- lacks UI options and would not impress client
+	- currently investigating corresponding UI frameworks
+- mobile/web applications for decent UI options
+	- php suggested by Adam due to it being easy to learn
+	- most team members are unfamiliar but do not mind learning
+	- Adam provided example php code and will explain to team on Sept 28
+
