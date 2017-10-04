@@ -1,0 +1,19 @@
+Meeting Minutes by: Brian Quach
+Date of Meeting: 04/10/2017
+Time: 2:00
+Location: IC406
+
+Attendance: Adam Koza, Brian Quach, Daniel Hugh, Darius Asri, Kevin Choi
+Absent:
+
+================================================================================
+
+Agenda: User Personas and Stories
+
+Discussion Items / Actions / Decision
+
+Personas
+ - Created a few personas
+ - Started on User Stories
+ - Will check with TA during next meeting to see if we're on the right track
+
