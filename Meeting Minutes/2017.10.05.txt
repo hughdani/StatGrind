@@ -1,0 +1,47 @@
+Meeting Minutes by: Darius Asri Rezaei
+Date of Meeting: 05/10/2017
+Time: 5:30
+Location: IC406
+
+Attendance: Adam Koza, Brian Quach, Daniel Hugh, Darius Asri, Kevin Choi
+Absent:
+
+================================================================================
+
+Agenda: Platform, Question Sourcing, Personas, User Stories, Github, Pace, Client, Plans for Reading Week
+
+Discussion Items / Actions / Decision
+
+Platform
+	- Language: PHP
+	- Framework: Laravel, Bootstrap
+	- Database: MySQL
+
+Question Sourcing
+	- We will try to use the same database of questions as Webwork
+	- Adam showed us a local copy of the questions that he pulled onto his server
+
+Personas
+	- Plan to combine some pre-existing personas (TA & Prof or TA & Student)
+	- Get rid of a few niche personas (ie. Keith)
+
+User Stories
+	- Need to prioritize the current list of user stories
+	- Need to spell out basic functionality of the web application, missing
+	- A lot of the current user stories are fluff 
+
+GitHub
+	- 'Master' branch can only be merged with another 'Experimental' branch
+	- For each task 'Experimental' will be branched/merged
+	- Once 'Experimental' is robust we will merge it to master
+
+Pace
+	- Keep pace up with the class, follow Thierry's recipe
+	- No one is comfortable with programming at this stage
+ 
+Client
+	- User stories are not ready, will need to have a complete version before we make a meeting to get her opinion on features
+
+Plans for Reading Week
+	- Next meeting will be Wednesday 2:00, discord
+	- Try to brainstorm some changes to personas/user stories beforehand
