@@ -1,0 +1,38 @@
+Meeting Minutes by: Kevin Choi
+Date of Meeting: 19/10/2017
+Time: 5:30 pm
+Location: IC lab
+
+Attendance: Adam Koza, Brian Quach, Daniel Hugh, Darius Asri, Kevin Choi
+Absent:
+
+================================================================================
+
+Agenda: Sprint planning (breaking user stories into tasks, assigning tasks, etc)
+
+Discussion Items / Actions / Decision
+
+User Stories:
+	- Each branch created for each user stories
+	- Mulitple people can be working on the same branch to complete the user story
+	
+Questions:
+	- Questions for now will be hardcoded, will implement randomization (using variables) later on 
+	- Will be in a text file
+	- Starting off slow, creating task to be able to generate plain text instead of question with randomized variables
+	- Thinking of importing mathjs library
+	- Considering to use latex.codecogs.com/svg.latex?__equation__, to display an image of the question
+
+Trello:
+	- Will set up Trello
+	- Trello will consists of tasks and to do, in progress, completed, etc. Check Trello Sprint#1 board
+	- also should keep track of a google doc for the burn down chart, like the number of hours spend for each tasks
+
+Tasks:
+	- Core functionality only for now 
+	- Discuss about time commitment
+	- Will produce the tasks in this meeting, see google doc
+
+Questions for Sohee:
+	- To be able to generate her own questions or use the existing library to get the questions?
+
