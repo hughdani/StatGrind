@@ -44,8 +44,7 @@
 
       <div class="col-sm-6">
         <h5>Question Text</h5>
-				<textarea id="questionText" class="form-control" rows="10" 
-					placeholder="Question Text" required></textarea>
+        <textarea id="questionText" class="form-control" rows="10" placeholder="Question Text" required></textarea>
       </div>
     </div>
 
