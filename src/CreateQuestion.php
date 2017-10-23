@@ -12,7 +12,7 @@
 </div>
   
 <div class="container">
-  <form>
+  <form method="post">
     <div class="form-row">
 
       <div class="col-sm-12">
@@ -55,13 +55,13 @@
 
       <div class="col-sm-6">
         <h5>Question Text</h5>
-        <textarea id="questionText" class="form-control" rows="10" placeholder="Question Text" required></textarea>
+        <textarea id="questionText" name="questionText" class="form-control" rows="10" placeholder="Question Text" required></textarea>
       </div>
     </div>
 
     <div class="form-row">
       <button type="button" class="btn btn-danger"> Back </button>
-      <button type="button" class="btn btn-primary"> Create </button>
+      <button type="submit" class="btn btn-primary" name="create" value="create"> Create </button>
     </div>
 
   </form>
@@ -71,3 +71,13 @@
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 </body>
 </html>
+ <?php
+ function saveString($questionInput){ // function that takes in a string and store into a file
+  $file_name = "question.txt";
+  file_put_contents($file_name, $questionInput);
+ }
+ if(isset($_POST["create"])){
+  saveString($_POST["questionText"]); // saves the string in the textarea into the file
+ }
+  
+   ?> 
