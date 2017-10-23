@@ -37,7 +37,7 @@
     <div class="form-row">
       <div class="col-sm-6">
         <h5>Question Formula</h5>
-        <input class="form-control" type="text" placeholder="Formula"</input>
+        <input class="form-control" type="text" placeholder="Question Formula"</input>
         <ol id="varList">
         </ol>
       </div>
