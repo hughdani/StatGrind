@@ -18,14 +18,25 @@
       <div class="col-sm-12">
         <h5>Question Variables</h5>
         <div class="form-group">
-          <button type="button" class="btn btn-sm btn-primary">New Matrix</button>
-          <button type="button" class="btn btn-sm btn-primary">New Integer</button>
+          <div class="form-row">
+            <button type="button" class="btn btn-sm btn-primary">New Integer</button>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <div class="form-row">
+            <button type="button" class="btn btn-sm btn-primary">New Matrix</button> 
+            <input type="text"> x <input type="text">
+          </div>
         </div>
         <ul class="list-group" id="varList">
           <li class="list-group-item"> 
-            x = 5 (latex this?) 
-            <div class="btn-group pull-right" role="group" aria-label="Basic example">
-              <button type="button" class="btn btn-xs btn-primary">Something</button>
+            x = 5
+            <div class="form-group pull-right" role="group" aria-label="Basic example">
+              <label class="form-check-label">
+                <input class="form-check-input" type="checkbox" value="">
+                Randomize
+              </label>
               <button type="button" class="btn btn-xs btn-warning">Change</button>
               <button type="button" class="btn btn-xs btn-danger">Remove</button>
             </div>
