@@ -12,3 +12,5 @@ Our team agreement can be found [here](https://github.com/CSCC01F17/L02_01/blob/
 ### Persona & User Stories
 Our most up to date product backlog can be found [here](https://github.com/CSCC01F17/L02_01/blob/master/deliverable/03/personas-ustories-v1.pdf).
 
+### Product and Sprint Backlog
+Out most recent product and sprint backlog can be found [here](https://github.com/CSCC01F17/L02_01/blob/master/deliverable/03/product-and-sprint-backlog-1.pdf).
