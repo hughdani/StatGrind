@@ -12,7 +12,7 @@
 </div>
   
 <div class="container">
-  <form method="post">
+  <form method="post" action="PreviewQuestion.php">
     <div class="form-row">
 
       <div class="col-sm-12">
@@ -61,7 +61,7 @@
 
     <div class="form-row">
       <button type="button" class="btn btn-danger"> Back </button>
-      <button type="submit" class="btn btn-primary" name="create" value="create"> Create </button>
+      <button type="submit" class="btn btn-primary" name="submit" value="submit"> Create </button>
     </div>
 
   </form>
