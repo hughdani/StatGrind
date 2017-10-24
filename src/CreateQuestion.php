@@ -71,13 +71,3 @@
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 </body>
 </html>
- <?php
- function saveString($questionInput){ // function that takes in a string and store into a file
-  $file_name = "question.txt";
-  file_put_contents($file_name, $questionInput);
- }
- if(isset($_POST["create"])){
-  saveString($_POST["questionText"]); // saves the string in the textarea into the file
- }
-  
-   ?> 
