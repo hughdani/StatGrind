@@ -8,7 +8,7 @@ Absent:
 
 ================================================================================
 
-Agenda: (e.g.: regular meeting / progress update / catch up meeting / emergency)
+Agenda: (Summary of Previous Sprint, Questions for Sohee, Sprint Administration, Upcoming Sprint)
 
 Discussion Items / Actions / Decision
 
