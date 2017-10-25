@@ -1,0 +1,35 @@
+Meeting Minutes by: Daniel
+Date of Meeting: 24/10/2017
+Time: 8:00 pm
+Location: Discord
+
+Attendance: Adam Koza, Brian Quach, Daniel Hugh, Darius Asri, Kevin Choi
+Absent:
+
+================================================================================
+
+Agenda: (e.g.: regular meeting / progress update / catch up meeting / emergency)
+
+Discussion Items / Actions / Decision
+
+Summary of Previous Sprint
+    - basic pages for Question creation and Assignment creation have been created
+    - there are some preliminary database tables
+
+Questions for Sohee
+    - Are you dependent on the existing WebWork for generating questions? / Are you ok with just creating questions yourself?
+    - What features do you like and dislike in WebWorks?
+    - Are you comfortable with using API like WolframAlpha when generating formulas and LaTeX for question text?
+    - How should randomization of assignment questions work? Are questions reused with different variable values or are new questions from a set of questions picked for the assignment?
+    - Restrictions on variable types/datatypes and its bounds?
+
+Sprint Administration
+    - meetings on Monday for progress reporting
+    - sprints run for one week starting on Thursday and ending the following Wednesday
+    - unification of sprint and product backlogs into one Google Sheet Doc
+    - discontinue the use of Trello as it is inconvient to concurrently update alongside with our Google Sheets
+
+Upcoming Sprint
+    - breakdown more user stories into tasks under Core Functionality
+    - understand how to connect/submit data to the database
+    - many of us with midterms this week, expect fewer hours into the project
