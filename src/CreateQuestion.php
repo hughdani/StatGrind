@@ -8,9 +8,9 @@
 <body>
 
 <div class="jumbotron text-center">
-  <p>Question Creator</p> 
+  <p>Question Creator</p>
 </div>
-  
+
 <div class="container">
   <form method="post" action="PreviewQuestion.php">
     <div class="form-row">
@@ -25,12 +25,12 @@
 
         <div class="form-group">
           <div class="form-row">
-            <button type="button" class="btn btn-sm btn-primary">New Matrix</button> 
+            <button type="button" class="btn btn-sm btn-primary">New Matrix</button>
             <input type="text"> x <input type="text">
           </div>
         </div>
         <ul class="list-group" id="varList">
-          <li class="list-group-item"> 
+          <li class="list-group-item">
             x = 5
             <div class="form-group pull-right" role="group" aria-label="Basic example">
               <label class="form-check-label">
@@ -48,7 +48,7 @@
     <div class="form-row">
       <div class="col-sm-6">
         <h5>Question Formula</h5>
-        <input class="form-control" type="text" placeholder="Question Formula"</input>
+        <input id="formula" name="formula" class="form-control" type="text" placeholder="Question Formula"</input>
         <ol id="varList">
         </ol>
       </div>
@@ -56,6 +56,7 @@
       <div class="col-sm-6">
         <h5>Question Text</h5>
         <textarea id="questionText" name="questionText" class="form-control" rows="10" placeholder="Question Text" required></textarea>
+        <input type="hidden" name="assignment_id" id="assignment_id" value="<?php if (isset($_POST['assignment_id'])){ echo $_POST['assignment_id']; } else { echo 1; } ?>" />
       </div>
     </div>
 
