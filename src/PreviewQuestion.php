@@ -25,7 +25,7 @@ if (isset($_POST['questionText']))
         $file_name = "/question" . (iterator_count($fi) + 1) . ".txt";
 
         // Append answer to question.
-        $qanda = $_POST['questionText'] . "\n\n\n\n ANSWER: " . $_POST['formula'];
+        $qanda = $_POST['questionText'] . "\n\n\n\n ANSWER: " . $_POST['questionFormula'];
 
         // Save question to file.
         saveString($dir . $file_name, $qanda); // saves the string in the textarea into the file

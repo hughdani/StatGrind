@@ -59,10 +59,10 @@
         </div>
         <div class="form-row">
           <div class="col-xs-6">
-          <input class="form-control" id="lowBound" type="text" value="">
+          <input class="form-control" id="lowBound" name="lowBound" type="text" value="">
           </div>
           <div class="col-xs-6">
-          <input class="form-control" id="upBound" type="text" value="">
+          <input class="form-control" id="upBound" name="upBound" type="text" value="">
           </div>
         </div>
       </div>
@@ -77,7 +77,7 @@
     </div>
     <!-- Question Formula -->
     <div class="form-row">
-      <input type="text" class="form-control" placeholder="Question Formula">
+      <input id="questionFormula" name="questionFormula" type="text" class="form-control" placeholder="Question Formula">
     </div>
 
     <div class="form-row">
