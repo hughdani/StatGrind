@@ -31,8 +31,6 @@ function saveString($filename, $questionInput) {
 // Insert new assignment into assignments table
 if (isset($_POST['starttime']))
 {
-	echo $_POST['starttime'];
-	echo $_POST['endtime'];
 	$start = converttime($_POST['starttime']);
 	$end = converttime($_POST['endtime']);
 	$assignment_id = $_POST['assignment_id'];
@@ -98,11 +96,8 @@ if (isset($_POST['location']))
 	
 }
 
-if (isset($_POST['assignment_id'])){
-	$assignment_id = $_POST['assignment_id'];
-} else {
-	$assignment_id = 1;
-}
+
+$assignment_id = $_POST['assignment_id'];
 
 
 ?>
