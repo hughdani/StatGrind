@@ -11,8 +11,8 @@ function computeFormula($formula) {
 	// create instance of api
 	$engine = new WolframAlphaEngine('R4AW9W-39U3QJHUQ4');
 
-	// send query info
-	$resp = $engine->getResults("2 + 2 = 4 - 1");
+	// get query info
+	$resp = $engine->getResults($formula);
 
 	// get data pods back
 	$pod = $resp->getPods();
@@ -29,15 +29,16 @@ function computeFormula($formula) {
 	}
 
 	// print the answer
-	echo $plaintext;
+	return $plaintext;
 }
-function saveString($filename, $questionInput){ // function that takes in a string and store into a file
+
+// function that takes in a string and store into a file
+function saveString($filename, $questionInput){ 
   file_put_contents($filename, $questionInput);
 }
 
-if (isset($_POST['questionText']))
+if (isset($_POST['questionText']) and isset($_POST['questionFormula']))
 {
-	computeFormula($_POST['questionFormula']);
 	
         $dir = 'questions';
 
@@ -53,8 +54,9 @@ if (isset($_POST['questionText']))
         $file_name = "/question" . (iterator_count($fi) + 1) . ".txt";
 
         // Append answer to question.
-        $qanda = $_POST['questionText'] . "\n\n\n\n ANSWER: " . $_POST['questionFormula'];
-
+        $answer = computeFormula($_POST['questionFormula']);
+        echo $answer . "<br>";
+        $qanda = $_POST['questionText'] . "<br> FORMULA: " . $_POST['questionFormula'];
         // Save question to file.
         saveString($dir . $file_name, $qanda); // saves the string in the textarea into the file
         echo $qanda;

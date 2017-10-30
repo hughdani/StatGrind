@@ -12,7 +12,7 @@
 </div>
   
 <div class="container">
-  <form method="post" action="EditAssignmentPage.php">
+  <form method="post" action="PreviewQuestion.php">
     <!-- Question Variables -->
     <div class="form-row">
       <h4>Question Variables</h4>
