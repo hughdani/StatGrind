@@ -5,24 +5,31 @@
 <body>
 <?php
 include 'dependencies/wa_wrapper/WolframAlphaEngine.php';
+
 // use wolfram alpha to calculate formula
-function computeFormula(formula) {
+function computeFormula($formula) {
+	// create instance of api
 	$engine = new WolframAlphaEngine('R4AW9W-39U3QJHUQ4');
-	$result = $engine->process('2 + 2');
-	echo $result->parsedXml->asXML();
-//	$pod = $resp->getPods();
-//
-//	$pod = $pod[1];
-//
-//	foreach($pod->getSubpods() as $subpod){
-//		  if($subpod->plaintext){
-//			      $plaintext = $subpod->plaintext;
-//			          break;
-//			        }
-//	}
-//
-//
-//	echo $plaintext;
+
+	// send query info
+	$resp = $engine->getResults("2 + 2 = 4 - 1");
+
+	// get data pods back
+	$pod = $resp->getPods();
+
+	// select the wanted pod
+	$pod = $pod[1];
+
+	// search for the plaintext pod
+	foreach($pod->getSubpods() as $subpod){
+		if($subpod->plaintext){
+		      $plaintext = $subpod->plaintext;
+			          break;
+			        }
+	}
+
+	// print the answer
+	echo $plaintext;
 }
 function saveString($filename, $questionInput){ // function that takes in a string and store into a file
   file_put_contents($filename, $questionInput);
@@ -30,8 +37,7 @@ function saveString($filename, $questionInput){ // function that takes in a stri
 
 if (isset($_POST['questionText']))
 {
-	$qstring = $_POST['questionFormula'];
-
+	computeFormula($_POST['questionFormula']);
 	
         $dir = 'questions';
 
