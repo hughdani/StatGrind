@@ -4,13 +4,35 @@
 </head>
 <body>
 <?php
+include 'dependencies/wa_wrapper/WolframAlphaEngine.php';
+// use wolfram alpha to calculate formula
+function computeFormula(formula) {
+	$engine = new WolframAlphaEngine('R4AW9W-39U3QJHUQ4');
+	$result = $engine->process('2 + 2');
+	echo $result->parsedXml->asXML();
+//	$pod = $resp->getPods();
+//
+//	$pod = $pod[1];
+//
+//	foreach($pod->getSubpods() as $subpod){
+//		  if($subpod->plaintext){
+//			      $plaintext = $subpod->plaintext;
+//			          break;
+//			        }
+//	}
+//
+//
+//	echo $plaintext;
+}
 function saveString($filename, $questionInput){ // function that takes in a string and store into a file
   file_put_contents($filename, $questionInput);
 }
 
 if (isset($_POST['questionText']))
 {
+	$qstring = $_POST['questionFormula'];
 
+	
         $dir = 'questions';
 
         // create new directory with 744 permissions if it does not exist yet
