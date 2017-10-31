@@ -8,15 +8,16 @@
 </head>
 
 <h2>List of Created Assignments</h2>
+
 <?php
     $mysqli = new mysqli("localhost", "root", "R0binson", "CSCC01");
     $result = $mysqli->query("SELECT * FROM assignments");
     if ($result->num_rows > 0) {
-        while ($row = $result->fetch_row()) {
-            echo "<br> id: ". $row["assignment_id"]. "--start date: ". $row["start_date"]. " -- due date:". $row["due_date"] "<br>";
+        while ($row = $result->fetch_assoc()) {
+            echo "<br> id: ". $row["assignment_id"]. "--start date: ". $row["start_date"]. " --end date: ". $row["end_date"]. "<br>";
         }
     } else {
-        echo "0 results"
+        echo "0 results";
     }
     $mysqli->close();
 ?>
