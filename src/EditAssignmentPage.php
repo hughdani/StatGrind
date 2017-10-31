@@ -107,11 +107,11 @@ $assignment_id = $_POST['assignment_id'];
 
 <div class="container-fluid">
 
-        <div class="jumbotron">
-            <h1>Edit Assignment <?php echo $assignment_id; ?></h1>
-        </div>
+	<div class="jumbotron">
+		<h1>Edit Assignment <?php echo $assignment_id; ?></h1>
+	</div>
 
-		<?php
+	<?php
 		$i = 1;
 		// Grab questions with correct assignment_id.
 		$mysqli = new mysqli("localhost", "root", "R0binson", "CSCC01");
@@ -127,15 +127,20 @@ $assignment_id = $_POST['assignment_id'];
 		$mysqli->close();		
 		echo "<br><br>";
 		echo "<h2>Question $i</h2>";
-		?>
-                        <form action="CreateQuestion.php" method="post">
-                                <input type="hidden" name="assignment_id" id="assignment_id" value="<?php echo $assignment_id; ?>"/>
-                                <input type="submit" class="btn btn-default" value="Create New Question">
-                        </form>
-						<form action="SelectQuestionPage.php" method="post">
-                                <input type="hidden" name="assignment_id" id="assignment_id" value="<?php echo $assignment_id; ?>"/>
-                                <input type="submit" class="btn btn-default" value="Select Question">
-                        </form>
+	?>
+
+	<form action="CreateQuestion.php" method="post">
+		<input type="hidden" name="assignment_id" id="assignment_id" value="<?php echo $assignment_id; ?>"/>
+		<input type="submit" class="btn btn-default" value="Create New Question">
+	</form>
+	<form action="SelectQuestionPage.php" method="post">
+		<input type="hidden" name="assignment_id" id="assignment_id" value="<?php echo $assignment_id; ?>"/>
+		<input type="submit" class="btn btn-default" value="Select Question">
+	</form>
+	<form action="ConfirmCreateAssignmentPage.php" method="post">
+		<input type="hidden" name="assignment_id" id="assignment_id" value="<?php echo $assignment_id; ?>"/>
+		<input type="submit" class="btn btn-default" value="Submit Assignment">
+	</form>
 
 
 </div>
