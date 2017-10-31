@@ -18,7 +18,7 @@
 </form>
 
 <!-- Quick path to view all created assignments. -->
-<form action="AllAssignmentsPage.php" method="post">
+<form action="AllCreatedAssignmentsPage.php" method="post">
     <input type="submit" class="btn btn-default" value="View All Assignments">
 </form>
 
