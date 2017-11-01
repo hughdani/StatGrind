@@ -133,6 +133,11 @@ $assignment_id = $_POST['assignment_id'];
 		<input type="hidden" name="assignment_id" id="assignment_id" value="<?php echo $assignment_id; ?>"/>
 		<input type="submit" class="btn btn-default" value="Create New Question">
 	</form>
+	<form action="AddRandomQuestions.php" method="post">
+		<input type="hidden" name="assignment_id" id="assignment_id" value="<?php echo $assignment_id; ?>"/>
+		Add <input type="number" min="1" name="num_questions" id = "num_questions" value=1 /> random questions
+		<input type="submit" class="btn btn-default" value="Add Questions">
+	</form>
 	<form action="SelectQuestionPage.php" method="post">
 		<input type="hidden" name="assignment_id" id="assignment_id" value="<?php echo $assignment_id; ?>"/>
 		<input type="submit" class="btn btn-default" value="Select Question">
@@ -141,7 +146,6 @@ $assignment_id = $_POST['assignment_id'];
 		<input type="hidden" name="assignment_id" id="assignment_id" value="<?php echo $assignment_id; ?>"/>
 		<input type="submit" class="btn btn-default" value="Submit Assignment">
 	</form>
-
 
 </div>
 </body>
