@@ -28,7 +28,7 @@
 			// display each questions from their text file location
 			while($row = mysqli_fetch_assoc($result)){
 				echo "<p>Question $qNum</p><br>";
-				$file = file_get_contents($row->location);
+				$file = file_get_contents($row['location']);
 				$questionText = explode("ANSWER:", $file);
 				echo $questionText[0] . "<br><br>";
 				echo "ANSWER:" . $questionText[1];
