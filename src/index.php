@@ -21,6 +21,9 @@
       <input type="submit" value ="Create a New Assignment">
     </form>
 
+    <form action="CreateQuestion.php" method="post">
+      <input type="submit" value ="Create a New Question">
+    </form>
 
   </body>
 </html>
