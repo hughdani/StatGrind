@@ -8,29 +8,37 @@ Absent:
 
 ================================================================================
 
-Agenda: (Merge Branches, Database Design, Task Transposition, Task Overlaps, Design)
+Agenda: (Merge Branches, Database Design, Task Transposition, Task Overlaps, Design, Code, Git, Sprints)
 
 Discussion Items / Actions / Decision
 
 Merge Branches
-		- Question creation is now on master branch
-		- Assignment creation is now on master branch
+	- Question creation is now on master branch
+	- Assignment creation is now on master branch
 
 Database Design
-		- Normalize current DB design
-		- Plan to create associative entity between question and assignment
+	- Normalize current DB design
+	- Plan to create associative entity between question and assignment
 
 Task Transposition
-    - Move the randomization aspect of the project up to a new user story
-		- Focus more on core functionality for next sprint
+	- Move the randomization aspect of the project up to a new user story
+	- Focus more on core functionality for next sprint
 
 Task Overlaps
-    - Clear up confusion between Darius & Kevin's task for viewing question
-		- One is for viewing individial questions (Darius) 
-		- One is for viewing assignment questions (Kevin)
+	- Clear up confusion between Darius & Kevin's task for viewing question
+	- One is for viewing individial questions (Darius) 
+	- One is for viewing assignment questions (Kevin)
 
 Design
-		- Plan to add a confirm button in q preview page before saving q
+	- Plan to add a confirm button in q preview page before saving q
+	- Plan to add a back button so that the page works with assignment page
 
-Sprint 3
-		- Do task distribution for sprint 3
+Code
+	- Use PHP formatter for conventions
+
+Git
+	- Merge from master onto feature branch first
+
+Sprints
+	- Do task distribution for sprint 3
+	- Sprints will be Friday to Wednesday
