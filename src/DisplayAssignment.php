@@ -20,7 +20,7 @@
 	
 		// get filename for question
 		$conn = new mysqli($servername, $username, $password, $dbname);
-		$sqlquery = "SELECT * FROM questions WHERE assignment_id = " . $assignmentID;
+		$sqlquery = "SELECT location FROM in_assignment LEFT JOIN questions ON in_assignment.question_id=questions.question_id WHERE in_assignment.assignment_id = " . $assignmentID;
 		$result = mysqli_query($conn, $sqlquery);
 		
 		if(mysqli_num_rows($result) > 0){
