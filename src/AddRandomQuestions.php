@@ -20,17 +20,15 @@
 
 	<?php
         	$mysqli = new mysqli("localhost", "root", "R0binson", "CSCC01");
-        	$question_id = $mysqli->query("SELECT * FROM `questions`")->num_rows + 1;
 		for ($i = 1; $i <= $num_questions; $i++) {
-        		$result = $mysqli->query("SELECT DISTINCT location FROM `questions`");
+        		$result = $mysqli->query("SELECT question_id FROM `questions`");
 			for ($j = 1; $j <= rand(1, $result->num_rows); $j++){
 				$row = $result->fetch_row();
 			}
-			$newquestionlocation = $row[0];
-			$insertsql = "INSERT INTO questions (question_id, assignment_id, location) 
-					VALUES ($question_id, $assignment_id, '$newquestionlocation')";
+			$question_id = $row[0];
+			$insertsql = "INSERT INTO in_assignment (assignment_id, question_id) 
+					VALUES ($assignment_id, $question_id)";
 			$mysqli->query($insertsql);
-			$question_id = $question_id + 1;
 		}
 		$mysqli->close();
 	?>

@@ -15,8 +15,9 @@
 <?php
 // Determine how many rows exist in question table (for question_id).
 $mysqli = new mysqli("localhost", "root", "R0binson", "CSCC01");
-$result = $mysqli->query("SELECT * FROM assignments");
+$result = $mysqli->query("SELECT assignment_id FROM assignments");
 $assignment_id = $result->num_rows + 1;
+$mysqli->close();
 ?>
 
 
