@@ -70,19 +70,27 @@ if (isset($_POST['questionText']))
 	$assignment_id = $_POST['assignment_id'];
 	$sql = "INSERT INTO questions (location) VALUES ('$location')";
 	$mysqli->query($sql);
+
+	$sql = "SELECT question_id, location FROM questions WHERE location = '$location'";
+	$row = $mysqli->query($sql)->fetch_row();
+	$new_question_id = $row[0];
+
+	$sql = "INSERT INTO in_assignment (assignment_id, question_id) VALUES ($assignment_id, $new_question_id)";
+	$mysqli->query($sql);
+
 	$mysqli->close();
 	
 }
 
 // if question was selected, save that question
-if (isset($_POST['location']))
+if (isset($_POST['question_id']))
 {
 	
 	// Insert question into question table
 	$mysqli = new mysqli("localhost", "root", "R0binson", "CSCC01");
-	$location = $_POST['location'];
+	$question_id = $_POST['question_id'];
 	$assignment_id = $_POST['assignment_id'];
-	$sql = "INSERT INTO questions (location) VALUES ('$location')";
+	$sql = "INSERT INTO in_assignment (assignment_id, question_id) VALUES ($assignment_id, $question_id)";
 	$mysqli->query($sql);
 	$mysqli->close();
 	

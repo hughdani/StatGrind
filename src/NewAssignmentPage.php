@@ -13,10 +13,11 @@
 
 <body>
 <?php
-// Determine how many rows exist in question table (for question_id).
+// Determine how many rows exist in question table (for assignment_id).
 $mysqli = new mysqli("localhost", "root", "R0binson", "CSCC01");
-$result = $mysqli->query("SELECT assignment_id FROM assignments");
-$assignment_id = $result->num_rows + 1;
+$result = $mysqli->query("SELECT assignment_id FROM assignments ORDER by assignment_id DESC");
+$prev_assignment = $result->fetch_row();
+$assignment_id = $prev_assignment[0] + 1;
 $mysqli->close();
 ?>
 
