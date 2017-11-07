@@ -81,11 +81,17 @@
     </div>
 
     <div class="form-row">
-      <button type="button" class="btn btn-danger"> Back </button>
+      <button type="button" class="btn btn-danger" onclick="history.back();"> Back </button>
       <button type="submit" class="btn btn-primary" name="submit" value="submit"> Create </button>
     </div>
   </form>
 </div>
+
+<?php
+    function postAction(action){
+    	$form = 
+    }
+?>
 
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
