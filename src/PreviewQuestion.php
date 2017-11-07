@@ -6,7 +6,6 @@
     <form method="POST">
         <div class="form-row">
             Previewing question:
-
         </div>
 
     <?php
@@ -81,6 +80,12 @@
         $sql = "INSERT INTO questions (question_id, assignment_id, location) VALUES ($question_id, $assignment_id, '$location')";
         $mysqli->query($sql);
         $mysqli->close();
+
+        echo "Question have been saved! <br>";
+        echo "<form>";
+        echo "<form method='post' action='CreateQuestion.php'>";
+        echo "<button type='submit' name='submit' value='submit' formaction='CreateQuestion.php'> Back to CreateQuestion </button>";
+        echo "</form>";
     }
     ?>
         <div class="form-row">
