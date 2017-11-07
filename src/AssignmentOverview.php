@@ -60,6 +60,7 @@ while ($row = $result->fetch_row()) {
 	}
 	
 }
+$mysqli->close();
 
 ?>
 
