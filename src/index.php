@@ -25,5 +25,14 @@
       <input type="submit" value ="Create a New Question">
     </form>
 
+
+    <form action="DisplayAssignment.php" method="post">
+      <input type="submit" value ="View Full Assignment">
+    </form>
+
+    <form action="AssignmentAnswer.php" method="post">
+      <input type="submit" value ="View Assignment Answer">
+    </form>
+
   </body>
 </html>
