@@ -18,6 +18,15 @@ if (isset($_POST['student_id'])) {
 } else {
 	$student_id = "kozaadam";
 }
+// If comming from ConfirmSubmission page, insert submission into results table
+if (isset($_POST['result'])) {
+	$result = $_POST['result'];
+	$assignment_id = $_POST['assignment_id'];
+	$mysqli = new mysqli("localhost", "root", "R0binson", "CSCC01");
+	$sql = "INSERT INTO results (student_id, assignment_id, result) VALUES ('$student_id', $assignment_id, $result)";
+	$mysqli->query($sql);
+	$mysqli->close();
+}
 
 // Get current time, convert to 24hr.
 $current_time = date("Y-m-d h:i:sa");
