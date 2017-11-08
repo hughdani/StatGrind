@@ -25,5 +25,10 @@
       <input type="submit" value ="Create a New Question">
     </form>
 
+    <form action="WriteAssignment.php" method="post">
+      <input type="text" name="assignment_id" id="assignment_id" placeholder="Assignment #">
+      <input type="submit" value ="Write Assignment">
+    </form>
+
   </body>
 </html>
