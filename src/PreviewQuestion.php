@@ -65,9 +65,11 @@
 
         // Append answer to question.
         $answer = computeFormula($_POST['questionFormula']);
+        echo $answer . "<br>";
         $qanda = $_POST['questionText'] . "<br> FORMULA: " . $_POST['questionFormula'];
         // Save question to file.
         saveString($dir . $file_name, $qanda); // saves the string in the textarea into the file
+        echo $qanda . "<br>";
 
         // Determine how many rows exist in question table (for question_id).
         $mysqli = new mysqli("localhost", "root", "R0binson", "CSCC01");
@@ -77,7 +79,7 @@
         // Insert question into question table
         $location = $dir . $file_name;
         $assignment_id = $_POST['assignment_id'];
-        $sql = "INSERT INTO questions (question_id, assignment_id, location) VALUES ($question_id, $assignment_id, '$location')";
+        $sql = "INSERT INTO questions (question_id, location) VALUES ($question_id, '$location')";
         $mysqli->query($sql);
         $mysqli->close();
 
