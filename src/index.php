@@ -34,7 +34,6 @@
     <form action="WriteAssignment.php" method="post">
       <input type="text" name="assignment_id" id="assignment_id" placeholder="Assignment #">
       <input type="submit" value ="Write Assignment">
->>>>>>> merge-test
     </form>
 
   </body>
