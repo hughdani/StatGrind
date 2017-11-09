@@ -74,7 +74,7 @@ while ($row = $result->fetch_row()) {
         if(isset($_POST[$updateIndex])){
         	$newMark = $_POST[$newMarkIndex];
         	$newFeedback = $_POST[$newFeedbackIndex];
-        	$sqlUpdate = "UPDATE results SET feedback = '$newFeedback', result = '$newMark'  WHERE student_id = '$student_id' AND assignment_id = $row[0]";
+        	$sqlUpdate = "UPDATE results SET feedback = '$newFeedback', result = '$newMark'  WHERE student_id = '$student_id' AND assignment_id = $row[0] AND attempt_id = $attempt_id";
 
         	$mysqli->query($sqlUpdate);
         	echo "Updated Mark/Feedback"
