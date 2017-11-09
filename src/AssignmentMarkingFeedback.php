@@ -25,8 +25,18 @@ if(isset($_POST['attempt_id'])){
 	$attempt_id = $_POST['attempt_id'];
 	if ($attempt_id != 0){
 		$mysqli = new mysqli("localhost", "root", "R0binson", "CSCC01");
-		$sqlUpdate = "UPDATE results SET result=$newMark, feedback='$newFeedback' WHERE attempt_id=$attempt_id";
-		$mysqli->query($sqlUpdate);
+		If (($newMark == "") and ($newFeedback != "")){
+			$sqlUpdate = "UPDATE results SET feedback='$newFeedback' WHERE attempt_id=$attempt_id";
+			$mysqli->query($sqlUpdate);
+		}
+		if (($newMark != "") and ($newFeedback == "")){
+			$sqlUpdate = "UPDATE results SET result=$newMark WHERE attempt_id=$attempt_id";
+			$mysqli->query($sqlUpdate);
+		}
+		if (($newMark != "") and ($newFeedback != "")){
+			$sqlUpdate = "UPDATE results SET result=$newMark, feedback='$newFeedback' WHERE attempt_id=$attempt_id";
+			$mysqli->query($sqlUpdate);
+		}
 		$mysqli->close();
 	}
 }
