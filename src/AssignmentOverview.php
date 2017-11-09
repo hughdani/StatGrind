@@ -48,7 +48,7 @@ while ($row = $result->fetch_row()) {
 	if ($current_time > $row[1]) {
 		echo "<h2>Assignment $row[0]</h2><br>";
 		// Select all student attempts for this assignment.
-		$sql = "SELECT result, attempt_id FROM results WHERE student_id = '$student_id' AND assignment_id = $row[0]";
+		$sql = "SELECT result, attempt_id, feedback FROM results WHERE student_id = '$student_id' AND assignment_id = $row[0]";
 		$result2 = $mysqli->query($sql);
 		$attempts = $result2->num_rows;
 		// Determine last attempt.
@@ -59,13 +59,15 @@ while ($row = $result->fetch_row()) {
 				if ($row2[1] > $attempt_id) {
 					$mark = $row2[0];
 					$attempt_id = $row2[1];
+					$feedback = $row2[2];
 				}
 			}
 		} else {
 			$mark = 0;
+			$feedback = "";
 		}
 		echo "Mark: " . $mark . "<br>Number of attempts: " . $attempts . "<br>";
-		echo "Instructor feedback: " . "<br>";
+		echo "Instructor feedback: " . $feedback . "<br>";
 	}
 	
 }
