@@ -38,7 +38,7 @@ while ($row = $result->fetch_row()) {
 	if ($current_time > $row[1]) {
 		echo "<h2>Assignment $row[0]</h2><br>";
 		// Select all student attempts for this assignment.
-		$sql = "SELECT result, attempt_id FROM results WHERE student_id = '$student_id' AND assignment_id = $row[0]";
+		$sql = "SELECT result, attempt_id, feedback FROM results WHERE student_id = '$student_id' AND assignment_id = $row[0]";
 		$result2 = $mysqli->query($sql);
 		$attempts = $result2->num_rows;
 		// Determine last attempt.
@@ -49,28 +49,33 @@ while ($row = $result->fetch_row()) {
 				if ($row2[1] > $attempt_id) {
 					$mark = $row2[0];
 					$attempt_id = $row2[1];
+					$feedback = $row2[2];
 				}
 			}
 		} else {
 			$mark = 0;
 		}
-		echo "Instructor feedback: " . "<br>";
-        echo "<form method='post'>";
 		echo "Mark: " . $mark . "<br>Number of attempts: " . $attempts . "<br>";
-		echo "<input id='newMark'.$row[0] name='newMark'.$row[0] type='text' class='form-control' placeholder='$mark'>"
-        echo "<
-      	<textarea id='assignment' . $row[0] . 'FeedbackText' name='assignment' . $row[0] . 'FeedbackText' class='form-control' rows='5' placeholder='Insert feedback here'></textarea>
-      	<button type='submit' name='updateAssignment'.$row[0] id='updateAssignment'. $row[0] value='submitAssignment'. $row[0] . 'Feedback' />
-        ";
-        echo "</form>";
+		echo "Instructor feedback: " . "<br>";
+		echo $feedback . "<br>";
 
-        if(isset($_POST['updateAssignment'. $row[0]])){
-        	$newMark = $_POST['newMark'.$row[0]];
-        	$feedback = $_POST['assignment' . $row[0] . 'FeedbackText'];
-        	$sqlFeedback = "UPDATE results SET feedback = '$feedback', result = '$newMark'  WHERE student_id = '$student_id' AND assignment_id = $row[0]";
+		?>
 
-        	$mysqli->query($sqlFeedback);
-        	echo "Update Mark/Feedback"
+        <form method='post'>
+		<input id=<?php echo 'newMark$row[0]'?> name=<?php echo 'newMark$row[0]'?> type='text' class='form-control' placeholder=<?php echo $mark?>>
+      	<textarea id=<?php echo 'feedback$row[0]'?> name=<?php echo 'feedback$row[0]'?>  class='form-control' rows='5' placeholder=<?php echo $feedback?>></textarea>
+      	<button type='submit' name=<?php echo 'update$row[0]'?> id=<?php echo 'update$row[0]'?> value='submitUpdate' />
+        </form>"
+
+        <?php
+
+        if(isset($_POST['update$row[0]'])){
+        	$newMark = $_POST['newMark$row[0]'];
+        	$newFeedback = $_POST['feedback$row[0]'];
+        	$sqlUpdate = "UPDATE results SET feedback = '$newFeedback', result = '$newMark'  WHERE student_id = '$student_id' AND assignment_id = $row[0]";
+
+        	$mysqli->query($sqlUpdate);
+        	echo "Updated Mark/Feedback"
         }
 	}
 	
