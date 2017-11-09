@@ -62,9 +62,9 @@ while ($row = $result->fetch_row()) {
 		?>
 
         <form method='post'>
-		<input id=<?php echo "newMark$row[0]";?> name=<?php echo "newMark$row[0]";?> type='text' class='form-control' placeholder=<?php echo $mark?>>
-      	<textarea id=<?php echo "feedback$row[0]";?> name=<?php echo "feedback$row[0]";?>  class='form-control' rows='5' placeholder=<?php echo $feedback?>></textarea>
-      	<button type='submit' name=<?php echo "update$row[0]";?> id=<?php echo "update$row[0]";?> value='submitUpdate' />
+		<input id="<?php echo "newMark$row[0]";?>" name="<?php echo "newMark$row[0]";?>" type='text' class='form-control' placeholder="<?php echo $mark?>">
+      	<textarea id="<?php echo "feedback$row[0]";?>" name="<?php echo "feedback$row[0]";?>"  class='form-control' rows='5' placeholder="<?php echo $feedback?>"></textarea>
+      	<button type='submit' name="<?php echo "update$row[0]";?>" id="<?php echo "update$row[0]";?>" value='submitUpdate' />
         </form>"
 
         <?php
