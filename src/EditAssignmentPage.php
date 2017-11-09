@@ -96,8 +96,26 @@ if (isset($_POST['question_id']))
 	
 }
 
+// if question was removed, remove that question
+if (isset($_POST['map_id']))
+{
+	// Insert question into question table
+	$mysqli = new mysqli("localhost", "root", "R0binson", "CSCC01");
+	$map_id = $_POST['map_id'];
+	$sql = "DELETE FROM in_assignment WHERE map_id = $map_id";
+	$mysqli->query($sql);
+	$mysqli->close();
 
-$assignment_id = $_POST['assignment_id'];
+}
+
+
+
+
+if (isset($_POST['assignment_id'])) {
+	$assignment_id = $_POST['assignment_id'];
+} else {
+	$assignment_id = 1;
+}
 
 
 ?>
@@ -115,14 +133,20 @@ $assignment_id = $_POST['assignment_id'];
 		$i = 1;
 		// Grab questions with correct assignment_id.
 		$mysqli = new mysqli("localhost", "root", "R0binson", "CSCC01");
-		$result = $mysqli->query("SELECT assignment_id, location FROM in_assignment LEFT JOIN questions ON in_assignment.question_id=questions.question_id WHERE assignment_id = $assignment_id");
+		$result = $mysqli->query("SELECT in_assignment.question_id, location, map_id FROM in_assignment LEFT JOIN questions ON in_assignment.question_id=questions.question_id WHERE assignment_id = $assignment_id");
 		while ($row = $result->fetch_row()) {
 			echo "<h2>Question $i</h2><br>";
 			$filetxt = file_get_contents($row[1]);
 			$q = explode("ANSWER:", $filetxt);
 			echo $q[0] . "<br><br>";
-			echo "ANSWER: " . $q[1];
+			echo "ANSWER: " . $q[1] . "<br>";
 			$i = $i + 1;
+			?>
+			<form action="EditAssignmentPage.php" method="post">
+				<input type="hidden" name="map_id" id="map_id" value="<?php echo $row[2]; ?>"/>
+				<input type="submit" class="btn btn-default" value="Remove Question">
+			</form>
+			<?php
 		}
 		$mysqli->close();		
 		echo "<br><br>";

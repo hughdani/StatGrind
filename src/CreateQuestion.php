@@ -81,7 +81,7 @@
     </div>
 
     <div class="form-row">
-      <button type="button" class="btn btn-danger"> Back </button>
+      <button type="button" class="btn btn-danger" onclick="history.back();"> Back </button>
       <button type="submit" class="btn btn-primary" name="submit" value="submit"> Create </button>
     </div>
   </form>

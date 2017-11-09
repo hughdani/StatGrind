@@ -3,43 +3,53 @@
 <title>Question Preview</title>
 </head>
 <body>
-<?php
-include 'dependencies/wa_wrapper/WolframAlphaEngine.php';
+    <form method="POST">
+        <div class="form-row">
+            Previewing question:
+        </div>
 
-// use wolfram alpha to calculate formula
-function computeFormula($formula) {
-	// create instance of api
-	$engine = new WolframAlphaEngine('R4AW9W-39U3QJHUQ4');
+    <?php
+    include 'dependencies/wa_wrapper/WolframAlphaEngine.php';
 
-	// get query info
-	$resp = $engine->getResults($formula);
+    // use wolfram alpha to calculate formula
+    function computeFormula($formula) {
+        // create instance of api
+        $engine = new WolframAlphaEngine('R4AW9W-39U3QJHUQ4');
 
-	// get data pods back
-	$pod = $resp->getPods();
+        // get query info
+        $resp = $engine->getResults($formula);
 
-	// select the wanted pod
-	$pod = $pod[1];
+        // get data pods back
+        $pod = $resp->getPods();
 
-	// search for the plaintext pod
-	foreach($pod->getSubpods() as $subpod){
-		if($subpod->plaintext){
-		      $plaintext = $subpod->plaintext;
-			          break;
-			        }
-	}
+        // select the wanted pod
+        $pod = $pod[1];
 
-	// print the answer
-	return $plaintext;
-}
+        // search for the plaintext pod
+        foreach($pod->getSubpods() as $subpod){
+            if($subpod->plaintext){
+                  $plaintext = $subpod->plaintext;
+                          break;
+                        }
+        }
 
-// function that takes in a string and store into a file
-function saveString($filename, $questionInput){ 
-  file_put_contents($filename, $questionInput);
-}
+        // print the answer
+        return $plaintext;
+    }
 
-if (isset($_POST['questionText']) and isset($_POST['questionFormula']))
-{
-	
+    // function that takes in a string and store into a file
+    function saveString($filename, $questionInput){ 
+      file_put_contents($filename, $questionInput);
+    }
+
+    if (isset($_POST['questionText']) and isset($_POST['questionFormula']))
+    {
+        echo "Question: " . $_POST['questionText'] . "<br>";
+        echo "Formula: " . $_POST['questionFormula'] . "<br>";
+
+    }
+
+    if(isset($_POST['save'])){
         $dir = 'questions';
 
         // create new directory with 744 permissions if it does not exist yet
@@ -59,13 +69,13 @@ if (isset($_POST['questionText']) and isset($_POST['questionFormula']))
         $qanda = $_POST['questionText'] . "<br> FORMULA: " . $_POST['questionFormula'];
         // Save question to file.
         saveString($dir . $file_name, $qanda); // saves the string in the textarea into the file
-        echo $qanda;
+        echo $qanda . "<br>";
 
         // Determine how many rows exist in question table (for question_id).
         $mysqli = new mysqli("localhost", "root", "R0binson", "CSCC01");
         $result = $mysqli->query("SELECT question_id FROM questions");
         $question_id = $result->num_rows + 1;
-
+        
         // Insert question into question table
         $location = $dir . $file_name;
         $assignment_id = $_POST['assignment_id'];
@@ -73,7 +83,17 @@ if (isset($_POST['questionText']) and isset($_POST['questionFormula']))
         $mysqli->query($sql);
         $mysqli->close();
 
-}
-?>
+        echo "Question have been saved! <br>"
+        ?>
+        
+        <form method="post" action="CreateQuestion.php">
+        <button type="submit" name="submit" value="submit" formaction="CreateQuestion.php">Create more questions</button>
+        </form>
+    }
+        <div class="form-row">
+            <button type="button" class="btn btn-danger" onclick="history.back();"> Back </button>
+            <button type="submit" class="btn btn-primary" name="save" value="save"> Save </button>
+        </div>
+    </form>
 </body>
 </html>

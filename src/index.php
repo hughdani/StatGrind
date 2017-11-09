@@ -11,10 +11,12 @@
     <br>
     <br>
 
-    <form action="welcome.php" method="post">
-      Name: <input type="text" name="name"><br>
-      E-mail: <input type="text" name="email"><br>
-      <input type="submit">
+    <form action="AccountLogin.php" method="post">
+      <input type="submit" value ="Log In">
+    </form>
+
+    <form action="CreateAccount.php" method="post">
+      <input type="submit" value ="Create Account">
     </form>
 
     <form action="NewAssignmentPage.php" method="post">
@@ -27,6 +29,12 @@
 
     <form action="AssignmentOverview.php" method="post">
       <input type="submit" value ="Assignment Overview">
+    </form>
+
+    <form action="WriteAssignment.php" method="post">
+      <input type="text" name="assignment_id" id="assignment_id" placeholder="Assignment #">
+      <input type="submit" value ="Write Assignment">
+>>>>>>> merge-test
     </form>
 
   </body>
