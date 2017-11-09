@@ -77,6 +77,7 @@ if (isset($_POST["login_attempt"])) {
 </div>
 
   
+<!- Not logged in ->
 <div class="container" <?php if ($logged_in == true) {
     echo "style = 'display:none'";
 } ?>>
@@ -92,6 +93,8 @@ if (isset($_POST["login_attempt"])) {
   </form>
 </div>
 
+
+<!- Logged in ->
 <div class="container" <?php if ($logged_in == false) {
     echo "style = 'display:none'";
 } ?>>
@@ -113,6 +116,19 @@ if (isset($_POST["login_attempt"])) {
     echo "value='$userid'";
 } ?>"/>
       <input type="submit" value ="Create a New Question">
+    </form>
+
+    <form action="AssignmentMarkingFeedback.php" method="post" <?php if (isset($userid)){ echo visibility_tag($userid, "grade_assignment_perm"); }?>>
+      <input type="submit" value ="Update marking/feedback">
+    </form>
+
+    <form action="AssignmentOverview.php" method="post" <?php if (isset($userid)){ echo visibility_tag($userid, "view_assignment_perm"); }?>>
+      <input type="submit" value ="Assignment Overview">
+    </form>
+
+    <form action="WriteAssignment.php" method="post" <?php if (isset($userid)){ echo visibility_tag($userid, "view_assignment_perm"); }?>>
+      <input type="text" name="assignment_id" id="assignment_id" placeholder="Assignment #">
+      <input type="submit" value ="Write Assignment">
     </form>
 </div>
 

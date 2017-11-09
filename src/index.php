@@ -19,26 +19,5 @@
       <input type="submit" value ="Create Account">
     </form>
 
-    <form action="NewAssignmentPage.php" method="post">
-      <input type="submit" value ="Create a New Assignment">
-    </form>
-
-    <form action="CreateQuestion.php" method="post">
-      <input type="submit" value ="Create a New Question">
-    </form>
-
-    <form action="AssignmentMarkingFeedback.php" method="post">
-      <input type="submit" value ="Update marking/feedback">
-    </form>
-
-    <form action="AssignmentOverview.php" method="post">
-      <input type="submit" value ="Assignment Overview">
-    </form>
-
-    <form action="WriteAssignment.php" method="post">
-      <input type="text" name="assignment_id" id="assignment_id" placeholder="Assignment #">
-      <input type="submit" value ="Write Assignment">
-    </form>
-
   </body>
 </html>
