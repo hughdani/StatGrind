@@ -23,10 +23,12 @@ if(isset($_POST['attempt_id'])){
 	$newMark = $_POST['newmark'];
 	$newFeedback = $_POST['feedback'];
 	$attempt_id = $_POST['attempt_id'];
-	$mysqli = new mysqli("localhost", "root", "R0binson", "CSCC01");
-	$sqlUpdate = "UPDATE results SET result=$newMark, feedback='$newFeedback' WHERE attempt_id=$attempt_id";
-	$mysqli->query($sqlUpdate);
-	$mysqli->close();
+	if ($attempt_id != 0){
+		$mysqli = new mysqli("localhost", "root", "R0binson", "CSCC01");
+		$sqlUpdate = "UPDATE results SET result=$newMark, feedback='$newFeedback' WHERE attempt_id=$attempt_id";
+		$mysqli->query($sqlUpdate);
+		$mysqli->close();
+	}
 }
 
 // Get current time, convert to 24hr.
@@ -52,7 +54,7 @@ while ($row = $result->fetch_row()) {
 		$result2 = $mysqli->query($sql);
 		$attempts = $result2->num_rows;
 		$feedback = "";
-		
+		$attempt_id = 0;
 		// Determine last attempt.
 		if ($attempts > 0) {
 			$mark = 0;
