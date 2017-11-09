@@ -11,10 +11,12 @@
     <br>
     <br>
 
-    <form action="welcome.php" method="post">
-      Name: <input type="text" name="name"><br>
-      E-mail: <input type="text" name="email"><br>
-      <input type="submit">
+    <form action="AccountLogin.php" method="post">
+      <input type="submit" value ="Log In">
+    </form>
+
+    <form action="CreateAccount.php" method="post">
+      <input type="submit" value ="Create Account">
     </form>
 
     <form action="NewAssignmentPage.php" method="post">
