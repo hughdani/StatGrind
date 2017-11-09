@@ -20,13 +20,13 @@ if (isset($_POST['student_id'])) {
 }
 
 if(isset($_POST['attempt_id'])){
-        	$newMark = $_POST['newmark'];
-        	$newFeedback = $_POST['feedback'];
-			$mysqli = new mysqli("localhost", "root", "R0binson", "CSCC01");
-        	$sqlUpdate = "UPDATE results SET feedback = '$newFeedback', result = '$newMark'  WHERE attempt_id = $attempt_id";
-        	$mysqli->query($sqlUpdate);
-			$mysqli->close();
-        }
+        $newMark = $_POST['newmark'];
+        $newFeedback = $_POST['feedback'];
+	$mysqli = new mysqli("localhost", "root", "R0binson", "CSCC01");
+        $sqlUpdate = "UPDATE results SET feedback = '$newFeedback', result = '$newMark'  WHERE attempt_id = $attempt_id";
+        $mysqli->query($sqlUpdate);
+	$mysqli->close();
+}
 
 // Get current time, convert to 24hr.
 $current_time = date("Y-m-d h:i:sa");
@@ -46,12 +46,12 @@ $result = $mysqli->query($sql);
 while ($row = $result->fetch_row()) {
 	if ($current_time > $row[1]) {
 		echo "<h2>Assignment $row[0]</h2><br>";
-		
 		// Select all student attempts for this assignment.
 		$sql = "SELECT result, attempt_id, feedback FROM results WHERE student_id = '$student_id' AND assignment_id = $row[0]";
 		$result2 = $mysqli->query($sql);
 		$attempts = $result2->num_rows;
 		$feedback = "";
+		
 		// Determine last attempt.
 		if ($attempts > 0) {
 			$mark = 0;
@@ -72,11 +72,11 @@ while ($row = $result->fetch_row()) {
 		?>
 
         <form method='post'>
-        <input type="hidden" name="student_id" id="student_id" value="<?php echo "$student_id";?>"/>
-        <input type="hidden" name="attempt_id" id="attempt_id" value="<?php echo "$attempt_id";?>"/>
+        	<input type="hidden" name="student_id" id="student_id" value="<?php echo "$student_id";?>"/>
+        	<input type="hidden" name="attempt_id" id="attempt_id" value="<?php echo "$attempt_id";?>"/>
 		<input id="newmark" name="newmark" type='text' class='form-control' placeholder="<?php echo $mark?>">
-      	<textarea id="feedback" name="feedback"  class='form-control' rows='5' placeholder="<?php echo $feedback?>"></textarea>
-      	<input type="submit" class="btn btn-default" value="Submit Update"/>
+      		<textarea id="feedback" name="feedback"  class='form-control' rows='5' placeholder="<?php echo $feedback?>"></textarea>
+      		<input type="submit" class="btn btn-default" value="Submit Update"/>
         </form>
 
         <?php
