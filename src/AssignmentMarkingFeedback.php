@@ -77,7 +77,7 @@ while ($row = $result->fetch_row()) {
         	$sqlUpdate = "UPDATE results SET feedback = '$newFeedback', result = '$newMark'  WHERE student_id = '$student_id' AND assignment_id = $row[0] AND attempt_id = $attempt_id";
 
         	$mysqli->query($sqlUpdate);
-        	echo "Updated Mark/Feedback"
+        	echo "Updated Mark/Feedback";
         }
 	}
 	
