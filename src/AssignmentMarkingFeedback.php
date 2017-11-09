@@ -68,10 +68,12 @@ while ($row = $result->fetch_row()) {
         </form>"
 
         <?php
-
-        if(isset($_POST["update$row[0]"])){
-        	$newMark = $_POST["newMark$row[0]"];
-        	$newFeedback = $_POST["feedback$row[0]"];
+        $updateIndex = "update". $row[0];
+        $newMarkIndex = "newMark". $row[0];
+        $newFeedbackIndex = "feedback". $row[0];
+        if(isset($_POST[$updateIndex])){
+        	$newMark = $_POST[$newMarkIndex];
+        	$newFeedback = $_POST[$newFeedbackIndex];
         	$sqlUpdate = "UPDATE results SET feedback = '$newFeedback', result = '$newMark'  WHERE student_id = '$student_id' AND assignment_id = $row[0]";
 
         	$mysqli->query($sqlUpdate);
