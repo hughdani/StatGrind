@@ -41,6 +41,7 @@ while ($row = $result->fetch_row()) {
 		$sql = "SELECT result, attempt_id, feedback FROM results WHERE student_id = '$student_id' AND assignment_id = $row[0]";
 		$result2 = $mysqli->query($sql);
 		$attempts = $result2->num_rows;
+		$feedback = "";
 		// Determine last attempt.
 		if ($attempts > 0) {
 			$mark = 0;
@@ -56,16 +57,16 @@ while ($row = $result->fetch_row()) {
 			$mark = 0;
 		}
 		echo "Mark: " . $mark . "<br>Number of attempts: " . $attempts . "<br>";
-		echo "Instructor feedback: " . "<br>";
-		echo $feedback . "<br>";
+		echo "Instructor feedback: " . $feedback . "<br>";
 
 		?>
 
         <form method='post'>
 		<input id="<?php echo "newMark$row[0]";?>" name="<?php echo "newMark$row[0]";?>" type='text' class='form-control' placeholder="<?php echo $mark?>">
       	<textarea id="<?php echo "feedback$row[0]";?>" name="<?php echo "feedback$row[0]";?>"  class='form-control' rows='5' placeholder="<?php echo $feedback?>"></textarea>
-      	<button type='submit' name="<?php echo "update$row[0]";?>" id="<?php echo "update$row[0]";?>" value='submitUpdate' />
-        </form>"
+      	<input type="hidden" name="<?php echo "update$row[0]";?>" id="<?php echo "update$row[0]";?>" value="1"/>
+      	<input type="submit" class="btn btn-default" value="Submit Update"/>
+        </form>
 
         <?php
         $updateIndex = "update". $row[0];
