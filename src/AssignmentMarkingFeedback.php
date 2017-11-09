@@ -20,11 +20,12 @@ if (isset($_POST['student_id'])) {
 }
 
 if(isset($_POST['attempt_id'])){
-        $newMark = $_POST['newmark'];
-        $newFeedback = $_POST['feedback'];
+	$newMark = $_POST['newmark'];
+	$newFeedback = $_POST['feedback'];
+	$attempt_id = $_POST['attempt_id'];
 	$mysqli = new mysqli("localhost", "root", "R0binson", "CSCC01");
-        $sqlUpdate = "UPDATE results SET feedback = '$newFeedback', result = '$newMark'  WHERE attempt_id = $attempt_id";
-        $mysqli->query($sqlUpdate);
+	$sqlUpdate = "UPDATE results SET result=$newMark, feedback='$newFeedback' WHERE attempt_id=$attempt_id";
+	$mysqli->query($sqlUpdate);
 	$mysqli->close();
 }
 
@@ -72,10 +73,10 @@ while ($row = $result->fetch_row()) {
 		?>
 
         <form method='post'>
-        	<input type="hidden" name="student_id" id="student_id" value="<?php echo "$student_id";?>"/>
-        	<input type="hidden" name="attempt_id" id="attempt_id" value="<?php echo "$attempt_id";?>"/>
-		<input id="newmark" name="newmark" type='text' class='form-control' placeholder="<?php echo $mark?>">
-      		<textarea id="feedback" name="feedback"  class='form-control' rows='5' placeholder="<?php echo $feedback?>"></textarea>
+        	<input type="hidden" name="student_id" id="student_id" value="<?php echo $student_id; ?>"/>
+        	<input type="hidden" name="attempt_id" id="attempt_id" value="<?php echo $attempt_id; ?>"/>
+		<input id="newmark" name="newmark" type='text' class='form-control' placeholder="<?php echo $mark; ?>">
+      		<textarea id="feedback" name="feedback" class='form-control' rows='5' placeholder="<?php echo $feedback; ?>"></textarea>
       		<input type="submit" class="btn btn-default" value="Submit Update"/>
         </form>
 
