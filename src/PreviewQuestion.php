@@ -83,13 +83,13 @@
         $mysqli->query($sql);
         $mysqli->close();
 
-        echo "Question have been saved! <br>";
-        echo "<form>";
-        echo "<form method='post' action='CreateQuestion.php'>";
-        echo "<button type='submit' name='submit' value='submit' formaction='CreateQuestion.php'> Back to CreateQuestion </button>";
-        echo "</form>";
+        echo "Question have been saved! <br>"
+        ?>
+        
+        <form method="post" action="CreateQuestion.php">
+        <button type="submit" name="submit" value="submit" formaction="CreateQuestion.php">Create more questions</button>
+        </form>
     }
-    ?>
         <div class="form-row">
             <button type="button" class="btn btn-danger" onclick="history.back();"> Back </button>
             <button type="submit" class="btn btn-primary" name="save" value="save"> Save </button>
