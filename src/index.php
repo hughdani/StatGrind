@@ -19,14 +19,5 @@
       <input type="submit" value ="Create Account">
     </form>
 
-
-    <form action="DisplayAssignment.php" method="post">
-      <input type="submit" value ="View Full Assignment">
-    </form>
-
-    <form action="AssignmentAnswer.php" method="post">
-      <input type="submit" value ="View Assignment Answer">
-    </form>
-
   </body>
 </html>
