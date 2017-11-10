@@ -1,0 +1,48 @@
+Meeting Minutes by: Adam
+Date of Meeting: 02/11/2017
+Time: 11am
+Location: Discord
+
+Attendance: Adam Koza, Brian Quach, Daniel Hugh, Darius Asri, Kevin Choi
+Absent:
+
+================================================================================
+
+Agenda: (Merge Branches, Database Design, Task Transposition, Task Overlaps, Design, Code, Git, Sprints)
+
+Discussion Items / Actions / Decision
+
+To do listS:
+sprint 3 to do:
+- finish filling out provisional & actual burndown to determine tasks to move to sprint 4 
+- update user stories document for stories that were merged
+- fix bugs in the testing branch and merge to master
+
+sprint 4 to do:
+- discuss how to handle assignment instances & the way they are stored in the database
+- break up user stories into tasks
+- assign sprint 4 tasks
+- prep for delieverable 5 (tests, code review, etc)
+
+Things to consider for sprint 4:
+- Re-work index page, turn into welcome page.
+- Add more focus on UI this sprint.
+- Look into starting a session upon login and using session variables in our code for values like student_id.
+
+Breaking user stories into tasks for sprint 4:
+- Split up U15 into two user stories, create enrollment manage page and delete student option.
+- Discuss how to handle and store randomized variables:
+	- Generate random values per session, last submission in solution file.
+	- store variables in this format: $x=random_int(0,500) in the text file.
+- Push back U19.
+- Decide which User stories we want to prioritize after U20.
+	- Class stats page, assignment stats page, class average of assignment.
+- Move write assignment button to assignment overview page.
+- Merge U21 and U22.
+- Improve UI. Add top nav bar, update existing pages.
+- Add column to assignments table, enable renaming of assignments. 
+- Add edit question page.
+
+
+Code review items:
+- Comment in php.
