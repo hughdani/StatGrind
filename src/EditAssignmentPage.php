@@ -64,33 +64,33 @@ if (isset($_POST['questionText']))
 	// Save question to file.
 	saveString($dir . $file_name, $qanda); // saves the string in the textarea into the file
 
-	// Determine how many rows exist in question table (for question_id).
-	$mysqli = new mysqli("localhost", "root", "R0binson", "CSCC01");
-	$result = $mysqli->query("SELECT * FROM questions");
-	$question_id = $result->num_rows + 1;
-
 	// Insert question into question table
+	$mysqli = new mysqli("localhost", "root", "R0binson", "CSCC01");
 	$location = $dir . $file_name;
 	$assignment_id = $_POST['assignment_id'];
-	$sql = "INSERT INTO questions (question_id, assignment_id, location) VALUES ($question_id, $assignment_id, '$location')";
+	$sql = "INSERT INTO questions (location) VALUES ('$location')";
 	$mysqli->query($sql);
+
+	$sql = "SELECT question_id, location FROM questions WHERE location = '$location'";
+	$row = $mysqli->query($sql)->fetch_row();
+	$new_question_id = $row[0];
+
+	$sql = "INSERT INTO in_assignment (assignment_id, question_id) VALUES ($assignment_id, $new_question_id)";
+	$mysqli->query($sql);
+
 	$mysqli->close();
 	
 }
 
 // if question was selected, save that question
-if (isset($_POST['location']))
+if (isset($_POST['question_id']))
 {
 	
-	// Determine how many rows exist in question table (for question_id).
-	$mysqli = new mysqli("localhost", "root", "R0binson", "CSCC01");
-	$result = $mysqli->query("SELECT * FROM questions");
-	$question_id = $result->num_rows + 1;
-	
 	// Insert question into question table
-	$location = $_POST['location'];
+	$mysqli = new mysqli("localhost", "root", "R0binson", "CSCC01");
+	$question_id = $_POST['question_id'];
 	$assignment_id = $_POST['assignment_id'];
-	$sql = "INSERT INTO questions (question_id, assignment_id, location) VALUES ($question_id, $assignment_id, '$location')";
+	$sql = "INSERT INTO in_assignment (assignment_id, question_id) VALUES ($assignment_id, $question_id)";
 	$mysqli->query($sql);
 	$mysqli->close();
 	
@@ -115,10 +115,10 @@ $assignment_id = $_POST['assignment_id'];
 		$i = 1;
 		// Grab questions with correct assignment_id.
 		$mysqli = new mysqli("localhost", "root", "R0binson", "CSCC01");
-		$result = $mysqli->query("SELECT * FROM questions WHERE assignment_id = $assignment_id");
+		$result = $mysqli->query("SELECT assignment_id, location FROM in_assignment LEFT JOIN questions ON in_assignment.question_id=questions.question_id WHERE assignment_id = $assignment_id");
 		while ($row = $result->fetch_row()) {
 			echo "<h2>Question $i</h2><br>";
-			$filetxt = file_get_contents($row[2]);
+			$filetxt = file_get_contents($row[1]);
 			$q = explode("ANSWER:", $filetxt);
 			echo $q[0] . "<br><br>";
 			echo "ANSWER: " . $q[1];

@@ -63,13 +63,13 @@ if (isset($_POST['questionText']) and isset($_POST['questionFormula']))
 
         // Determine how many rows exist in question table (for question_id).
         $mysqli = new mysqli("localhost", "root", "R0binson", "CSCC01");
-        $result = $mysqli->query("SELECT * FROM questions");
+        $result = $mysqli->query("SELECT question_id FROM questions");
         $question_id = $result->num_rows + 1;
 
         // Insert question into question table
         $location = $dir . $file_name;
         $assignment_id = $_POST['assignment_id'];
-        $sql = "INSERT INTO questions (question_id, assignment_id, location) VALUES ($question_id, $assignment_id, '$location')";
+        $sql = "INSERT INTO questions (question_id, location) VALUES ($question_id, '$location')";
         $mysqli->query($sql);
         $mysqli->close();
 

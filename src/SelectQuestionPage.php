@@ -18,24 +18,23 @@ $assignment_id = $_POST['assignment_id'];
 
 		<?php
 		$i = 1;
-		// Grab questions with correct assignment_id.
 		$mysqli = new mysqli("localhost", "root", "R0binson", "CSCC01");
-		$result = $mysqli->query("SELECT * FROM questions");
+		$result = $mysqli->query("SELECT question_id, location FROM questions");
 		$displayed = [];
 		while ($row = $result->fetch_row()) {
-			if (!in_array($row[2], $displayed)) {
+			if (!in_array($row[1], $displayed)) {
 				echo "<h2>Question $i</h2><br>";
-				$filetxt = file_get_contents($row[2]);
+				$filetxt = file_get_contents($row[1]);
 				$q = explode("ANSWER:", $filetxt);
 				echo $q[0] . "<br><br>";
 				echo "ANSWER: " . $q[1];
-				array_push($displayed, $row[2]);
+				array_push($displayed, $row[1]);
 				$i = $i + 1;
 			
 		?>
 		<form action="EditAssignmentPage.php" method="post">
             <input type="hidden" name="assignment_id" id="assignment_id" value="<?php echo $assignment_id; ?>"/>
-			<input type="hidden" name="location" id="location" value="<?php echo $row[2]; ?>"/>
+			<input type="hidden" name="question_id" id="question_id" value="<?php echo $row[0]; ?>"/>
             <input type="submit" class="btn btn-default" value="Select Question">
         </form>
 		
