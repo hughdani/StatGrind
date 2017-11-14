@@ -19,13 +19,11 @@ if ($result->num_rows > 0) {
         $a_start = $row['start_date'];
         $a_end = $row['end_date'];
         $a_chk = ($row['visible'] ? "checked" : "");
-
         // create entry for assignment
         echo "<br> id: $a_id";
         echo "<br> start date: $a_start";
         echo "<br> end date: $a_end";
         echo "<br> <label class='form-check-label'>";
-
         // set the name and value based on the id, set the check status based on visibility
         echo "<input name='vis-$a_id' type='checkbox' value=$a_id class='chk-vis form-check-input' $a_chk>";
         echo "Visible";
