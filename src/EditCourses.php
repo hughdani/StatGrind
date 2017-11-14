@@ -47,7 +47,7 @@ if ($result->num_rows > 0) {
         $course_name = $row['course_name'];
         $course_desc = $row['course_desc'];
 ?>
-<form method='post' action='AllCourses.php'>
+<form method='post'>
   <input type='hidden' name='course_id' value='<?php echo $course_id ?>'>
 
   <div class='form-group'>
