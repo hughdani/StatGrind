@@ -1,4 +1,4 @@
-<html>
+
 <head>
     <title>Edit My Courses</title>
     <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet">
@@ -19,19 +19,28 @@ if (!permission_check($mysqli, $user_id)) {
 
 
 // Update records before pulling them if posting back to the same page
-if (isset ($_POST['course_id'])) {
+if (isset ($_POST['up_course'])) {
   $course_id = $_POST['course_id'];
-  $new_cname = $_POST['course_name'];
-  $new_cdesc = $_POST['course_desc'];
-  if ($new_cname != "" && $new_cdesc == "") {
-    $query = "UPDATE courses SET course_name = '$new_cname' WHERE course_id = $course_id";
+  $up_cname = $_POST['course_name'];
+  $up_cdesc = $_POST['course_desc'];
+  if ($up_cname != "" && $up_cdesc == "") {
+    $query = "UPDATE courses SET course_name = '$up_cname' WHERE course_id = $course_id";
   }
-  if ($new_cname == "" && $new_cdesc != "") {
-    $query = "UPDATE courses SET course_desc = '$new_cdesc' WHERE course_id = $course_id";
+  if ($up_cname == "" && $up_cdesc != "") {
+    $query = "UPDATE courses SET course_desc = '$up_cdesc' WHERE course_id = $course_id";
   }
-  if ($new_cname != "" && $new_cdesc != "") {
-    $query = "UPDATE courses SET course_name = '$new_cname' AND course_desc = '$new_cdesc' WHERE course_id = $course_id";
+  if ($up_cname != "" && $up_cdesc != "") {
+    $query = "UPDATE courses SET course_name = '$up_cname', course_desc = '$up_cdesc' WHERE course_id = $course_id";
   }
+  $mysqli->query($query);
+}
+
+if (isset ($_POST['create_course'])) {
+  $new_cname = $_POST['new_cname'];
+  $new_cdesc = $_POST['new_cdesc'];
+  $query = "INSERT INTO courses (course_name, course_desc) VALUES ('$new_cname', '$new_cdesc')";
+  $mysqli->query($query);
+  $query = "INSERT INTO teaching_course (user_id, course_id) VALUES ($user_id, $mysqli->insert_id)";
   $mysqli->query($query);
 }
 
@@ -61,9 +70,8 @@ if ($result->num_rows > 0) {
   </div>
 
   <div class='form-group'>
-    <input type='submit' value='Submit Changes' class='btn btn-default'> 
+    <input type='submit' name='up_course' value='Submit Changes' class='btn btn-default'> 
   </div>
-
 </form>
 <?php
     }
@@ -71,7 +79,11 @@ if ($result->num_rows > 0) {
     echo "No courses found!";
 }
 $mysqli->close();
-
+?>
+<form method='post' action='CreateCourse.php'>
+  <input type='submit' value='New Course' class='btn btn-default'>
+</form>
+<?php
 /**
  * Returns true if the user_id belongs to an instructor
  *
