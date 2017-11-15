@@ -32,7 +32,7 @@
 			}
 
 			// Get the number of students in the db, account_type = 2 is for students
-			$sql = "SELECT username FROM users WHERE account_type = 2"
+			$sql = "SELECT username FROM users WHERE account_type = 2";
 			$result3 = $mysqli->query($sql);
 			$num_of_students = $result3->num_rows;
 			echo "Number of students " . $num_of_students . "<br> Number of attempts " . $attempts . "<br>";
