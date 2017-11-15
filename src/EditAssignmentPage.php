@@ -143,6 +143,7 @@ if (isset($_POST['assignment_id'])) {
 			$i = $i + 1;
 			?>
 			<form action="EditAssignmentPage.php" method="post">
+				<input type="hidden" name="assignment_id" id="assignment_id" value="<?php echo $assignment_id; ?>"/>
 				<input type="hidden" name="map_id" id="map_id" value="<?php echo $row[2]; ?>"/>
 				<input type="submit" class="btn btn-default" value="Remove Question">
 			</form>
