@@ -1,4 +1,8 @@
 <?php
+if (isset($_POST['a_id']) && isset($_POST['a_vis'])) {
+    set_visibility($_POST['a_id'], $_POST['a_vis']);
+}
+
 // set the visibility of assignment given by $a_id to $a_vis
 function set_visibility($a_id, $a_vis) {
     $mysqli = new mysqli('localhost', 'root', 'R0binson', 'CSCC01');
@@ -8,8 +12,5 @@ function set_visibility($a_id, $a_vis) {
     }
     $mysqli->close();
     echo json_encode(array($upquery));
-}
-if (isset($_POST['a_id']) && isset($_POST['a_vis'])) {
-    set_visibility($_POST['a_id'], $_POST['a_vis']);
 }
 ?>

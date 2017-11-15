@@ -50,7 +50,7 @@ $(document).ready(function() {
 
     // send info to server
     $.ajax({
-        url:"Functions.php",
+        url:"Ajax.php",
         type: "post",
         dataType: 'json',
         data: a_data,
