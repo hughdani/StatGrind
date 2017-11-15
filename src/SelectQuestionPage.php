@@ -16,6 +16,12 @@ $assignment_id = $_POST['assignment_id'];
             <h1>Select Question</h1>
         </div>
 
+		<!--Cancel button to go back to edit assignment page-->
+		<form action="EditAssignmentPage.php" method="post">
+            <input type="hidden" name="assignment_id" id="assignment_id" value="<?php echo $assignment_id; ?>"/>
+            <input type="submit" class="btn btn-default" value="Cancel">
+        </form>
+
 		<?php
 		$i = 1;
 		$mysqli = new mysqli("localhost", "root", "R0binson", "CSCC01");

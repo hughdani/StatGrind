@@ -1,15 +1,19 @@
 <html>
 <head>
-<title> View Assignment </title>
+    <title>Assignment Answer</title>
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet">
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 </head>
 <body>
-	<form method="POST">
-		Assignment ID: <input type="text" name="AssignmentID"><br>
-		<input type="submit" name="submit" value="Submit">
-	</form>
-	<form action="index.php" method="post">
-    	<input type="submit" class="btn btn-default" value="Return Home">
-	</form>
+<form method="POST">
+    Assignment ID: <input type="text" name="AssignmentID"><br>
+    <input type="submit" name="submit" value="Search Answer">
+</form>
+
+<form action="index.php" method="post">
+    <input type="submit" class="btn btn-default" value="Return Home">
+</form>
+
 <?php
 	function GetAssignment(){
 		$servername = "localhost";
@@ -30,11 +34,10 @@
 			$qNum = 1;
 			// display each questions from their text file location
 			while($row = mysqli_fetch_assoc($result)){
-				echo "<p>Question $qNum</p><br>";
+				echo "<p>Question $qNum</p>";
 				$file = file_get_contents($row['location']);
 				$questionText = explode("ANSWER:", $file);
-				echo $questionText[0] . "<br><br>";
-				echo "ANSWER:" . $questionText[1];
+				echo "ANSWER:" . $questionText[1] . "<br><br>";
 				$qNum = $qNum + 1;
 			}
 		}
@@ -45,7 +48,6 @@
 		GetAssignment();
 	}
 
-
-?>
+    ?>
 </body>
 </html>

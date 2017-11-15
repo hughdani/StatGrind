@@ -13,7 +13,7 @@
 	
 	// get question text from file
 	$file = fopen($result->location, "r") or die("Unable to open file!");
-	echo fread($file, filesize($result->location);
+	echo fread($file, filesize($result->location));
 	fclose($file);
 ?>
 </body>
