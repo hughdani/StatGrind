@@ -24,12 +24,18 @@
 			echo "<h3>Assignment $row[0]</h3><br>";
 			$sql = "SELECT result FROM results WHERE assignment_id = $row[0]";
 			$result2 = $mysqli->query($sql);
-			$num_of_students = $result2->num_rows;
+			$attempts = $result2->num_rows;
 			$assignmentTotal = 0;
 			// Sum up the total marks for the current assignment
 			while ($row2 = $result2->fetch_row()){
 				$assignmentTotal += row2[0];
 			}
+
+			// Get the number of students in the db, account_type = 2 is for students
+			$sql = "SELECT username FROM users WHERE account_type = 2"
+			$result3 = $mysqli->query($sql);
+			$num_of_students = $result3->num_rows;
+			echo "Number of students " . $num_of_students . "<br> Number of attempts " . $attempts . "<br>";
 			$average = $assignmentTotal / $num_of_students;
 			echo "Assignment average is: " . $average . "<br>";
 		}
