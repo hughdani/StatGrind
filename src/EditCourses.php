@@ -73,7 +73,7 @@ if ($result->num_rows > 0) {
     <input type='submit' name='up_course' value='Submit Changes' class='btn btn-default'> 
   </div>
 </form>
-<form method='post' action='ManageCourseEnrolment.php'>
+<form method='post' action='ManageEnrolment.php'>
   <div class='form-group'>
     <input type='hidden' name='course_id' value='<?php echo $course_id?>'>
     <input type='submit' name='manage_enrolment' value='Manage Enrolment' class='btn btn-default'> 
