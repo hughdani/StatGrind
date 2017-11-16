@@ -46,7 +46,7 @@ $(document).ready(function() {
     // get info about the checkbox's assignment
     var a_id = $(this).val();
     var a_vis = $(this).is(':checked') ? 1 : 0;
-    var a_data = {'a_id': a_id, 'a_vis': a_vis};
+    var a_data = {'f_set_visibility': 'true', 'a_id': a_id, 'a_vis': a_vis};
 
     // send info to server
     $.ajax({

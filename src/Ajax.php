@@ -1,16 +1,23 @@
 <?php
-if (isset($_POST['a_id']) && isset($_POST['a_vis'])) {
+$mysqli = new mysqli('localhost', 'root', 'R0binson', 'CSCC01');
+if (isset($_POST['f_set_visibility'])) {
     set_visibility($_POST['a_id'], $_POST['a_vis']);
 }
 
-// set the visibility of assignment given by $a_id to $a_vis
+/**
+ * Set the visibility of an assignment
+ *
+ * @param $a_id:  the id of the assignment to set
+ * @param $a_vis: the visibility status to set
+ */
 function set_visibility($a_id, $a_vis) {
-    $mysqli = new mysqli('localhost', 'root', 'R0binson', 'CSCC01');
-    $upquery = "UPDATE assignments SET visible=$a_vis WHERE assignment_id=$a_id";
-    if ($mysqli->query($upquery) === FALSE) {
-        echo json_encode(array($mysqli->error));
+    global $mysqli;
+    $query = "UPDATE assignments SET visible=$a_vis WHERE assignment_id=$a_id";
+    if ($mysqli->query($query) === FALSE) {
+        echo json_encode(array("FAILED"));
+    } else {
+    echo json_encode(array("SUCCESS"));
     }
-    $mysqli->close();
-    echo json_encode(array($upquery));
 }
+$mysqli->close();
 ?>
