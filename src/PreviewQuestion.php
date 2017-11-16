@@ -76,10 +76,16 @@
         $result = $mysqli->query("SELECT question_id FROM questions");
         $question_id = $result->num_rows + 1;
         
+	// Get tag(s)
+	$questionTags = '';
+	if (isset($_POST['questionTags'])){
+		$questionTags = $_POST['questionTags'];
+	}
+
         // Insert question into question table
         $location = $dir . $file_name;
         $assignment_id = $_POST['assignment_id'];
-        $sql = "INSERT INTO questions (question_id, location) VALUES ($question_id, '$location')";
+        $sql = "INSERT INTO questions (question_id, location, tag) VALUES ($question_id, '$location', '$questionTags')";
         $mysqli->query($sql);
         $mysqli->close();
 
