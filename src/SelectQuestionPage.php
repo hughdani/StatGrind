@@ -21,11 +21,27 @@ $assignment_id = $_POST['assignment_id'];
             <input type="hidden" name="assignment_id" id="assignment_id" value="<?php echo $assignment_id; ?>"/>
             <input type="submit" class="btn btn-default" value="Cancel">
         </form>
+	
+	<br>
 
+	<!--Search for question based on tag-->
+	<form action="SelectQuestionPage.php" method="post">
+            <input type="text" name="questionTag" id="questionTag" placeholder="Question Tag(s)"/>
+            <input type="hidden" name="assignment_id" id="assignment_id" value="<?php echo $assignment_id; ?>"/>
+            <input type="submit" class="btn btn-default" value="Search">
+        </form>
 		<?php
 		$i = 1;
 		$mysqli = new mysqli("localhost", "root", "R0binson", "CSCC01");
-		$result = $mysqli->query("SELECT question_id, location FROM questions");
+		$sql = "SELECT question_id, location FROM questions";
+
+		// Apply filters
+		if (isset($_POST['questionTag'])){
+			$filter = $_POST['questionTag'];
+			$sql = $sql . " WHERE tag LIKE '%$filter%'";
+		}
+
+		$result = $mysqli->query($sql);
 		$displayed = [];
 		while ($row = $result->fetch_row()) {
 			if (!in_array($row[1], $displayed)) {

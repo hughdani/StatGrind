@@ -79,7 +79,10 @@
     <div class="form-row">
       <input id="questionFormula" name="questionFormula" type="text" class="form-control" placeholder="Question Formula">
     </div>
-
+    <!-- Question Tags -->
+    <div class="form-row">
+      <input id="questionTags" name="questionTags" type="text" class="form-control" placeholder="Question Tag(s)">
+    </div>
     <div class="form-row">
       <button type="button" class="btn btn-danger" onclick="history.back();"> Back </button>
       <button type="submit" class="btn btn-primary" name="submit" value="submit"> Create </button>

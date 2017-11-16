@@ -18,6 +18,8 @@ if (isset($_POST['student_id'])) {
 } else {
 	$student_id = "kozaadam";
 }
+
+	echo "<!-- $student_id -->";
 // If comming from ConfirmSubmission page, insert submission into results table
 if (isset($_POST['result'])) {
 	$result = $_POST['result'];
@@ -38,13 +40,31 @@ if ($edit_hour[2][2] == "p") {
 } else {
 	$current_time = $edit_time[0] . " " . $edit_hour[0] . ":" . $edit_hour[1] . ":" . $edit_hour[2][0] .  $edit_hour[2][1];
 }
+?>
 
+Find assignment:
+<form action="AssignmentOverview.php" method="post">
+	<input type="text" name="search_param" id="search_param" placeholder="Assignment Group">
+	<input type="hidden" name="student_id" id="student_id" <?php if ($student_id){ echo "value=$student_id";} ?>>
+	<input type="submit" value ="Search">
+</form>
+
+<?php
 // Select all assignment from assignment table.
 $mysqli = new mysqli("localhost", "root", "R0binson", "CSCC01");
-$sql = "SELECT assignment_id, start_date FROM assignments";
+$sql = "SELECT assignment_id, start_date, end_date FROM assignments";
+
+//Apply search params if any
+if (isset($_POST['search_param'])) {
+	$filter = $_POST['search_param'];
+	$sql = $sql . " WHERE tag LIKE '%$filter%'";
+}
+
 $result = $mysqli->query($sql);
 // Display open assignments.
 while ($row = $result->fetch_row()) {
+	$start_date = $row[1];
+	$end_date = $row[2];
 	if ($current_time > $row[1]) {
 		echo "<h2>Assignment $row[0]</h2><br>";
 		// Select all student attempts for this assignment.
@@ -66,6 +86,7 @@ while ($row = $result->fetch_row()) {
 			$mark = 0;
 			$feedback = "";
 		}
+		echo "Available from : " . $start_date . " to " . $end_date . "<br>";
 		echo "Mark: " . $mark . "<br>Number of attempts: " . $attempts . "<br>";
 		echo "Instructor feedback: " . $feedback . "<br>";
 	}
@@ -74,8 +95,6 @@ while ($row = $result->fetch_row()) {
 $mysqli->close();
 
 ?>
-
-
 
 </div>
 </body>
