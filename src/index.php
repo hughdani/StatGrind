@@ -18,6 +18,10 @@
     <form action="CreateAccount.php" method="post">
       <input type="submit" value ="Create Account">
     </form>
+    
+    <form action="SelectQuestionType.php" method="post">
+		  <input type="submit" class="btn btn-default" value="Select Question Type">
+  	</form>
 
   </body>
 </html>
