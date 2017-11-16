@@ -2,7 +2,7 @@
   
 <html>
 <head>
-    <title>edit assignment</title>
+    <title>Manage Enrolment</title>
     <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
@@ -16,7 +16,7 @@ $mysqli = new mysqli('localhost', 'root', 'R0binson', 'CSCC01');
 $user_id = $_SESSION['user_id'];
 $user_id = 124;
 
-if (!permission_check($mysqli, $user_id)) {
+if (!permission_check($user_id)) {
     header('Location: Forbidden.php');
 }
 
@@ -47,7 +47,6 @@ if (isset($_POST['course_id'])) {
   create_forms($result, 'taking_course');
 
 }
-$mysqli->close();
 ?>
 <!-- Quick path to get back to managing courses. -->
 <form action="EditCourses.php" method="post">
@@ -61,36 +60,42 @@ $mysqli->close();
  * @param string  $table the name of the table to check enrolment in
  */
 function create_forms($data, $table) {
+  global $mysqli;
+  global $c_id;
+
   if ($data->num_rows > 0) {
     echo "<form method='post' action=''>";
     while ($row = $data->fetch_assoc()) {
       $u_id = $row['user_id'];
       $u_fname = $row['first_name'];
       $u_lname = $row['last_name'];
-      $u_enrol = is_enrolled($c_id, $u_id, $table) ? "checked" : "";
+      $u_enrol = is_enrolled($u_id, $table) ? "checked" : "";
 ?>
       <br>
       <?php echo "<b>ID</b>: $u_id" ?>
       <br>
-      <b> <?php echo "<b>Name</b>: $u_lname, $u_fname" ?>
+      <?php echo "<b>Name</b>: $u_lname, $u_fname" ?>
       <br>
       <label class='form-check-label'>
-      <input type='checkbox' class='chk-enrol form-check-input' value='<?php echo "$c_id;$u_id;$table" ?>'> Enrolled </label>
+      <input type='checkbox' class='chk-enrol form-check-input' value='<?php echo "$c_id;$u_id;$table" ?>' <?php echo $u_enrol ?>> Enrolled </label>
       <br>
 <?php
     }
+    echo "</form>";
   }
 }
 /**
  * Returns true if the user is enrolled in course
  *
- * @param int $c_id   the id of the course to loop up
  * @param int $u_id   the id of the user to look up
  * @param int $table  the name of the table to look up the user on
  */
-function is_enrolled($c_id, $u_id, $table) {
+function is_enrolled($u_id, $table) {
+  global $mysqli;
+  global $c_id;
+
   $query = "SELECT * FROM $table WHERE user_id = $u_id AND course_id = $c_id";
-  return ($mysqli->query($query)->num_rows > 0);
+  return (($mysqli->query($query))->num_rows > 0);
 }
 /**
  * Returns true if the user_id belongs to an instructor
@@ -98,6 +103,7 @@ function is_enrolled($c_id, $u_id, $table) {
  * @param int $user_id  the id of the user accessing the page
  */
 function permission_check($user_id) {
+    global $mysqli;
     $query = "";
     $query = $query . "SELECT * FROM users LEFT JOIN account_types ";
     $query = $query . "ON users.account_type = account_types.account_type ";
@@ -106,6 +112,7 @@ function permission_check($user_id) {
     $result = $mysqli->query($query);
     return ($result->num_rows != 0);
 }
+$mysqli->close();
 ?>
 <script>
 $(document).ready(function() {
