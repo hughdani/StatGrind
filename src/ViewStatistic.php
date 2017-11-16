@@ -4,6 +4,7 @@
     <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet">
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
     <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+    <script type="text/javascript" src="//ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
 </head>
 
 <body>
@@ -90,14 +91,14 @@
 
 					echo "<div id='avgChart'></div>";
 					?>
-					<script>
+					<script type="text/javascript">
 						// Load google charts
 						google.charts.load('current', {'packages':['corechart']});
-						google.charts.setOnLoadCallback(drawChart);
+						google.charts.setOnLoadCallback(drawChart(<?php $assignmentsArray ?>,"avgChart"));
 
 						// Draw the chart and set the chart values
 						function drawChart(dataArray, divID) {
-						  var data = google.visualization.arrayToDataTable(dataArray(<?php $assignmentsArray ?>,"avgChart"));
+						  var data = google.visualization.arrayToDataTable(dataArray(dataArray);
 
 						  // Optional; add a title and set the width and height of the chart
 						  var options = {'title':'Assignments Average', 'width':550, 'height':400};
