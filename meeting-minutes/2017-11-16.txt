@@ -1,0 +1,47 @@
+Meeting Minutes by: Kevin Choi
+Date of Meeting: (dd/mm/yyyy) 16/11/2017
+Time: 2:30 pm - 4 pm and 5:30 - 6:30
+Location: IC Lab
+
+Attendance: Adam Koza, Brian Quach, Daniel Hugh, Darius Asri, Kevin Choi
+Absent: N/A
+
+================================================================================
+
+Agenda: (e.g.: regular meeting / progress update / catch up meeting / emergency)
+
+- End Sprint#4 and plan for Sprint#5
+	- merge into master (Sprint#4), need to change user stories (merged ones)
+	- need to work on UI (MAIN FOCUS FROM SRPINT 5)
+		- use css, NEED NEW
+		- php formatter (at the end) 
+		- ANIMATION?! (simple animation)
+	- Issues with save button in PreviewQuestion page
+	- Need to add roles (Super Instructor, Admin)
+	- Session variables 
+		- user_id 
+	- Button to return home (login page), logout (return to index page, need to remove session variables), back buttons everywhere (between questions) 
+	- Hover button to show description of what it does
+	- Write assignment assignment overview page
+
+
+- Code review
+	- Code Review 
+		- over discord 
+	- time/location
+		- Sunday 11am 
+	- have code review then debrief after code review
+		- also review the database
+		- recording debrief - Brian
+
+- Verification & Validation *send Thierry via piazza about test automation
+	- unit testing
+		- have spreadsheet with test cases -> expected output
+		- new test php page to post parameters (buttons) to test each page and check for its returns
+			- for example database values
+	- acceptance testing
+		- check all functions are working
+
+- Clean up database
+	- Update database with real questions
+
