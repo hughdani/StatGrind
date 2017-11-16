@@ -14,15 +14,17 @@
 
 	<form method="post">
 		<div>
+			View statistics for: 
 			<select name="selectAssignment" onchange="this.form.submit();">
-			<?php 
-			$mysqli = new mysqli("localhost", "root", "R0binson", "CSCC01");
-			$sql = "SELECT assignment_id FROM assignments";
-			$result = $mysqli->query($sql);
-			while ($row = $result->fetch_row()){
-			echo "<option value='assignment".$row[0]."''> Assignment". $row[0] . "</option>";
-			}
-			?>
+				<option disabled value="" selected hidden>Select Assignment</option>
+				<?php 
+				$mysqli = new mysqli("localhost", "root", "R0binson", "CSCC01");
+				$sql = "SELECT assignment_id FROM assignments";
+				$result = $mysqli->query($sql);
+				while ($row = $result->fetch_row()){
+				echo "<option value='".$row[0]."''> Assignment". $row[0] . "</option>";
+				}
+				?>
 			</select>
 			<br>
 
@@ -35,8 +37,8 @@
 				$attempts = $result2->num_rows;
 				$assignmentTotal = 0;
 				// Sum up the total marks for the current assignment
-				while ($row = $result2->fetch_row()){
-					$assignmentTotal += $row[0];
+				while ($row1 = $result2->fetch_row()){
+					$assignmentTotal += $row1[0];
 				}
 
 				// Get the number of students in the db, account_type = 2 is for students
