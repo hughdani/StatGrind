@@ -28,9 +28,20 @@ if (isset($_POST['course_id'])) {
   $query = "";
   $query = $query . "SELECT * FROM users u LEFT JOIN account_types t ";
   $query = $query . "ON u.account_type = t.account_type ";
+  $query = $query . "WHERE u.user_id <> $user_id " ; 
+  $query = $query . "AND t.type_description='Instructor' ";
+  $query = $query . "ORDER BY u.last_name, u.first_name";
+  $result = $mysqli->query($query);
+
+  create_forms($result, 'teaching_course');
+
+  echo "<h2>TAs</h2>";
+  $query = "";
+  $query = $query . "SELECT * FROM users u LEFT JOIN account_types t ";
+  $query = $query . "ON u.account_type = t.account_type ";
   $query = $query . "WHERE u.user_id <> $user_id "; 
-  $query = $query . "AND (t.type_description='Instructor' OR t.type_description='TA') ";
-  $query = $query . "ORDER BY t.type_description, u.last_name, u.first_name";
+  $query = $query . "AND t.type_description='TA' ";
+  $query = $query . "ORDER BY u.last_name, u.first_name";
   $result = $mysqli->query($query);
 
   create_forms($result, 'teaching_course');
@@ -40,7 +51,7 @@ if (isset($_POST['course_id'])) {
   $query = "";
   $query = $query . "SELECT * FROM users u LEFT JOIN account_types t ";
   $query = $query . "ON u.account_type = t.account_type ";
-  $query = $query . "WHERE u.user_id <> $user_id AND t.account_type = 'Student'"; 
+  $query = $query . "WHERE u.user_id <> $user_id AND t.type_description = 'Student' "; 
   $query = $query . "ORDER BY u.last_name, u.first_name";
   $result = $mysqli->query($query);
 
