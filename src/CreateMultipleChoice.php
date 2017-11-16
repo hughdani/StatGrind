@@ -47,7 +47,7 @@
 
             // questionFormula set to dummy filler value for it to work with existing PreviewQuestion.php
             echo"<input class='hidden' name=questionText id=questionText value='". $_POST['mc_question'] . "'>
-                <input class='hidden' name=questionFormula id=questionFormula value='MCdummyvalue' >
+                <input class='hidden' name=questionFormula id=questionFormula value='2+2' >
                 <input type='submit' class='btn' value='Submit'> 
                 </div>
                 </form>";

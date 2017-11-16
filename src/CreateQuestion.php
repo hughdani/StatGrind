@@ -85,6 +85,12 @@
       <button type="submit" class="btn btn-primary" name="submit" value="submit"> Create </button>
     </div>
   </form>
+
+      
+  <form action="SelectQuestionType.php" method="post">
+		  <input type="submit" class="btn btn-default" value="Select Question Type">
+  </form>
+
 </div>
 
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
