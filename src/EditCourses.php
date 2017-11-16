@@ -9,46 +9,39 @@
 <?php
 session_start();
 $mysqli = new mysqli('localhost', 'root', 'R0binson', 'CSCC01');
-
 $user_id = $_SESSION['user_id'];
 $user_id = 124;
-
 if (!permission_check($mysqli, $user_id)) {
     header('Location: Forbidden.php');
 }
-
-
 // Update records before pulling them if posting back to the same page
-if (isset ($_POST['up_course'])) {
-  $course_id = $_POST['course_id'];
-  $up_cname = $_POST['course_name'];
-  $up_cdesc = $_POST['course_desc'];
-  if ($up_cname != "" && $up_cdesc == "") {
-    $query = "UPDATE courses SET course_name = '$up_cname' WHERE course_id = $course_id";
-  }
-  if ($up_cname == "" && $up_cdesc != "") {
-    $query = "UPDATE courses SET course_desc = '$up_cdesc' WHERE course_id = $course_id";
-  }
-  if ($up_cname != "" && $up_cdesc != "") {
-    $query = "UPDATE courses SET course_name = '$up_cname', course_desc = '$up_cdesc' WHERE course_id = $course_id";
-  }
-  $mysqli->query($query);
+if (isset($_POST['up_course'])) {
+    $course_id = $_POST['course_id'];
+    $up_cname = $_POST['course_name'];
+    $up_cdesc = $_POST['course_desc'];
+    if ($up_cname != "" && $up_cdesc == "") {
+        $query = "UPDATE courses SET course_name = '$up_cname' WHERE course_id = $course_id";
+    }
+    if ($up_cname == "" && $up_cdesc != "") {
+        $query = "UPDATE courses SET course_desc = '$up_cdesc' WHERE course_id = $course_id";
+    }
+    if ($up_cname != "" && $up_cdesc != "") {
+        $query = "UPDATE courses SET course_name = '$up_cname', course_desc = '$up_cdesc' WHERE course_id = $course_id";
+    }
+    $mysqli->query($query);
 }
-
-if (isset ($_POST['create_course'])) {
-  $new_cname = $_POST['new_cname'];
-  $new_cdesc = $_POST['new_cdesc'];
-  $query = "INSERT INTO courses (course_name, course_desc) VALUES ('$new_cname', '$new_cdesc')";
-  $mysqli->query($query);
-  $query = "INSERT INTO teaching_course (user_id, course_id) VALUES ($user_id, $mysqli->insert_id)";
-  $mysqli->query($query);
+if (isset($_POST['create_course'])) {
+    $new_cname = $_POST['new_cname'];
+    $new_cdesc = $_POST['new_cdesc'];
+    $query = "INSERT INTO courses (course_name, course_desc) VALUES ('$new_cname', '$new_cdesc')";
+    $mysqli->query($query);
+    $query = "INSERT INTO teaching_course (user_id, course_id) VALUES ($user_id, $mysqli->insert_id)";
+    $mysqli->query($query);
 }
-
 // do a look up on the courses taught by the user
 $query = "";
 $query = $query . "SELECT * FROM courses WHERE course_id IN";
 $query = $query . "(SELECT course_id FROM teaching_course WHERE user_id = $user_id)";
-
 $result = $mysqli->query($query);
 if ($result->num_rows > 0) {
     while ($row = $result->fetch_assoc()) {
@@ -75,7 +68,7 @@ if ($result->num_rows > 0) {
 </form>
 <form method='post' action='ManageEnrolment.php'>
   <div class='form-group'>
-    <input type='hidden' name='course_id' value='<?php echo $course_id?>'>
+    <input type='hidden' name='course_id' value='<?php echo $course_id ?>'>
     <input type='submit' name='manage_enrolment' value='Manage Enrolment' class='btn btn-default'> 
   </div>
 </form>

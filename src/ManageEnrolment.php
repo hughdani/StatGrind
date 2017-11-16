@@ -12,51 +12,41 @@
 <?php
 session_start();
 $mysqli = new mysqli('localhost', 'root', 'R0binson', 'CSCC01');
-
 $user_id = $_SESSION['user_id'];
 $user_id = 124;
-
 if (!permission_check($user_id)) {
     header('Location: Forbidden.php');
 }
-
 if (isset($_POST['course_id'])) {
-  $c_id = ($_POST['course_id']);
-  
-  // get all instructors and TAs
-  echo "<h2>Instructors</h2>";
-  $query = "";
-  $query = $query . "SELECT * FROM users u LEFT JOIN account_types t ";
-  $query = $query . "ON u.account_type = t.account_type ";
-  $query = $query . "WHERE u.user_id <> $user_id " ; 
-  $query = $query . "AND t.type_description='Instructor' ";
-  $query = $query . "ORDER BY u.last_name, u.first_name";
-  $result = $mysqli->query($query);
-
-  create_forms($result, 'teaching_course');
-
-  echo "<h2>TAs</h2>";
-  $query = "";
-  $query = $query . "SELECT * FROM users u LEFT JOIN account_types t ";
-  $query = $query . "ON u.account_type = t.account_type ";
-  $query = $query . "WHERE u.user_id <> $user_id "; 
-  $query = $query . "AND t.type_description='TA' ";
-  $query = $query . "ORDER BY u.last_name, u.first_name";
-  $result = $mysqli->query($query);
-
-  create_forms($result, 'teaching_course');
-
-  // get all Students
-  echo "<h2>Students</h2>";
-  $query = "";
-  $query = $query . "SELECT * FROM users u LEFT JOIN account_types t ";
-  $query = $query . "ON u.account_type = t.account_type ";
-  $query = $query . "WHERE u.user_id <> $user_id AND t.type_description = 'Student' "; 
-  $query = $query . "ORDER BY u.last_name, u.first_name";
-  $result = $mysqli->query($query);
-
-  create_forms($result, 'taking_course');
-
+    $c_id = ($_POST['course_id']);
+    // get all instructors and TAs
+    echo "<h2>Instructors</h2>";
+    $query = "";
+    $query = $query . "SELECT * FROM users u LEFT JOIN account_types t ";
+    $query = $query . "ON u.account_type = t.account_type ";
+    $query = $query . "WHERE u.user_id <> $user_id ";
+    $query = $query . "AND t.type_description='Instructor' ";
+    $query = $query . "ORDER BY u.last_name, u.first_name";
+    $result = $mysqli->query($query);
+    create_forms($result, 'teaching_course');
+    echo "<h2>TAs</h2>";
+    $query = "";
+    $query = $query . "SELECT * FROM users u LEFT JOIN account_types t ";
+    $query = $query . "ON u.account_type = t.account_type ";
+    $query = $query . "WHERE u.user_id <> $user_id ";
+    $query = $query . "AND t.type_description='TA' ";
+    $query = $query . "ORDER BY u.last_name, u.first_name";
+    $result = $mysqli->query($query);
+    create_forms($result, 'teaching_course');
+    // get all Students
+    echo "<h2>Students</h2>";
+    $query = "";
+    $query = $query . "SELECT * FROM users u LEFT JOIN account_types t ";
+    $query = $query . "ON u.account_type = t.account_type ";
+    $query = $query . "WHERE u.user_id <> $user_id AND t.type_description = 'Student' ";
+    $query = $query . "ORDER BY u.last_name, u.first_name";
+    $result = $mysqli->query($query);
+    create_forms($result, 'taking_course');
 }
 ?>
 <!-- Quick path to get back to managing courses. -->
@@ -71,16 +61,15 @@ if (isset($_POST['course_id'])) {
  * @param string  $table the name of the table to check enrolment in
  */
 function create_forms($data, $table) {
-  global $mysqli;
-  global $c_id;
-
-  if ($data->num_rows > 0) {
-    echo "<form method='post' action=''>";
-    while ($row = $data->fetch_assoc()) {
-      $u_id = $row['user_id'];
-      $u_fname = $row['first_name'];
-      $u_lname = $row['last_name'];
-      $u_enrol = is_enrolled($u_id, $table) ? "checked" : "";
+    global $mysqli;
+    global $c_id;
+    if ($data->num_rows > 0) {
+        echo "<form method='post' action=''>";
+        while ($row = $data->fetch_assoc()) {
+            $u_id = $row['user_id'];
+            $u_fname = $row['first_name'];
+            $u_lname = $row['last_name'];
+            $u_enrol = is_enrolled($u_id, $table) ? "checked" : "";
 ?>
       <br>
       <?php echo "<b>ID</b>: $u_id" ?>
@@ -91,9 +80,9 @@ function create_forms($data, $table) {
       <input type='checkbox' class='chk-enrol form-check-input' value='<?php echo "$c_id;$u_id;$table" ?>' <?php echo $u_enrol ?>> Enrolled </label>
       <br>
 <?php
+        }
+        echo "</form>";
     }
-    echo "</form>";
-  }
 }
 /**
  * Returns true if the user is enrolled in course
@@ -102,11 +91,10 @@ function create_forms($data, $table) {
  * @param int $table  the name of the table to look up the user on
  */
 function is_enrolled($u_id, $table) {
-  global $mysqli;
-  global $c_id;
-
-  $query = "SELECT * FROM $table WHERE user_id = $u_id AND course_id = $c_id";
-  return (($mysqli->query($query))->num_rows > 0);
+    global $mysqli;
+    global $c_id;
+    $query = "SELECT * FROM $table WHERE user_id = $u_id AND course_id = $c_id";
+    return (($mysqli->query($query))->num_rows > 0);
 }
 /**
  * Returns true if the user_id belongs to an instructor
