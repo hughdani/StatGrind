@@ -4,10 +4,9 @@
     <link rel="stylesheet" href="css/main.css" />
 </head>
 <body>
-    <form method="POST">
-        <div class="form-row">
-            Previewing question:
-        </div>
+    <div class="form-row">
+        Previewing question:
+    </div>
 
     <?php
     include 'dependencies/wa_wrapper/WolframAlphaEngine.php';
@@ -65,8 +64,8 @@
         $file_name = "/question" . (iterator_count($fi) + 1) . ".txt";
 
         // Append answer to question.
-        $answer = computeFormula($_POST['questionFormula']);
-        echo $answer . "<br>";
+        //$answer = computeFormula($_POST['questionFormula']);
+        //echo $answer . "<br>";
         $qanda = $_POST['questionText'] . "<br> FORMULA: " . $_POST['questionFormula'];
         // Save question to file.
         saveString($dir . $file_name, $qanda); // saves the string in the textarea into the file
@@ -95,12 +94,14 @@
         ?>
         
         <form method="post" action="CreateQuestion.php">
-        <button type="submit" name="submit" value="submit" formaction="CreateQuestion.php">Create more questions</button>
+            <button type="submit" name="submit" value="submit">Create more questions</button>
         </form>
-        <div class="form-row">
-            <button type="button" class="btn btn-danger" onclick="history.back();"> Back </button>
-            <button type="submit" class="btn btn-primary" name="save" value="save"> Save </button>
-        </div>
-    </form>
+        <form method="post" action="PreviewQuestion.php">
+            <div class="form-row">
+                <button type="button" class="btn btn-danger" onclick="history.back();"> Back </button>
+                <button type="submit" class="btn btn-primary" name="save" value="save"> Save </button>
+            </div>
+        </form>
+
 </body>
 </html>
