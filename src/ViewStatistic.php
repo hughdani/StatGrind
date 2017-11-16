@@ -50,7 +50,7 @@
 			<?php
 			if(isset($_POST['selectAssignment'])){
 				$selectedId = $_POST['selectAssignment'];
-				if($selected != "All Assignments"){
+				if($selectedId != "All Assignments"){
 					echo "<h3>Assignment ". $selectedId ."</h3><br>";
 					$sql = "SELECT result FROM results WHERE assignment_id = $selectedId";
 					$result2 = $mysqli->query($sql);
@@ -67,7 +67,7 @@
 					$num_of_students = $result3->num_rows;
 
 					while($row2 = $result3->fetch_row()){
-						$sql = "SELECT COUNT(student_id) FROM results WHERE student_id IN (SELECT user_id FROM users WHERE account_type = 2)";
+						$sql = "SELECT COUNT(student_id) FROM results WHERE student_id IN (SELECT user_id FROM users WHERE account_type = 2) and assignment_id = $selectedId";
 						$result4 = $mysqli->query($sql);
 						$num_of_participate = ($result4->fetch_row())[0];
 					}
