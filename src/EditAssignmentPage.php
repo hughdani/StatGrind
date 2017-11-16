@@ -28,6 +28,13 @@ function saveString($filename, $questionInput) {
   file_put_contents($filename, $questionInput);
 }
 
+//Get assignment tags if any
+if (isset($_POST['assignment_tag'])) {
+	$assignment_tag = $_POST['assignment_tag'];
+} else {
+	$assignment_tag = "";
+}
+
 // Insert new assignment into assignments table
 if (isset($_POST['starttime']))
 {
@@ -36,7 +43,7 @@ if (isset($_POST['starttime']))
 	$assignment_id = $_POST['assignment_id'];
 	
 	$mysqli = new mysqli("localhost", "root", "R0binson", "CSCC01");
-	$sql = "INSERT INTO assignments (assignment_id, start_date, end_date) VALUES ($assignment_id, '$start', '$end')";
+	$sql = "INSERT INTO assignments (assignment_id, start_date, end_date, tag) VALUES ($assignment_id, '$start', '$end', '$assignment_tag')";
 	$mysqli->query($sql);
 	$mysqli->close();
 }
@@ -143,6 +150,7 @@ if (isset($_POST['assignment_id'])) {
 			$i = $i + 1;
 			?>
 			<form action="EditAssignmentPage.php" method="post">
+				<input type="hidden" name="assignment_id" id="assignment_id" value="<?php echo $assignment_id; ?>"/>
 				<input type="hidden" name="map_id" id="map_id" value="<?php echo $row[2]; ?>"/>
 				<input type="submit" class="btn btn-default" value="Remove Question">
 			</form>
@@ -159,7 +167,8 @@ if (isset($_POST['assignment_id'])) {
 	</form>
 	<form action="AddRandomQuestions.php" method="post">
 		<input type="hidden" name="assignment_id" id="assignment_id" value="<?php echo $assignment_id; ?>"/>
-		Add <input type="number" min="1" name="num_questions" id = "num_questions" value=1 /> random questions
+		Add <input type="number" min="1" name="num_questions" id = "num_questions" value=1 /> random questions (with tag 
+		<input type="text" name="questionTag" id = "questionTag" />)
 		<input type="submit" class="btn btn-default" value="Add Questions">
 	</form>
 	<form action="SelectQuestionPage.php" method="post">

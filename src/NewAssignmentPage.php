@@ -72,6 +72,7 @@ $mysqli->close();
 					</div>
 				</div>
 				<input type="hidden" name="assignment_id" id="assignment_id" value="<?php echo $assignment_id; ?>"/>
+				Add tag(s) to assignment: <input type="text" name="assignment_tag" id="assignment_tag" placeholder="Assignment Tags">
 				<input type="submit" class="btn btn-default" value="Create Assignment">
 			</form>
         <!-- List of questions will be pulled from database. Dummy values used.
@@ -94,7 +95,6 @@ $mysqli->close();
             <div class="checkbox">
                 <label><input type="checkbox" value="question_id6" name="Question 6">6+6</label>
             </div>
-
 
             <input type="submit" value="Create Assignment">
         </form> -->

@@ -21,7 +21,15 @@
 	<?php
         	$mysqli = new mysqli("localhost", "root", "R0binson", "CSCC01");
 		for ($i = 1; $i <= $num_questions; $i++) {
-        		$result = $mysqli->query("SELECT question_id FROM `questions`");
+			$sql = "SELECT question_id FROM `questions`";
+			
+			// Apply filter if any
+			if (isset($_POST['questionTag'])){
+				$filter = $_POST['questionTag'];
+				$sql = $sql . " WHERE tag LIKE '%$filter%'";
+			}
+			
+        		$result = $mysqli->query($sql);
 			for ($j = 1; $j <= rand(1, $result->num_rows); $j++){
 				$row = $result->fetch_row();
 			}
