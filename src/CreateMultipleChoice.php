@@ -1,36 +1,51 @@
+
 <head>
-    <title>Create Mutliple Choice</title>
+    <title>Create Multiple Choice</title>
     <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet">
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 </head>
 
+<form action="SelectQuestionType.php" method="post">
+    <input type="submit" class="btn btn-default" value="Refresh">
+</form>
+
 <!-- Multiple Choice -->
 <div class="container-fluid">
-    <div class="form-group">
-        <label for="num-question"> Number of Questions:</label>
-        <textarea class="form-control" rows="1" id="num-question"></textarea>
-    </div>   
-
-    <div class="form-group">
-        <label for="question"> Question:</label>
-        <textarea class="form-control" rows="5" id="question"></textarea>
-    </div>   
+    <div class="jumbotron text-center">
+        <p>Multiple Choice Creator</p> 
+    </div>
 
     <form action="CreateMultipleChoice.php" method="post">
-        <input id="new_mc"type="submit" class="btn btn-default" value="Multiple Choice">
+        <div class="form-group">
+            <label for="mc_question"> Question:</label>
+            <textarea type="submit" class="form-control" rows="5" name="mc_question" id="mc_question" required value=<?php echo $mc_question; ?>></textarea>
+        </div>  
+        <div class="form-group">
+            <label for="num_question"> Number of Options:</label>
+            <input class="form-control" type="number" id="num_options" name="num_options" min="2" required value=<?php echo $num_options; ?>>
+            <input type="submit" class="btn btn-default" name="new_mc" id="new_mc" value="Create Multiple Choice Question"> 
+        </div>   
     </form>
 
-    <div class="checkbox">
-        <label><input type="checkbox" value="">Option 1</label>
-    </div>
-   
+    <?php 
+        if(isset($_POST["new_mc"])) {
+            $num_options = $_POST["num_options"];
+            echo "<h3>Options</h3>";
+            for($i = 1; $i <= $num_options; $i++) {
+                echo "Option " . $i . " <input class='form-control' type='text' id=mc".$i . " value=''> " . "<br>";
+            }
+            echo "Correct Option ID: " . 
+            "<input class='form-control' type='number' id='correct_opt' name='correct_opt' min='2' required value=" . $correct_opt . "></div>";
+
+        }
+        
+        echo "<h3>Summary</h3>";
+        echo "Question: " . $_POST["mc_question"] . "<br>";
+        echo "Options: " . $_POST["num_options"];
+
+        
+    ?>
+
 </div>
 
-<?php 
-    if(isset($_POST['new_mc')) {
-        echo 'hello';
-    }
-
-?>
-
-
+<!-- submit with id mc -->

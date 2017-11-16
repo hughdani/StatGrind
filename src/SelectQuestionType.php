@@ -5,7 +5,5 @@
 </head>
 
 <form action="CreateMultipleChoice.php" method="post">
-    <input type="submit" class="btn btn-default" value="<Multiple Choice">
+    <input type="submit" class="btn btn-default" value="Multiple Choice">
 </form>
-
-
