@@ -1,6 +1,7 @@
 <html>
 <head>
 <title>Question Preview</title>
+    <link rel="stylesheet" href="css/main.css" />
 </head>
 <body>
     <form method="POST">

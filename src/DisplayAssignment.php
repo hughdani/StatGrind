@@ -1,6 +1,7 @@
 <html>
 <head>
 <title> View Assignment </title>
+<link rel="stylesheet" href="css/main.css" />
 </head>
 <body>
 	<form method="POST">
