@@ -5,23 +5,7 @@
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
     <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
 </head>
-<script>
-		// Load google charts
-		google.charts.load('current', {'packages':['corechart']});
-		google.charts.setOnLoadCallback(drawChart);
 
-		// Draw the chart and set the chart values
-		function drawChart(dataArray, divID) {
-		  var data = google.visualization.arrayToDataTable(dataArray);
-
-		  // Optional; add a title and set the width and height of the chart
-		  var options = {'title':'Assignments Average', 'width':550, 'height':400};
-
-		  // Display the chart inside the <div> element with id="piechart"
-		  var chart = new google.visualization.BarChart(document.getElementById(divID));
-		  chart.draw(data, options);
-		}
-	</script>
 <body>
 
 <div class="container-fluid">
@@ -73,7 +57,7 @@
 					}
 
 					$average = $assignmentTotal / $num_of_students;
-					echo "Number of students " . $num_of_students . "<br> Number of attempts " . $attempts . "<br> Average attempts: " . $attempts/$num_of_students . "<br> Assignment average is: " . $average . "<br>" . $num_of_participate . " out of " . $num_of_students . " participated in this assignment <br>";
+					echo "Number of registered students: " . $num_of_students . "<br> Total number of attempts for this assignment: " . $attempts . "<br> Average attempts: " . $attempts/$num_of_students . "<br> Assignment average: " . $average . "<br>" . $num_of_participate . " out of " . $num_of_students . " registered students participated in this assignment <br>";
 					
 
 				}
@@ -102,9 +86,29 @@
 						$newArray = array("Assignment ".$row[0], $average);
 						array_push($assignmentsArray, $newArray);
 					}
+					print_r($assignmentsArray);
 
 					echo "<div id='avgChart'></div>";
-					drawChart($assignmentsArray, "avgChart");
+					?>
+					<script>
+						// Load google charts
+						google.charts.load('current', {'packages':['corechart']});
+						google.charts.setOnLoadCallback(drawChart);
+
+						// Draw the chart and set the chart values
+						function drawChart(dataArray, divID) {
+						  var data = google.visualization.arrayToDataTable(dataArray(<?php $assignmentsArray ?>,"avgChart"));
+
+						  // Optional; add a title and set the width and height of the chart
+						  var options = {'title':'Assignments Average', 'width':550, 'height':400};
+
+						  // Display the chart inside the <div> element with id="piechart"
+						  var chart = new google.visualization.BarChart(document.getElementById(divID));
+						  chart.draw(data, options);
+						}
+					</script>
+
+					<?php
 				}
 			}
 
