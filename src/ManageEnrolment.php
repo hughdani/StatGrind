@@ -120,7 +120,7 @@ $(document).ready(function() {
     // get info about the checkbox's assignment
     var [c_id, u_id, table] = $(this).val().split(";");
     var u_enrol = $(this).is(':checked') ? 1 : 0;
-    var u_data = {f_set_enrolment: 'true', 'table': table, 'u_id': u_id, 'c_id': c_id, 'u_enrol': u_enrol};
+    var u_data = {'f_set_enrolment': 'true', 'table': table, 'u_id': u_id, 'c_id': c_id, 'u_enrol': u_enrol};
     // send info to server
     $.ajax({
         url:"Ajax.php",
