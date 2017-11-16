@@ -15,7 +15,7 @@ function set_enrolment($c_id, $u_id, $u_enrol, $table) {
     if ($u_enrol) {
       $query = "INSERT INTO $table (user_id, course_id) VALUES ($u_id, $c_id)"; 
     } else {
-      $query = "DELETE FROM $table WHERE user_id=$u_id AND course_id=$c_id)"; 
+      $query = "DELETE FROM $table WHERE user_id=$u_id AND course_id=$c_id"; 
     }
     if ($mysqli->query($upquery) === FALSE) {
         echo json_encode(array($mysqli->error));
@@ -26,7 +26,7 @@ function set_enrolment($c_id, $u_id, $u_enrol, $table) {
 
 
 //if (isset($_POST['u_id']) && isset($_POST['u_enrol'] && isset($_POST['table']) {
-if (isset($_POST['f_set_enrolment'])
+if (isset($_POST['f_set_enrolment'])) {
     set_enrolment($_POST['u_id'], $_POST['u_enrol'], $_POST['table']);
 }
 // if (isset($_POST['f_set_visibility'])
