@@ -65,7 +65,7 @@
 				else
 				{
 					// declare array to be pass into drawChart function
-					$assignmentsArray = array("Assignment Number", "Average Grade");
+					$assignmentsArray = array(array("Assignment Number", "Average Grade"));
 					$sql = "SELECT assignment_id FROM assignments";
 					$result = $mysqli->query($sql);					
 					// Loop through all assignments
@@ -98,7 +98,7 @@
 
 						// Draw the chart and set the chart values
 						function drawChart(dataArray, divID) {
-						  var data = google.visualization.arrayToDataTable(dataArray(dataArray);
+						  var data = new google.visualization.arrayToDataTable(dataArray);
 
 						  // Optional; add a title and set the width and height of the chart
 						  var options = {'title':'Assignments Average', 'width':550, 'height':400};
