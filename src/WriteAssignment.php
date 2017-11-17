@@ -59,13 +59,23 @@ if (isset($_POST['questions']))
 $qnumb = $i + 1;
 echo "<center><h2>Question $qnumb</h2><br>";
 $question_file = file_get_contents($questions[$i][1]);
-$q = explode("ANSWER:", $question_file);
+if (strpos($question_file, 'ANSWER:') !== false) {
+    $q = explode("ANSWER:", $question_file);
+} else {
+	$q = explode("FORMULA:", $question_file);
+}
 
 // Insert variable interpetor.
-echo $q[0] . "<br><br>";
+include 'VariableReader.php';
+$genquestion = varreader($q[0], $q[1]);
+
+// Display generated question
+$newquestionbody = $genquestion[0];
+$newformula = $genquestion[1];
+echo $newquestionbody . "<br><br>";
 
 // Set correct answer.
-$right_answer = "";
+$right_answer = computeFormula($newformula);
 
 
 // Determine if this is the last question
