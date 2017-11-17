@@ -4,6 +4,7 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+  <link rel="stylesheet" href="css/main.css" />
 </head>
 <body>
 
@@ -133,12 +134,21 @@
     <div class="form-row">
       <input id="questionFormula" name="questionFormula" type="text" class="form-control" placeholder="Question Formula">
     </div>
-
+    <!-- Question Tags -->
+    <div class="form-row">
+      <input id="questionTags" name="questionTags" type="text" class="form-control" placeholder="Question Tag(s)">
+    </div>
     <div class="form-row">
       <button type="button" class="btn btn-danger" onclick="history.back();"> Back </button>
       <button type="submit" class="btn btn-primary" name="submit" value="submit"> Create </button>
     </div>
   </form>
+
+      
+  <form action="SelectQuestionType.php" method="post">
+		  <input type="submit" class="btn btn-default" value="Select Question Type">
+  </form>
+
 </div>
 
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>

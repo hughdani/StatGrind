@@ -23,6 +23,7 @@ $final = $final / count($results);
     <title>Confirm Submission</title>
     <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet">
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <link rel="stylesheet" href="css/main.css" />
 </head>
 <body>
 <div class="container-fluid">

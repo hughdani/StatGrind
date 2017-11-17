@@ -46,6 +46,7 @@ if (isset($_POST['questions']))
     <title>Write Assignment <?php echo $assignment_id; ?></title>
     <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet">
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <link rel="stylesheet" href="css/main.css" />
 </head>
 <body>
 <div class="container-fluid">
