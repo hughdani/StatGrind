@@ -12,11 +12,11 @@
 </div>
   
 <div class="container">
-  <form method="post" action="PreviewQuestion.php">
+  <form method="post" action="PreviewQuestion.php" name="form1">
     <!-- Question Variables -->
     <div class="form-row">
-      <h4>Question Variables</h4>
-      <div class="form-row">
+      <h4>Add Random Variable</h4>
+      <!-- <div class="form-row">
         <ul class="list-group" id="varList">
           <li class="list-group-item"> 
           </li>
@@ -36,13 +36,13 @@
           </ul>
         </div>
       </div>
-      <div class="col-xs-4">
+      <div class="col-xs-1">
         <div class="dropdown">
-          <button class="btn btn-default dropdown-toggle" type="button" id="ddlVarTyoe" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+          <button class="btn btn-default dropdown-toggle" type="button" id="ddlVarType" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
           Domain
           <span class="caret"></span>
           </button>
-          <ul class="dropdown-menu" aria-labelledby="dropdownMenu1">
+          <ul id="dommenu" class="dropdown-menu" aria-labelledby="dropdownMenu1">
             <li><a>Domain</a></li>
             <li role="separator" class="divider"></li>
             <li><a>Integer</a></li>
@@ -50,26 +50,80 @@
             <li><a>Complex</a></li>
           </ul>
         </div>
-      </div>
+      </div> -->
+	  <div class="col-xs-2">
+	  <label for="sel1">Domain:</label>
+		<select class="form-control" id="sel1">
+			<option>Integer</option>
+			<option>Real</option>
+		</select>
+	  </div>
       <div class="col-xs-4">
-        <div class="form-row">
+        <!-- <div class="form-row">
           <div class="checkbox">
           <label><input type="checkbox" value="">Randomize Between:</label>
           </div>
-        </div>
-        <div class="form-row">
+        </div> 
+        <div class="form-row"> -->
           <div class="col-xs-6">
-          <input class="form-control" id="lowBound" name="lowBound" type="text" value="">
+		  <label for="lowBound">Min:</label>
+		  <input class="form-control" id="lowBound" name="lowBound" type="text" value="">
           </div>
           <div class="col-xs-6">
+		  <label for="upBound">Min:</label>
           <input class="form-control" id="upBound" name="upBound" type="text" value="">
           </div>
-        </div>
+        <!-- </div> -->
       </div>
+	  <br>
       <div class="form-row">
-        <button type="button" class="btn btn-primary" name="addVar" value="addVar">Add</button>
+        <input onclick='addvar()' type='button' class="btn btn-primary" name="addVar" value="Add"
       </div>
     </div>
+	<script>
+	var str = "abcdefghijklmnopqrstuvwxyz";
+	var i = 0;
+	var y = -1;
+	
+	
+	function addvar(){
+		if (i == 26) {
+			i = 0; y++;
+		}
+		if (i <= 25 && y < 0) {
+			var name = str.charAt(i);
+		} else {
+			var name = str.charAt(y) + str.charAt(i);
+		}
+		
+		var e = document.getElementById("sel1");
+		var vartype = e.options[e.selectedIndex].text;
+		
+		var minv = document.getElementById("lowBound").value;
+		var maxv = document.getElementById("upBound").value;
+		if (minv == "") {
+			minv = "0";
+		}
+		if (maxv == "") {
+			maxv = "300";
+		}
+		
+		if (vartype == "Real"){
+			var qtype = "=random_real(";
+		} else {
+			var qtype = "=random_int(";
+		}
+		
+		
+		
+		var text = " $" + name + qtype + minv + "," + maxv + ")";
+		var oldtext = document.forms.form1.questionText.value;
+		document.forms.form1.questionText.value = oldtext + text;
+		i++;
+	}    
+	</script>
+	
+	<br><br>
     <!-- Question Text -->
     <div class="form-row">
       <textarea id="questionText" name="questionText" class="form-control" rows="10" placeholder="Question Text" required></textarea>
