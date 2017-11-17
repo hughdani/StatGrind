@@ -120,6 +120,10 @@
 		var text = " $" + name + qtype + minv + "," + maxv + ")";
 		var oldtext = document.forms.form1.questionText.value;
 		document.forms.form1.questionText.value = oldtext + text;
+		
+		var oldform = document.forms.form1.questionFormula.value;
+		document.forms.form1.questionFormula.value = oldform + " $" + name;
+		
 		i++;
 	}    
 	</script>
