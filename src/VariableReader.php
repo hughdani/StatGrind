@@ -1,7 +1,6 @@
-<?php 
+<?php
 
-$text = '$a=random_int(0,5) + $b=random_int(0,100)'
-$form = '$a+$b';
+include 'dependencies/wa_wrapper/WolframAlphaEngine.php';
 
 function varreader($questiontext, $formula) {
 
@@ -14,7 +13,7 @@ function varreader($questiontext, $formula) {
 			$var = $split[0];
 			$type = explode("(", $split[1]);
 			$startstr = explode(",", $type[1]);
-			$endstr = explode(")", $start[1]);
+			$endstr = explode(")", $startstr[1]);
 			$start = $startstr[0];
 			$end = $endstr[0];
 			if ($type[0] == "random_int") {
@@ -38,6 +37,32 @@ function varreader($questiontext, $formula) {
 	$returnarray[] = $returntext;
 	$returnarray[] = $formula;
 	return $returnarray;
+}
+
+// use wolfram alpha to calculate formula
+function computeFormula($formulatext) {
+    // create instance of api
+    $engine = new WolframAlphaEngine('R4AW9W-39U3QJHUQ4');
+
+    // get query info
+    $resp = $engine->getResults($formulatext);
+
+    // get data pods back
+    $pod = $resp->getPods();
+
+    // select the wanted pod
+    $pod = $pod[1];
+
+    // search for the plaintext pod
+    foreach($pod->getSubpods() as $subpod){
+        if($subpod->plaintext){
+            $plaintext = $subpod->plaintext;
+                    break;
+        }
+    }
+
+    // print the answer
+    return $plaintext;
 }
 
 ?>
