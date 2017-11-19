@@ -122,6 +122,10 @@ if (isset($_POST["login_attempt"])) {
       <input type="submit" value ="Update marking/feedback">
     </form>
 
+    <form action="EditCourses.php" method="post" <?php if (isset($userid)){ echo visibility_tag($userid, "course_management_perm"); }?>>
+      <input type="submit" value ="Course Management">
+    </form>
+
     <form action="AssignmentOverview.php" method="post" <?php if (isset($userid)){ echo visibility_tag($userid, "view_assignment_perm"); }?>>
       <input type="submit" value ="Assignment Overview">
     </form>
