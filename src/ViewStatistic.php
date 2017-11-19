@@ -3,8 +3,6 @@
     <title>Assignment Statistics</title>
     <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet">
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
-    <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
-    <script type="text/javascript" src="//ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
     <link rel="stylesheet" href="css/main.css" />
 </head>
 
@@ -65,52 +63,35 @@
 				}
 				else
 				{
-					// declare array to be pass into drawChart function
-					$assignmentsArray = array(array("Assignment Number", "Average Grade"));
 					$sql = "SELECT assignment_id FROM assignments";
 					$result = $mysqli->query($sql);					
 					// Loop through all assignments
-					while ($row = $result->fetch_row()) {		
-						$sql = "SELECT result FROM results WHERE assignment_id = $row[0]";
-						$result5 = $mysqli->query($sql);
-						$attempts = $result5->num_rows;
-						$assignmentTotal = 0;
-						// Sum up the total marks for the current assignment
-						while ($row3 = $result5->fetch_row()){
-							$assignmentTotal += $row3[0];
+					echo "<table>
+						<tr>
+							<th>Assignment Number</th>
+							<th>Average Mark</th>
+						</tr>";
+						while ($row = $result->fetch_row()) {		
+							$sql = "SELECT result FROM results WHERE assignment_id = $row[0]";
+							$result5 = $mysqli->query($sql);
+							$attempts = $result5->num_rows;
+							$assignmentTotal = 0;
+							// Sum up the total marks for the current assignment
+							while ($row3 = $result5->fetch_row()){
+								$assignmentTotal += $row3[0];
+							}
+							// Get the number of students in the db, account_type = 2 is for students
+							$sql = "SELECT username FROM users WHERE account_type = 2";
+							$result3 = $mysqli->query($sql);
+							$num_of_students = $result3->num_rows;
+							$average = $assignmentTotal / $num_of_students;
+							// set the new table row
+							echo "<tr>
+									<th>Assignment ". $row[0] . "</th>
+									<th>". $average ."</th>
+								</tr>";
 						}
-						// Get the number of students in the db, account_type = 2 is for students
-						$sql = "SELECT username FROM users WHERE account_type = 2";
-						$result3 = $mysqli->query($sql);
-						$num_of_students = $result3->num_rows;
-						$average = $assignmentTotal / $num_of_students;
-						// set the new array
-						$newArray = array("Assignment ".$row[0], $average);
-						array_push($assignmentsArray, $newArray);
-					}
-					print_r($assignmentsArray);
-
-					echo "<div id='avgChart'></div>";
-					?>
-					<script type="text/javascript">
-						// Load google charts
-						google.charts.load('current', {'packages':['corechart']});
-						google.charts.setOnLoadCallback(drawChart(<?php $assignmentsArray ?>,"avgChart"));
-
-						// Draw the chart and set the chart values
-						function drawChart(dataArray, divID) {
-						  var data = new google.visualization.arrayToDataTable(dataArray);
-
-						  // Optional; add a title and set the width and height of the chart
-						  var options = {'title':'Assignments Average', 'width':550, 'height':400};
-
-						  // Display the chart inside the <div> element with id="piechart"
-						  var chart = new google.visualization.BarChart(document.getElementById(divID));
-						  chart.draw(data, options);
-						}
-					</script>
-
-					<?php
+					echo "</table>";
 				}
 			}
 

@@ -155,6 +155,10 @@ if (isset($_POST["login_attempt"])) {
       <input type="submit" value ="View Assignment Answer">
     </form>
 
+    <form action="ViewStatistic.php" method="post">
+      <input type="submit" value ="View Assignment Statistics">
+    </form>
+
 </div>
 
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
