@@ -76,7 +76,11 @@ $newformula = $genquestion[1];
 echo $newquestionbody . "<br><br>";
 
 // Set correct answer.
-$right_answer = computeFormula($newformula);
+if ($newformula == "") {
+	$right_answer = ""
+} else {
+	$right_answer = computeFormula($newformula);
+}
 
 
 // Determine if this is the last question
