@@ -2,7 +2,7 @@
 class database {
     private $host = "thatbitcoinguy.com";
     private $user = "root";
-    private $pass = "R0binson";
+    private $pass = "iKCC2YFyUxr7qBhk";
     private $db = "CSCC01";
 
     private $mysqli;
