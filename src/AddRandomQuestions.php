@@ -3,6 +3,7 @@
     <title>Add Random Questions</title>
     <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet">
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <link rel="stylesheet" href="css/main.css" />
 </head>
 
 <?php
@@ -21,7 +22,15 @@
 	<?php
         	$mysqli = new mysqli("localhost", "root", "R0binson", "CSCC01");
 		for ($i = 1; $i <= $num_questions; $i++) {
-        		$result = $mysqli->query("SELECT question_id FROM `questions`");
+			$sql = "SELECT question_id FROM `questions`";
+			
+			// Apply filter if any
+			if (isset($_POST['questionTag'])){
+				$filter = $_POST['questionTag'];
+				$sql = $sql . " WHERE tag LIKE '%$filter%'";
+			}
+			
+        		$result = $mysqli->query($sql);
 			for ($j = 1; $j <= rand(1, $result->num_rows); $j++){
 				$row = $result->fetch_row();
 			}

@@ -46,6 +46,7 @@ if (isset($_POST['questions']))
     <title>Write Assignment <?php echo $assignment_id; ?></title>
     <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet">
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <link rel="stylesheet" href="css/main.css" />
 </head>
 <body>
 <div class="container-fluid">
@@ -59,13 +60,27 @@ if (isset($_POST['questions']))
 $qnumb = $i + 1;
 echo "<center><h2>Question $qnumb</h2><br>";
 $question_file = file_get_contents($questions[$i][1]);
-$q = explode("ANSWER:", $question_file);
+if (strpos($question_file, 'ANSWER:') !== false) {
+    $q = explode("ANSWER:", $question_file);
+} else {
+	$q = explode("FORMULA:", $question_file);
+}
 
 // Insert variable interpetor.
-echo $q[0] . "<br><br>";
+include 'VariableReader.php';
+$genquestion = varreader($q[0], $q[1]);
+
+// Display generated question
+$newquestionbody = $genquestion[0];
+$newformula = $genquestion[1];
+echo $newquestionbody . "<br><br>";
 
 // Set correct answer.
-$right_answer = "";
+if ($newformula == "") {
+	$right_answer = ""
+} else {
+	$right_answer = computeFormula($newformula);
+}
 
 
 // Determine if this is the last question
