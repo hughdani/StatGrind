@@ -26,7 +26,7 @@ Find assignment:
 <?php
 // Select all assignments where the end date hasn't passed
 $mysqli = new mysqli("localhost", "root", "R0binson", "CSCC01");
-$sql = "SELECT assignment_id, end_date FROM assignments WHERE end_date > NOW() AND start_date <= NOW()";
+$sql = "SELECT assignment_id, end_date FROM assignments WHERE end_date > NOW() AND start_date <= NOW() AND visibility=true";
 
 //Apply search params if any
 if (isset($_POST['search_param'])) {
