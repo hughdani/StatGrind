@@ -71,7 +71,7 @@
 		  <input class="form-control" id="lowBound" name="lowBound" type="text" value="">
           </div>
           <div class="col-xs-6">
-		  <label for="upBound">Min:</label>
+		  <label for="upBound">Max:</label>
           <input class="form-control" id="upBound" name="upBound" type="text" value="">
           </div>
         <!-- </div> -->
