@@ -8,33 +8,13 @@
 </head>
 
 <?php
-function check_creds($username, $password) {
-    /*
-    Return integer based on result of credential check:
-    Correct user/password: 0
-    Account doesn't exist: 1
-    Incorrect password: 2
-    */
-    $mysqli = new mysqli("localhost", "root", "R0binson", "CSCC01");
-    $sql = "SELECT username, password FROM users WHERE username = '$username'";
-    $result = $mysqli->query($sql);
-    $mysqli->close();
-    if ($result->num_rows == 0) {
-        return 1;
-    } else if (strcmp($result->fetch_row() [1], $password) != 0) {
-        return 2;
-    } else {
-        return 0;
-    }
-}
+include 'database.php';
+$db = new database();
+
 function visibility_tag($userid, $permission_flag) {
-    /*
-    <?php if (isset($userid)){ echo visibility_tag($userid, "create_assignment_perm"); }?>
-    */
-    $mysqli = new mysqli("localhost", "root", "R0binson", "CSCC01");
+    global $db;
     $sql = "SELECT user_id, $permission_flag FROM users LEFT JOIN account_types ON users.account_type=account_types.account_type WHERE user_id = $userid";
-    $result = $mysqli->query($sql)->fetch_row();
-    $mysqli->close();
+    $result = $db->query($sql)->fetch_row();
     if ($result[1] == false) {
         return "style = 'display:none'";
     } else {
@@ -48,27 +28,24 @@ $username = "";
 if (isset($_POST["user_id"])){
 	$logged_in = true;
 	$userid = $_POST["user_id"];
-        $mysqli = new mysqli("localhost", "root", "R0binson", "CSCC01");
         $sql = "SELECT first_name FROM users WHERE user_id = $userid";
-        $result = $mysqli->query($sql)->fetch_row();
+        $result = $db->query($sql)->fetch_row();
         $firstname = $result[0];
-        $mysqli->close();
 }
 
 if (isset($_POST["login_attempt"])) {
     $username = $_POST["username"];
     $password = $_POST["password"];
-    if (check_creds($username, $password) == 0) {
+    $login = $db->login($username, $password);
+    if ($login == 0) {
         $logged_in = true;
-        $mysqli = new mysqli("localhost", "root", "R0binson", "CSCC01");
         $sql = "SELECT first_name, user_id FROM users WHERE username = '$username'";
-        $result = $mysqli->query($sql)->fetch_row();
+        $result = $db->query($sql)->fetch_row();
         $firstname = $result[0];
         $userid = $result[1];
-        $mysqli->close();
-    } else if (check_creds($username, $password) == 1) {
+    } else if ($login == 1) {
         $err_msg = "Account does not exist";
-    } else if (check_creds($username, $password) == 2) {
+    } else if ($login == 2) {
         $err_msg = "Incorrect password";
     }
 }
@@ -124,7 +101,7 @@ if (isset($_POST["login_attempt"])) {
 } ?>>
       <input type="hidden" name="user_id" id="user_id" <?php if (isset($userid)) {
     echo "value='$userid'";
-} ?>"/>
+} ?>/>
       <input type="submit" value ="Create a New Question">
     </form>
 
