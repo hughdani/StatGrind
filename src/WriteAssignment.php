@@ -77,7 +77,7 @@ echo $newquestionbody . "<br><br>";
 
 // Set correct answer.
 if ($newformula == "") {
-	$right_answer = ""
+	$right_answer = "";
 } else {
 	$right_answer = computeFormula($newformula);
 }
