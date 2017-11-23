@@ -7,6 +7,13 @@
 </head>
 
 <?php 
+// Set $assignment_id
+if (isset($_POST['assignment_id'])) {
+	$assignment_id = $_POST['assignment_id'];
+} else {
+	$assignment_id = 1;
+}
+
 // Convert starttime to sql datetime format
 // 10/25/2017 9:31 PM to 2017-10-25 21:31:00
 function converttime($time) {
@@ -108,8 +115,8 @@ if (isset($_POST['question_id']))
 if (isset($_POST['num_questions']))
 {
 	$mysqli = new mysqli("localhost", "root", "R0binson", "CSCC01");
-	for ($i = 1; $i <= $num_questions; $i++) {
-		$sql = "SELECT question_id FROM `questions`";
+	for ($i = 1; $i <= $_POST['num_questions']; $i++) {
+		$sql = "SELECT question_id FROM questions";
 		
 		// Apply filter if any
 		if (isset($_POST['questionTag'])){
@@ -119,9 +126,9 @@ if (isset($_POST['num_questions']))
 		
        	$result = $mysqli->query($sql);
 		for ($j = 1; $j <= rand(1, $result->num_rows); $j++){
-			$row = $result->fetch_row();
+			$row = $result->fetch_assoc();
 		}
-		$question_id = $row[0];
+		$question_id = $row["question_id"];
 		$insertsql = "INSERT INTO in_assignment (assignment_id, question_id) 
 				VALUES ($assignment_id, $question_id)";
 		$mysqli->query($insertsql);
@@ -139,15 +146,6 @@ if (isset($_POST['map_id']))
 	$mysqli->query($sql);
 	$mysqli->close();
 
-}
-
-
-
-
-if (isset($_POST['assignment_id'])) {
-	$assignment_id = $_POST['assignment_id'];
-} else {
-	$assignment_id = 1;
 }
 
 
