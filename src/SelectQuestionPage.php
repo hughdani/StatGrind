@@ -75,6 +75,8 @@ $assignment_id = $_POST['assignment_id'];
 			
 		?>
 				<form action="EditAssignmentPage.php" method="post">
+					<input type="hidden" name="assignment_id" id="assignment_id" value="<?= $assignment_id; ?>"/>
+					<input type="hidden" name="question_id" id="question_id" value="<?= $row["question_id"]; ?>"/>
 					<input type="submit" class="btn btn-default" value="Select Question">
 				</form>
 		
