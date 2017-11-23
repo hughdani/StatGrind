@@ -55,23 +55,28 @@ $assignment_id = $_POST['assignment_id'];
 		}
 
 		$result = $mysqli->query($sql);
+		
+		// Don't display duplicate questions
 		$displayed = [];
-		while ($row = $result->fetch_row()) {
-			if (!in_array($row[1], $displayed)) {
+		
+		// Display each question and answer with the ption to be selected.
+		while ($row = $result->fetch_assoc()) {
+			// Check if question as been displayed before
+			if (!in_array($row["location"], $displayed)) {
 				echo "<h2>Question $i</h2><br>";
-				$filetxt = file_get_contents($row[1]);
+				$filetxt = file_get_contents($row["location"]);
 				$q = explode("ANSWER:", $filetxt);
+				// DIsplay question and answer.
 				echo $q[0] . "<br><br>";
 				echo "ANSWER: " . $q[1];
-				array_push($displayed, $row[1]);
+				// Add question to list of displayed questions
+				array_push($displayed, $row["location"]);
 				$i = $i + 1;
 			
 		?>
-		<form action="EditAssignmentPage.php" method="post">
-            <input type="hidden" name="assignment_id" id="assignment_id" value="<?php echo $assignment_id; ?>"/>
-			<input type="hidden" name="question_id" id="question_id" value="<?php echo $row[0]; ?>"/>
-            <input type="submit" class="btn btn-default" value="Select Question">
-        </form>
+				<form action="EditAssignmentPage.php" method="post">
+					<input type="submit" class="btn btn-default" value="Select Question">
+				</form>
 		
 		<?php
 			}
