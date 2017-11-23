@@ -97,7 +97,7 @@ if (isset($_POST["login_attempt"])) {
       <input type="submit" value ="Create a New Assignment">
     </form>
     <form action="CreateQuestion.php" method="post" <?php if (isset($userid)) {
-    echo visibility_tag($userid, "create_assignment_perm");
+    echo visibility_tag($userid, "course_management_perm");
 } ?>>
       <input type="hidden" name="user_id" id="user_id" <?php if (isset($userid)) {
     echo "value='$userid'";
@@ -105,6 +105,11 @@ if (isset($_POST["login_attempt"])) {
       <input type="submit" value ="Create a New Question">
     </form>
 
+    <form action="DisplayQuestions.php" method="post" <?php if (isset($userid)) {
+    echo visibility_tag($userid, "course_management_perm");
+} ?>>
+	<input type="submit" value ="Edit Questions">
+    </form>
     <form action="AssignmentMarkingFeedback.php" method="post" <?php if (isset($userid)){ echo visibility_tag($userid, "grade_assignment_perm"); }?>>
       <input type="submit" value ="Update marking/feedback">
     </form>
