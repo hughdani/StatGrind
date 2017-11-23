@@ -105,10 +105,10 @@ if (isset($_POST["login_attempt"])) {
       <input type="submit" value ="Create a New Question">
     </form>
 
-    <form action="DisplayQuestions.php" method="post" <?php if (isset($userid)) {
+    <form action="AllCreatedQuestions.php" method="post" <?php if (isset($userid)) {
     echo visibility_tag($userid, "course_management_perm");
 } ?>>
-	<input type="submit" value ="Edit Questions">
+	<input type="submit" value ="All Created Questions">
     </form>
     <form action="AssignmentMarkingFeedback.php" method="post" <?php if (isset($userid)){ echo visibility_tag($userid, "grade_assignment_perm"); }?>>
       <input type="submit" value ="Update marking/feedback">
