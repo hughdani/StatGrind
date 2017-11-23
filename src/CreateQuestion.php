@@ -82,45 +82,58 @@
       </div>
     </div>
 	<script>
+	// Variable name alphabet.
 	var str = "abcdefghijklmnopqrstuvwxyz";
+	// Second character index.
 	var i = 0;
+	// First character index.
 	var y = -1;
 	
 	
 	function addvar(){
+		// If second character index is on "Z" then reset, and increment first character index.
 		if (i == 26) {
 			i = 0; y++;
 		}
+		// If first character index is -1, then only use second character index.
 		if (i <= 25 && y < 0) {
 			var name = str.charAt(i);
 		} else {
+		// Else, use first and second chacter indices.
 			var name = str.charAt(y) + str.charAt(i);
 		}
 		
+		// Get varable type, real or int.
 		var e = document.getElementById("sel1");
 		var vartype = e.options[e.selectedIndex].text;
 		
+		// Get Min and Max range for random number.
 		var minv = document.getElementById("lowBound").value;
 		var maxv = document.getElementById("upBound").value;
+		// Set default Min value if none entered.
 		if (minv == "") {
 			minv = "0";
 		}
+		// Set default Max value if none entered.
 		if (maxv == "") {
 			maxv = "300";
 		}
 		
+		// Build variable type text.
 		if (vartype == "Real"){
 			var qtype = "=random_real(";
 		} else {
+		// Default to integer.
 			var qtype = "=random_int(";
 		}
 		
-		
-		
+		// Build random variable declaration text.
 		var text = " $" + name + qtype + minv + "," + maxv + ")";
+		// Append variable text to question text.
 		var oldtext = document.forms.form1.questionText.value;
 		document.forms.form1.questionText.value = oldtext + text;
 		
+		// Append variable reference to formula text.
 		var oldform = document.forms.form1.questionFormula.value;
 		document.forms.form1.questionFormula.value = oldform + " $" + name;
 		
