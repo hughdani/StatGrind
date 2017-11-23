@@ -13,15 +13,15 @@ $assignment_id = $_POST['assignment_id'];
 
 <div class="container-fluid">
 
-        <div class="jumbotron">
-            <h1>Select Question</h1>
-        </div>
+    <div class="jumbotron">
+        <h1>Select Question</h1>
+    </div>
 
-		<!--Cancel button to go back to edit assignment page-->
-		<form action="EditAssignmentPage.php" method="post">
-            <input type="hidden" name="assignment_id" id="assignment_id" value="<?php echo $assignment_id; ?>"/>
-            <input type="submit" class="btn btn-default" value="Cancel">
-        </form>
+	<!--Cancel button to go back to edit assignment page-->
+	<form action="EditAssignmentPage.php" method="post">
+        <input type="hidden" name="assignment_id" id="assignment_id" value="<?php echo $assignment_id; ?>"/>
+        <input type="submit" class="btn btn-default" value="Cancel">
+    </form>
 	
 	<br>
 
@@ -30,7 +30,19 @@ $assignment_id = $_POST['assignment_id'];
             <input type="text" name="questionTag" id="questionTag" placeholder="Question Tag(s)"/>
             <input type="hidden" name="assignment_id" id="assignment_id" value="<?php echo $assignment_id; ?>"/>
             <input type="submit" class="btn btn-default" value="Search">
-        </form>
+    </form>
+	
+	<br>
+	
+	<!--Add N random questions-->
+	<form action="EditAssignmentPage.php" method="post">
+		<input type="hidden" name="assignment_id" id="assignment_id" value="<?php echo $assignment_id; ?>"/>
+		Add <input type="number" min="1" name="num_questions" id = "num_questions" value=1 /> random questions (with tag 
+		<input type="text" name="questionTag" id = "questionTag" />)
+		<input type="submit" class="btn btn-default" value="Add Questions">
+	</form>
+	
+	
 		<?php
 		$i = 1;
 		$mysqli = new mysqli("localhost", "root", "R0binson", "CSCC01");

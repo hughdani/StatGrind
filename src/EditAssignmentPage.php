@@ -104,6 +104,31 @@ if (isset($_POST['question_id']))
 	
 }
 
+// if a number of random questions was selected, save those questions.
+if (isset($_POST['num_questions']))
+{
+	$mysqli = new mysqli("localhost", "root", "R0binson", "CSCC01");
+	for ($i = 1; $i <= $num_questions; $i++) {
+		$sql = "SELECT question_id FROM `questions`";
+		
+		// Apply filter if any
+		if (isset($_POST['questionTag'])){
+			$filter = $_POST['questionTag'];
+			$sql = $sql . " WHERE tag LIKE '%$filter%'";
+		}
+		
+       	$result = $mysqli->query($sql);
+		for ($j = 1; $j <= rand(1, $result->num_rows); $j++){
+			$row = $result->fetch_row();
+		}
+		$question_id = $row[0];
+		$insertsql = "INSERT INTO in_assignment (assignment_id, question_id) 
+				VALUES ($assignment_id, $question_id)";
+		$mysqli->query($insertsql);
+	}
+	$mysqli->close();
+}
+
 // if question was removed, remove that question
 if (isset($_POST['map_id']))
 {
@@ -165,12 +190,6 @@ if (isset($_POST['assignment_id'])) {
 	<form action="CreateQuestion.php" method="post">
 		<input type="hidden" name="assignment_id" id="assignment_id" value="<?php echo $assignment_id; ?>"/>
 		<input type="submit" class="btn btn-default" value="Create New Question">
-	</form>
-	<form action="AddRandomQuestions.php" method="post">
-		<input type="hidden" name="assignment_id" id="assignment_id" value="<?php echo $assignment_id; ?>"/>
-		Add <input type="number" min="1" name="num_questions" id = "num_questions" value=1 /> random questions (with tag 
-		<input type="text" name="questionTag" id = "questionTag" />)
-		<input type="submit" class="btn btn-default" value="Add Questions">
 	</form>
 	<form action="SelectQuestionPage.php" method="post">
 		<input type="hidden" name="assignment_id" id="assignment_id" value="<?php echo $assignment_id; ?>"/>
