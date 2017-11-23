@@ -67,21 +67,21 @@ if (isset($_POST['questionText']))
 	$file_name = "/question" . (iterator_count($fi) + 1) . ".txt";
 
 	// Append answer to question.
-	$qanda = $_POST['questionText'] . "\n\n\n\n ANSWER: " . $_POST['formula'];
+	$qanda = $_POST['questionText'] . "\n\n\n\n ANSWER: " . $_POST['questionFormula'];
 
 	// Save question to file.
-	saveString($dir . $file_name, $qanda); // saves the string in the textarea into the file
+	$location = $dir . $file_name;
+	saveString($location, $qanda); // saves the string in the textarea into the file
 
 	// Insert question into question table
 	$mysqli = new mysqli("localhost", "root", "R0binson", "CSCC01");
-	$location = $dir . $file_name;
 	$assignment_id = $_POST['assignment_id'];
 	$sql = "INSERT INTO questions (location) VALUES ('$location')";
 	$mysqli->query($sql);
 
 	$sql = "SELECT question_id, location FROM questions WHERE location = '$location'";
-	$row = $mysqli->query($sql)->fetch_row();
-	$new_question_id = $row[0];
+	$row = $mysqli->query($sql)->fetch_assoc();
+	$new_question_id = $row["question_id"];
 
 	$sql = "INSERT INTO in_assignment (assignment_id, question_id) VALUES ($assignment_id, $new_question_id)";
 	$mysqli->query($sql);
@@ -167,17 +167,17 @@ if (isset($_POST['assignment_id'])) {
 		// Grab questions with correct assignment_id.
 		$mysqli = new mysqli("localhost", "root", "R0binson", "CSCC01");
 		$result = $mysqli->query("SELECT in_assignment.question_id, location, map_id FROM in_assignment LEFT JOIN questions ON in_assignment.question_id=questions.question_id WHERE assignment_id = $assignment_id");
-		while ($row = $result->fetch_row()) {
+		while ($row = $result->fetch_assoc()) {
 			echo "<h2>Question $i</h2><br>";
-			$filetxt = file_get_contents($row[1]);
+			$filetxt = file_get_contents($row["location"]);
 			$q = explode("ANSWER:", $filetxt);
 			echo $q[0] . "<br><br>";
 			echo "ANSWER: " . $q[1] . "<br>";
 			$i = $i + 1;
 			?>
 			<form action="EditAssignmentPage.php" method="post">
-				<input type="hidden" name="assignment_id" id="assignment_id" value="<?php echo $assignment_id; ?>"/>
-				<input type="hidden" name="map_id" id="map_id" value="<?php echo $row[2]; ?>"/>
+				<input type="hidden" name="assignment_id" id="assignment_id" value="<?= $assignment_id; ?>"/>
+				<input type="hidden" name="map_id" id="map_id" value="<?= $row["map_id"]; ?>"/>
 				<input type="submit" class="btn btn-default" value="Remove Question">
 			</form>
 			<?php
@@ -188,15 +188,15 @@ if (isset($_POST['assignment_id'])) {
 	?>
 
 	<form action="CreateQuestion.php" method="post">
-		<input type="hidden" name="assignment_id" id="assignment_id" value="<?php echo $assignment_id; ?>"/>
+		<input type="hidden" name="assignment_id" id="assignment_id" value="<?= $assignment_id; ?>"/>
 		<input type="submit" class="btn btn-default" value="Create New Question">
 	</form>
 	<form action="SelectQuestionPage.php" method="post">
-		<input type="hidden" name="assignment_id" id="assignment_id" value="<?php echo $assignment_id; ?>"/>
+		<input type="hidden" name="assignment_id" id="assignment_id" value="<?= $assignment_id; ?>"/>
 		<input type="submit" class="btn btn-default" value="Select Question">
 	</form>
 	<form action="ConfirmCreateAssignmentPage.php" method="post">
-		<input type="hidden" name="assignment_id" id="assignment_id" value="<?php echo $assignment_id; ?>"/>
+		<input type="hidden" name="assignment_id" id="assignment_id" value="<?= $assignment_id; ?>"/>
 		<input type="submit" class="btn btn-default" value="Submit Assignment">
 	</form>
 
