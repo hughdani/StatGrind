@@ -27,32 +27,36 @@
         </div>   
     </form>
 
-    <?php 
-        if(isset($_POST["new_mc"])) {
-            $num_options = $_POST["num_options"];
-            echo "<form action='PreviewQuestion.php' method='post'>";
-            echo "<div class='form-group'>";
-            echo "<h3>Options</h3>";
-            for($i = 1; $i <= $num_options; $i++) {
-                echo "Option " . $i . " <input class='form-control' type='text' id=mc".$i . " value='' required> " . "<br>";
-            }
-            echo "Correct Option ID: " . 
-            "<input class='form-control' type='number' id='correct_opt' name='correct_opt' min='1' max='" .
-            $num_options . "' required value='" . $correct_opt . "'></div>";
+    <?php if(isset($_POST["new_mc"])) : ?>
+        <?php $num_options = $_POST["num_options"]; ?>
+        <form action='PreviewQuestion.php' method='post'>
+            <div class='form-group'>
+                <h3>Options</h3>
 
-                   
-            echo "<h3>Summary</h3>";
-            echo "Question: " . $_POST["mc_question"] . "<br>";
-            echo "Options: " . $_POST["num_options"];
+                <?php for($i = 1; $i <= $num_options; $i++) : ?>
+                    <p>Option <?= $i ?> </p>
+                    <input class='form-control' type='text' id=mc<?=$i?> value='' required> 
+                    <br>
+                <?php endfor; ?>
 
-            // questionFormula set to dummy filler value for it to work with existing PreviewQuestion.php
-            echo"<input class='hidden' name=questionText id=questionText value='". $_POST['mc_question'] . "'>
-                <input class='hidden' name=questionFormula id=questionFormula value='2+2' >
-                <input type='submit' class='btn' value='Submit'> 
-                </div>
-                </form>";
-            }
-    ?>
+                <p>Correct Option ID:</p>
+                <input class='form-control' type='number' id='correct_opt' name='correct_opt' min='1' 
+                max=<?=$num_options?> required value=<?=$correct_opt?>>
+            </div>
+
+                    
+            <h3>Summary</h3>
+            <div>Question: <?=$_POST["mc_question"]?> </div>
+            <br>
+            <div>Options: <?=$_POST["num_options"]?> </div>
+
+            <!-- questionFormula set to dummy filler value for it to work with existing PreviewQuestion.php -->
+            <input class='hidden' name=questionText id=questionText value=<?=$_POST['mc_question']?>>
+            <input class='hidden' name=questionFormula id=questionFormula value='2+2' >
+            <input type='submit' class='btn' value='Submit'> 
+        </form>
+    
+    <?php endif; ?>
 </div>
 
 <!-- need to submit with the correct option, change previewquestion.php to handle this case -->
