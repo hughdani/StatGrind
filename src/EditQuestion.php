@@ -46,6 +46,6 @@ if (isset($_POST['question_id'])):
 endif;
 ?>
 </form>
-<form method='post' action='DisplayQuestions.php'>
+<form method='post' action='AllCreatedQuestions.php'>
 <input type='submit' value='Back'>
 </form>
