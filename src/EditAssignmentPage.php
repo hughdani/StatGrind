@@ -7,6 +7,10 @@
 </head>
 
 <?php 
+
+include 'Database.php';
+$db = new Database();
+
 // Convert starttime to sql datetime format
 // 10/25/2017 9:31 PM to 2017-10-25 21:31:00
 function converttime($time) {
@@ -29,7 +33,14 @@ function saveString($filename, $questionInput) {
   file_put_contents($filename, $questionInput);
 }
 
-//Get assignment tags if any
+// Get assignment title if defined
+if (isset($_POST['assignment_title'])){
+	$assignment_title = $_POST['assignment_title'];
+} else {
+	$assignment_title = "";
+}
+
+// Get assignment tags if any
 if (isset($_POST['assignment_tag'])) {
 	$assignment_tag = $_POST['assignment_tag'];
 } else {
@@ -44,7 +55,7 @@ if (isset($_POST['starttime']))
 	$assignment_id = $_POST['assignment_id'];
 	
 	$mysqli = new mysqli("localhost", "root", "R0binson", "CSCC01");
-	$sql = "INSERT INTO assignments (assignment_id, start_date, end_date, tag) VALUES ($assignment_id, '$start', '$end', '$assignment_tag')";
+	$sql = "INSERT INTO assignments (assignment_id, start_date, end_date, tag, title) VALUES ($assignment_id, '$start', '$end', '$assignment_tag', '$assignment_title')";
 	$mysqli->query($sql);
 	$mysqli->close();
 }
@@ -115,16 +126,13 @@ if (isset($_POST['map_id']))
 	$mysqli->close();
 
 }
-
-
-
-
+// If editing existing assignment, get id and title
 if (isset($_POST['assignment_id'])) {
 	$assignment_id = $_POST['assignment_id'];
 } else {
 	$assignment_id = 1;
 }
-
+$assignment_title = $db->getAssignmentTitle($assignment_id);
 
 ?>
 
@@ -134,7 +142,11 @@ if (isset($_POST['assignment_id'])) {
 <div class="container-fluid">
 
 	<div class="jumbotron">
-		<h1>Edit Assignment <?php echo $assignment_id; ?></h1>
+		<?php if ($assignment_title != ""): ?>
+			<h1>Edit <?= $assignment_title; ?></h1>
+		<?php else: ?>
+			<h1>Edit Assignment <?= $assignment_id; ?></h1>
+		<?php endif ?>
 	</div>
 
 	<?php

@@ -13,6 +13,9 @@
 		<h1>Assignment Marking/Feedback</h1>
 	</div>
 <?php
+	include 'Database.php';
+	$db = new Database();
+
 	// Get student_id
 	if (isset($_POST['student_id'])) {
 		$student_id = $_POST['student_id'];
@@ -59,7 +62,7 @@
 	// Display open assignments.
 	while ($row = $result->fetch_row()) {
 		if ($current_time > $row[1]) {
-			echo "<h2>Assignment $row[0]</h2><br>";
+			echo "<h2>".$db->getAssignmentTitle($row[0])."</h2><br>";
 			// Select all student attempts for this assignment.
 			$sql = "SELECT result, attempt_id, feedback FROM results WHERE student_id = '$student_id' AND assignment_id = $row[0]";
 			$result2 = $mysqli->query($sql);

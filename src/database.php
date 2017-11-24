@@ -1,5 +1,5 @@
 <?php
-class database {
+class Database {
     private $host = "thatbitcoinguy.com";
     private $user = "root";
     private $pass = "iKCC2YFyUxr7qBhk";
@@ -39,6 +39,16 @@ class database {
         } else {
             return 0;
         }
+    }
+
+    // Function that gets assignment title from id
+    function getAssignmentTitle($id){
+	global $db;
+	$sql = "SELECT assignment_id, title FROM assignments WHERE assignment_id = $id";
+	$result = $db->query($sql)->fetch_assoc();
+	$title = $result['title'];
+	if ($title == ""){ $title = "Assignment $id"; }
+	return $title;
     }
 }
 ?>

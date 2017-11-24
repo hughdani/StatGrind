@@ -10,6 +10,10 @@
 
 <h2>List of Created Assignments</h2>
 <?php
+
+include 'Database.php';
+$db = new Database();
+
 $mysqli = new mysqli('localhost', 'root', 'R0binson', 'CSCC01');
 $result = $mysqli->query('SELECT * FROM assignments');
 if ($result->num_rows > 0) {
@@ -20,6 +24,7 @@ if ($result->num_rows > 0) {
         $a_end = $row['end_date'];
         $a_chk = ($row['visible'] ? "checked" : "");
         // create entry for assignment
+	echo "<br>" . $db->getAssignmentTitle($a_id);
         echo "<br> id: $a_id";
         echo "<br> start date: $a_start";
         echo "<br> end date: $a_end";
