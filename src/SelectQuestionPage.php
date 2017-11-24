@@ -13,15 +13,15 @@ $assignment_id = $_POST['assignment_id'];
 
 <div class="container-fluid">
 
-        <div class="jumbotron">
-            <h1>Select Question</h1>
-        </div>
+    <div class="jumbotron">
+        <h1>Select Question</h1>
+    </div>
 
-		<!--Cancel button to go back to edit assignment page-->
-		<form action="EditAssignmentPage.php" method="post">
-            <input type="hidden" name="assignment_id" id="assignment_id" value="<?php echo $assignment_id; ?>"/>
-            <input type="submit" class="btn btn-default" value="Cancel">
-        </form>
+	<!--Cancel button to go back to edit assignment page-->
+	<form action="EditAssignmentPage.php" method="post">
+        <input type="hidden" name="assignment_id" id="assignment_id" value="<?php echo $assignment_id; ?>"/>
+        <input type="submit" class="btn btn-default" value="Cancel">
+    </form>
 	
 	<br>
 
@@ -30,7 +30,19 @@ $assignment_id = $_POST['assignment_id'];
             <input type="text" name="questionTag" id="questionTag" placeholder="Question Tag(s)"/>
             <input type="hidden" name="assignment_id" id="assignment_id" value="<?php echo $assignment_id; ?>"/>
             <input type="submit" class="btn btn-default" value="Search">
-        </form>
+    </form>
+	
+	<br>
+	
+	<!--Add N random questions-->
+	<form action="EditAssignmentPage.php" method="post">
+		<input type="hidden" name="assignment_id" id="assignment_id" value="<?php echo $assignment_id; ?>"/>
+		Add <input type="number" min="1" name="num_questions" id = "num_questions" value=1 /> random questions (with tag 
+		<input type="text" name="questionTag" id = "questionTag" />)
+		<input type="submit" class="btn btn-default" value="Add Questions">
+	</form>
+	
+	
 		<?php
 		$i = 1;
 		$mysqli = new mysqli("localhost", "root", "R0binson", "CSCC01");
@@ -43,23 +55,30 @@ $assignment_id = $_POST['assignment_id'];
 		}
 
 		$result = $mysqli->query($sql);
+		
+		// Don't display duplicate questions
 		$displayed = [];
-		while ($row = $result->fetch_row()) {
-			if (!in_array($row[1], $displayed)) {
+		
+		// Display each question and answer with the ption to be selected.
+		while ($row = $result->fetch_assoc()) {
+			// Check if question as been displayed before
+			if (!in_array($row["location"], $displayed)) {
 				echo "<h2>Question $i</h2><br>";
-				$filetxt = file_get_contents($row[1]);
+				$filetxt = file_get_contents($row["location"]);
 				$q = explode("ANSWER:", $filetxt);
+				// DIsplay question and answer.
 				echo $q[0] . "<br><br>";
 				echo "ANSWER: " . $q[1];
-				array_push($displayed, $row[1]);
+				// Add question to list of displayed questions
+				array_push($displayed, $row["location"]);
 				$i = $i + 1;
 			
 		?>
-		<form action="EditAssignmentPage.php" method="post">
-            <input type="hidden" name="assignment_id" id="assignment_id" value="<?php echo $assignment_id; ?>"/>
-			<input type="hidden" name="question_id" id="question_id" value="<?php echo $row[0]; ?>"/>
-            <input type="submit" class="btn btn-default" value="Select Question">
-        </form>
+				<form action="EditAssignmentPage.php" method="post">
+					<input type="hidden" name="assignment_id" id="assignment_id" value="<?= $assignment_id; ?>"/>
+					<input type="hidden" name="question_id" id="question_id" value="<?= $row["question_id"]; ?>"/>
+					<input type="submit" class="btn btn-default" value="Select Question">
+				</form>
 		
 		<?php
 			}
