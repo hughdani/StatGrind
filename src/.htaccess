@@ -1,0 +1,5 @@
+ErrorDocument 400 /Test/src/error.php
+ErrorDocument 401 /Test/src/error.php
+ErrorDocument 403 /Test/src/error.php
+ErrorDocument 404 /Test/src/error.php
+ErrorDocument 500 /Test/src/error.php
