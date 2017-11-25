@@ -10,7 +10,7 @@
     <!-- Banner -->
     <section id="banner">
         <h2>Welcome to <strong>StatGrind</strong></h2>
-        <p>Brought to you by The Code Monekeys</p>
+        <p>Brought to you by The Code Monkeys</p>
         <ul class="actions">
             <li>
                 <a class="button special" href="AccountLogin.php">Log In</a>
