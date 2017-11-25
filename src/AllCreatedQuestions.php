@@ -5,8 +5,8 @@
 </head>
 
 <?php
-include_once 'database.php';
-$db = new database();
+include_once 'Database.php';
+$db = new Database();
 ?>
 
 <?php foreach ($db->query("SELECT * FROM questions") as $q) { ?>
