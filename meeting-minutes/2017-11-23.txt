@@ -1,0 +1,21 @@
+Meeting Minutes by: Daniel
+Date of Meeting: 23/11/2017
+Time: 5:30 pm
+Location: IC 406
+
+Attendance: Adam Koza, Brian Quach, Daniel Hugh, Darius Asri, Kevin Choi
+Absent:
+
+================================================================================
+
+Agenda: Sprint, Wrapping up the Project
+
+Discussion Items / Actions / Decision
+
+    Sprint
+        - extend sprint 5 by 3 days to the following Sunday because the final deliverable is on Monday
+
+    Wrapping up the Project
+        - prioritize UI and bugs from code review
+        - divide tasks from code review debrief to finish on the weekend
+  	- TA presentation is on Wednesday, November 29 at 2:30pm 

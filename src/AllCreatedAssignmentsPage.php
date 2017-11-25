@@ -11,35 +11,24 @@
 <h2>List of Created Assignments</h2>
 <?php
 
-include 'Database.php';
+include_once 'Database.php';
 $db = new Database();
-
-$mysqli = new mysqli('localhost', 'root', 'R0binson', 'CSCC01');
-$result = $mysqli->query('SELECT * FROM assignments');
-if ($result->num_rows > 0) {
-    echo "<form method='post' action=''>";
-    while ($row = $result->fetch_assoc()) {
-        $a_id = $row['assignment_id'];
-        $a_start = $row['start_date'];
-        $a_end = $row['end_date'];
-        $a_chk = ($row['visible'] ? "checked" : "");
-        // create entry for assignment
-	echo "<br>" . $db->getAssignmentTitle($a_id);
-        echo "<br> id: $a_id";
-        echo "<br> start date: $a_start";
-        echo "<br> end date: $a_end";
-        echo "<br> <label class='form-check-label'>";
-        // set the name and value based on the id, set the check status based on visibility
-        echo "<input name='vis-$a_id' type='checkbox' value=$a_id class='chk-vis form-check-input' $a_chk>";
-        echo "Visible";
-        echo "</label><br>";
-    }
-    echo "</form>";
-} else {
-    echo "0 results";
-}
-$mysqli->close();
+$mysqli = $db->getconn();
 ?>
+
+<?php foreach ($db->query("SELECT * FROM assignments") as $a) { ?>
+    <form method='post' action=''>
+	<?php $assignment_title = $db->getAssignmentTitle($a['assignment_id']); ?>
+	<br> <strong><?= $assignment_title; ?> </strong>
+    	<br> id: <?= $a['assignment_id']; ?>
+        <br> start date: <?= $a['start_date']; ?>
+        <br> end date: <?= $a['end_date']; ?>
+        <br> <label class='form-check-label'>
+	<input name='vis-$a_id' type='checkbox' value=$a_id class='chk-vis form-check-input' <?= ($a['visible']) ? 'checked' : '' ?> >
+        Visible
+        </label><br>
+    </form>
+<?php } ?>
 <!-- Quick path to get back to creating new assignments. -->
 <form action="NewAssignmentPage.php" method="post">
     <input type="submit" class="btn btn-default" value="Create New Assignment">

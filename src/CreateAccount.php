@@ -21,7 +21,13 @@ function register($username, $password, $first_name, $last_name, $account_type) 
     $mysqli->close();
     return;
 }
+
 $err_msg = "";
+$err_clr = "red";
+$username = "";
+$firstname = "";
+$lastname = "";
+
 if (isset($_POST["create_Account"])) {
     $username = $_POST["user_name"];
     $firstname = $_POST["first_name"];
@@ -40,6 +46,7 @@ if (isset($_POST["create_Account"])) {
         $firstname = "";
         $lastname = "";
         $err_msg = "Account Created";
+	$err_clr = "green";
     }
 }
 ?>
@@ -48,27 +55,25 @@ if (isset($_POST["create_Account"])) {
 <div class="jumbotron text-center">
   <p>Create New Account</p> 
 </div>
-
 <div class="container">
+<?php if ($err_msg != ""): ?>
+<div class="alert" style="background-color:<?=$err_clr?>">
+  <span class="closebtn" onclick="this.parentElement.style.display='none';">&times;</span> 
+      <?= $err_msg; ?>
+</div>
+<?php endif; ?>
   <form method="post" action="CreateAccount.php">
-      User Name: <input type="text" name="user_name" minlength="4" <?php if (isset($username)) {
-    echo "value='$username'";
-} ?> required><br>
+      User Name: <input type="text" name="user_name" minlength="4" value="<?= $username; ?>" required><br>
       Password: <input type="password" name="password1" minlength="4" required><br>
       Confirm Password: <input type="password" name="password2" minlength="4" required><br>
-      First Name: <input type="text" name="first_name" <?php if (isset($firstname)) {
-    echo "value='$firstname'";
-} ?> required><br>
-      Last Name: <input type="text" name="last_name" <?php if (isset($lastname)) {
-    echo "value='$lastname'";
-} ?> required><br>
+      First Name: <input type="text" name="first_name" value="<?= $firstname; ?>" required><br>
+      Last Name: <input type="text" name="last_name" value="<?= $lastname; ?>" required><br>
       Account Type: <select name="account_type" required>
  			<option value="2">Student</option>
   			<option value="1">Instructor</option>
   			<option value="3">TA</option>
 		    </select><br>
       <input type="submit" name="create_Account" value ="Create Account">
-      <?php echo "<br> $err_msg"; ?>
   </form>
   <form method="post" action="AccountLogin.php">
       <input type="submit" name="log_in" value ="Log in">
