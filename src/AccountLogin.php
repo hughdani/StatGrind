@@ -30,7 +30,7 @@ if ($_POST['login']) {
 }
 ?>
 <div class="container">
-  <form method="post" action="NewAccountLogin.php">
+  <form method="post" action="AccountLogin.php">
       Username: <input type="text" name="username" required><br>
       Password: <input type="password" name="password" required><br>
       <input type="submit" name="login" value ="Log In">
