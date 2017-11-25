@@ -49,7 +49,7 @@ function display_mark_and_feedback($current_time, $student_id){
 			$result = $mysqli->query($sql);
 			while ($row = $result->fetch_row()){
 				if ($current_time > $row["start_date"]) {
-					echo "<option value='".$row['assignment_id']."''> Assignment". $row['assignment_id'] . "</option>";
+					echo "<option value='".$row["assignment_id"]."''> Assignment". $row["assignment_id"] . "</option>";
 				}
 			}
 			?>
@@ -57,18 +57,17 @@ function display_mark_and_feedback($current_time, $student_id){
 		<br>
 <?php
 	if(isset($_POST['selectedAssignment'])){
-		echo "<h2>Assignment $row["selectedAssignment"]</h2><br>";
+		$assignment_id = $_POST['selectedAssignment'];
+		echo "<h2>Assignment $assignment_id</h2><br>";
 		// Select all student attempts for this assignment.
-		$sql = "SELECT result, attempt_id, feedback FROM results WHERE attempt_id = (SELECT MAX(attempt_id) FROM results WHERE student_id = '$student_id' AND assignment_id = $row["selectedAssignment"])";
+		$sql = "SELECT result, attempt_id, feedback FROM results WHERE attempt_id = (SELECT MAX(attempt_id) FROM results WHERE student_id = '$student_id' AND assignment_id = $assignment_id)";
 		$result2 = $mysqli->query($sql);
-		$row2 = $result2->fetch_row()
+		$row2 = $result2->fetch_row();
 		$feedback = $row2["feedback"];
 		$attempt_id = $row2["attempt_id"];
 		$mark = $row2["result"];
 		echo "Mark: " . $mark . "<br>Number of attempts: " . $attempt_id . "<br>";
-		echo "Instructor feedback: " . $feedback . "<br>";
-	}
-	$mysqli->close();
+		echo "Instructor feedback: " . $feedback . "<br>";	
 ?>	
     	<input type="hidden" name="student_id" id="student_id" value="<?php echo $student_id; ?>"/>
     	<input type="hidden" name="attempt_id" id="attempt_id" value="<?php echo $attempt_id; ?>"/>
@@ -77,6 +76,8 @@ function display_mark_and_feedback($current_time, $student_id){
   		<input type="submit" class="btn btn-default" value="Submit Update"/>
     </form>
 <?php
+	}
+	$mysqli->close();
 }
 
 	// Get student_id
