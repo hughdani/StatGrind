@@ -48,7 +48,7 @@ function display_mark_and_feedback($current_time, $student_id){
 			$sql = "SELECT assignment_id, start_date FROM assignments";
 			$result = $mysqli->query($sql);
 			while ($row = $result->fetch_row()){
-				if ($current_time > $row['start_date']) {
+				if ($current_time > $row[1]) {
 					echo "<option value='".$row[0]."''> Assignment ". $row[0] . "</option>";
 				}
 			}
