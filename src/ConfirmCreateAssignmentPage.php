@@ -9,7 +9,11 @@
 </head>
 
 <?php 
-    echo $_POST["assignment_id"] . " successfully added.";
+
+include 'Database.php';
+$db = new Database();
+
+    echo $db->getAssignmentTitle($_POST["assignment_id"]) . " successfully added.";
 ?>
 
 <p>What would you like to do next?</p>

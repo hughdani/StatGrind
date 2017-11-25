@@ -1,4 +1,8 @@
 <?php 
+
+include 'Database.php';
+$db = new Database();
+
 // Determine assignment_id.
 if (isset($_POST['assignment_id']))
 {
@@ -43,7 +47,7 @@ if (isset($_POST['questions']))
 
 <html>
 <head>
-    <title>Write Assignment <?php echo $assignment_id; ?></title>
+    <title>Write <?= $db->getAssignmentTitle($assignment_id); ?></title>
     <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet">
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
     <link rel="stylesheet" href="css/main.css" />
@@ -52,7 +56,7 @@ if (isset($_POST['questions']))
 <div class="container-fluid">
 
 	<div class="jumbotron">
-		<h1>Write Assignment <?php echo $assignment_id; ?></h1>
+		<h1>Write <?= $db->getAssignmentTitle($assignment_id); ?></h1>
 	</div>
 
 <?php
@@ -77,7 +81,7 @@ echo $newquestionbody . "<br><br>";
 
 // Set correct answer.
 if ($newformula == "") {
-	$right_answer = ""
+	$right_answer = "";
 } else {
 	$right_answer = computeFormula($newformula);
 }
@@ -90,10 +94,10 @@ if ($qnumb == count($questions)) {
 	<form action="ConfirmSubmission.php" method="post">
 		<label for="user_answer">Answer:</label>
 		<input type="text" name="user_answer" id="user_answer">
-		<input type="hidden" name="right_answer" id="right_answer" value="<?php echo $right_answer; ?>"/>
-		<input type="hidden" name="assignment_id" id="assignment_id" value="<?php echo $assignment_id; ?>"/>
+		<input type="hidden" name="right_answer" id="right_answer" value="<?= $right_answer; ?>"/>
+		<input type="hidden" name="assignment_id" id="assignment_id" value="<?= $assignment_id; ?>"/>
 		<input type="hidden" name="results" id="results" value="<?php echo htmlentities(serialize($results)); ?>"/>
-		<input type="hidden" name="student_id" id="student_id" value="<?php echo $student_id; ?>"/>
+		<input type="hidden" name="student_id" id="student_id" value="<?= $student_id; ?>"/>
 		<input type="submit" class="btn btn-default" value="Submit Assignment">
 	</form></center>
 <?php
@@ -103,12 +107,12 @@ $i = $i + 1;
 	<form action="WriteAssignment.php" method="post">
 		<label for="user_answer">Answer:</label>
 		<input type="text" name="user_answer" id="user_answer">
-		<input type="hidden" name="right_answer" id="right_answer" value="<?php echo $right_answer; ?>"/>
-		<input type="hidden" name="assignment_id" id="assignment_id" value="<?php echo $assignment_id; ?>"/>
-		<input type="hidden" name="questions" id="questions" value="<?php echo htmlentities(serialize($questions)); ?>"/>
+		<input type="hidden" name="right_answer" id="right_answer" value="<?= $right_answer; ?>"/>
+		<input type="hidden" name="assignment_id" id="assignment_id" value="<?= $assignment_id; ?>"/>
+		<input type="hidden" name="questions" id="questions" value="<?= htmlentities(serialize($questions)); ?>"/>
 		<input type="hidden" name="results" id="results" value="<?php echo htmlentities(serialize($results)); ?>"/>
-		<input type="hidden" name="student_id" id="student_id" value="<?php echo $student_id; ?>"/>
-		<input type="hidden" name="index" id="index" value="<?php echo $i; ?>"/>
+		<input type="hidden" name="student_id" id="student_id" value="<?= $student_id; ?>"/>
+		<input type="hidden" name="index" id="index" value="<?= $i; ?>"/>
 		<input type="submit" class="btn btn-default" value="Next Question">
 	</form></center>
 <?php

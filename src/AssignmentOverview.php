@@ -13,6 +13,11 @@
 		<h1>Assignment Overview</h1>
 	</div>
 <?php
+
+include 'Database.php';
+$db = new Database();
+
+
 // Get student_id
 if (isset($_POST['student_id'])) {
 	$student_id = $_POST['student_id'];
@@ -45,7 +50,7 @@ if ($edit_hour[2][2] == "p") {
 
 Find assignment:
 <form action="AssignmentOverview.php" method="post">
-	<input type="text" name="search_param" id="search_param" placeholder="Assignment Group">
+	<input type="text" name="search_param" id="search_param" placeholder="Search for assignments">
 	<input type="hidden" name="student_id" id="student_id" <?php if ($student_id){ echo "value=$student_id";} ?>>
 	<input type="submit" value ="Search">
 </form>
@@ -58,7 +63,7 @@ $sql = "SELECT assignment_id, start_date, end_date FROM assignments";
 //Apply search params if any
 if (isset($_POST['search_param'])) {
 	$filter = $_POST['search_param'];
-	$sql = $sql . " WHERE tag LIKE '%$filter%'";
+	$sql = $sql . " WHERE tag LIKE '%$filter%' OR title LIKE '%$filter%'";
 }
 
 $result = $mysqli->query($sql);
@@ -66,8 +71,9 @@ $result = $mysqli->query($sql);
 while ($row = $result->fetch_row()) {
 	$start_date = $row[1];
 	$end_date = $row[2];
+	$assignment_title = $db->getAssignmentTitle($row[0]);
 	if ($current_time > $row[1]) {
-		echo "<h2>Assignment $row[0]</h2><br>";
+		echo "<h2>$assignment_title</h2><br>";
 		// Select all student attempts for this assignment.
 		$sql = "SELECT result, attempt_id, feedback FROM results WHERE student_id = '$student_id' AND assignment_id = $row[0]";
 		$result2 = $mysqli->query($sql);

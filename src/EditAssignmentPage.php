@@ -7,6 +7,17 @@
 </head>
 
 <?php 
+
+include 'Database.php';
+$db = new Database();
+
+// Set $assignment_id
+if (isset($_POST['assignment_id'])) {
+	$assignment_id = $_POST['assignment_id'];
+} else {
+	$assignment_id = 1;
+}
+
 // Convert starttime to sql datetime format
 // 10/25/2017 9:31 PM to 2017-10-25 21:31:00
 function converttime($time) {
@@ -29,7 +40,14 @@ function saveString($filename, $questionInput) {
   file_put_contents($filename, $questionInput);
 }
 
-//Get assignment tags if any
+// Get assignment title if defined
+if (isset($_POST['assignment_title'])){
+	$assignment_title = $_POST['assignment_title'];
+} else {
+	$assignment_title = "";
+}
+
+// Get assignment tags if any
 if (isset($_POST['assignment_tag'])) {
 	$assignment_tag = $_POST['assignment_tag'];
 } else {
@@ -44,7 +62,7 @@ if (isset($_POST['starttime']))
 	$assignment_id = $_POST['assignment_id'];
 	
 	$mysqli = new mysqli("localhost", "root", "R0binson", "CSCC01");
-	$sql = "INSERT INTO assignments (assignment_id, start_date, end_date, tag) VALUES ($assignment_id, '$start', '$end', '$assignment_tag')";
+	$sql = "INSERT INTO assignments (assignment_id, start_date, end_date, tag, title) VALUES ($assignment_id, '$start', '$end', '$assignment_tag', '$assignment_title')";
 	$mysqli->query($sql);
 	$mysqli->close();
 }
@@ -67,21 +85,21 @@ if (isset($_POST['questionText']))
 	$file_name = "/question" . (iterator_count($fi) + 1) . ".txt";
 
 	// Append answer to question.
-	$qanda = $_POST['questionText'] . "\n\n\n\n ANSWER: " . $_POST['formula'];
+	$qanda = $_POST['questionText'] . "\n\n\n\n ANSWER: " . $_POST['questionFormula'];
 
 	// Save question to file.
-	saveString($dir . $file_name, $qanda); // saves the string in the textarea into the file
+	$location = $dir . $file_name;
+	saveString($location, $qanda); // saves the string in the textarea into the file
 
 	// Insert question into question table
 	$mysqli = new mysqli("localhost", "root", "R0binson", "CSCC01");
-	$location = $dir . $file_name;
 	$assignment_id = $_POST['assignment_id'];
 	$sql = "INSERT INTO questions (location) VALUES ('$location')";
 	$mysqli->query($sql);
 
 	$sql = "SELECT question_id, location FROM questions WHERE location = '$location'";
-	$row = $mysqli->query($sql)->fetch_row();
-	$new_question_id = $row[0];
+	$row = $mysqli->query($sql)->fetch_assoc();
+	$new_question_id = $row["question_id"];
 
 	$sql = "INSERT INTO in_assignment (assignment_id, question_id) VALUES ($assignment_id, $new_question_id)";
 	$mysqli->query($sql);
@@ -104,6 +122,31 @@ if (isset($_POST['question_id']))
 	
 }
 
+// if a number of random questions was selected, save those questions.
+if (isset($_POST['num_questions']))
+{
+	$mysqli = new mysqli("localhost", "root", "R0binson", "CSCC01");
+	for ($i = 1; $i <= $_POST['num_questions']; $i++) {
+		$sql = "SELECT question_id FROM questions";
+		
+		// Apply filter if any
+		if (isset($_POST['questionTag'])){
+			$filter = $_POST['questionTag'];
+			$sql = $sql . " WHERE tag LIKE '%$filter%'";
+		}
+		
+       	$result = $mysqli->query($sql);
+		for ($j = 1; $j <= rand(1, $result->num_rows); $j++){
+			$row = $result->fetch_assoc();
+		}
+		$question_id = $row["question_id"];
+		$insertsql = "INSERT INTO in_assignment (assignment_id, question_id) 
+				VALUES ($assignment_id, $question_id)";
+		$mysqli->query($insertsql);
+	}
+	$mysqli->close();
+}
+
 // if question was removed, remove that question
 if (isset($_POST['map_id']))
 {
@@ -115,16 +158,13 @@ if (isset($_POST['map_id']))
 	$mysqli->close();
 
 }
-
-
-
-
+// If editing existing assignment, get id and title
 if (isset($_POST['assignment_id'])) {
 	$assignment_id = $_POST['assignment_id'];
 } else {
 	$assignment_id = 1;
 }
-
+$assignment_title = $db->getAssignmentTitle($assignment_id);
 
 ?>
 
@@ -134,7 +174,11 @@ if (isset($_POST['assignment_id'])) {
 <div class="container-fluid">
 
 	<div class="jumbotron">
-		<h1>Edit Assignment <?php echo $assignment_id; ?></h1>
+		<?php if ($assignment_title != ""): ?>
+			<h1>Edit <?= $assignment_title; ?></h1>
+		<?php else: ?>
+			<h1>Edit Assignment <?= $assignment_id; ?></h1>
+		<?php endif ?>
 	</div>
 
 	<?php
@@ -142,17 +186,17 @@ if (isset($_POST['assignment_id'])) {
 		// Grab questions with correct assignment_id.
 		$mysqli = new mysqli("localhost", "root", "R0binson", "CSCC01");
 		$result = $mysqli->query("SELECT in_assignment.question_id, location, map_id FROM in_assignment LEFT JOIN questions ON in_assignment.question_id=questions.question_id WHERE assignment_id = $assignment_id");
-		while ($row = $result->fetch_row()) {
+		while ($row = $result->fetch_assoc()) {
 			echo "<h2>Question $i</h2><br>";
-			$filetxt = file_get_contents($row[1]);
+			$filetxt = file_get_contents($row["location"]);
 			$q = explode("ANSWER:", $filetxt);
 			echo $q[0] . "<br><br>";
 			echo "ANSWER: " . $q[1] . "<br>";
 			$i = $i + 1;
 			?>
 			<form action="EditAssignmentPage.php" method="post">
-				<input type="hidden" name="assignment_id" id="assignment_id" value="<?php echo $assignment_id; ?>"/>
-				<input type="hidden" name="map_id" id="map_id" value="<?php echo $row[2]; ?>"/>
+				<input type="hidden" name="assignment_id" id="assignment_id" value="<?= $assignment_id; ?>"/>
+				<input type="hidden" name="map_id" id="map_id" value="<?= $row["map_id"]; ?>"/>
 				<input type="submit" class="btn btn-default" value="Remove Question">
 			</form>
 			<?php
@@ -163,21 +207,15 @@ if (isset($_POST['assignment_id'])) {
 	?>
 
 	<form action="CreateQuestion.php" method="post">
-		<input type="hidden" name="assignment_id" id="assignment_id" value="<?php echo $assignment_id; ?>"/>
+		<input type="hidden" name="assignment_id" id="assignment_id" value="<?= $assignment_id; ?>"/>
 		<input type="submit" class="btn btn-default" value="Create New Question">
 	</form>
-	<form action="AddRandomQuestions.php" method="post">
-		<input type="hidden" name="assignment_id" id="assignment_id" value="<?php echo $assignment_id; ?>"/>
-		Add <input type="number" min="1" name="num_questions" id = "num_questions" value=1 /> random questions (with tag 
-		<input type="text" name="questionTag" id = "questionTag" />)
-		<input type="submit" class="btn btn-default" value="Add Questions">
-	</form>
 	<form action="SelectQuestionPage.php" method="post">
-		<input type="hidden" name="assignment_id" id="assignment_id" value="<?php echo $assignment_id; ?>"/>
+		<input type="hidden" name="assignment_id" id="assignment_id" value="<?= $assignment_id; ?>"/>
 		<input type="submit" class="btn btn-default" value="Select Question">
 	</form>
 	<form action="ConfirmCreateAssignmentPage.php" method="post">
-		<input type="hidden" name="assignment_id" id="assignment_id" value="<?php echo $assignment_id; ?>"/>
+		<input type="hidden" name="assignment_id" id="assignment_id" value="<?= $assignment_id; ?>"/>
 		<input type="submit" class="btn btn-default" value="Submit Assignment">
 	</form>
 

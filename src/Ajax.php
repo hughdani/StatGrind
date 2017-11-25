@@ -13,7 +13,7 @@ function set_visibility($a_id, $a_vis) {
     if ($mysqli->query($query) === FALSE) {
         echo json_encode(array("FAILED"));
     } else {
-    echo json_encode(array("SUCCESS"));
+        echo json_encode(array("SUCCESS"));
     }
 }
 
@@ -33,9 +33,9 @@ function set_enrolment($c_id, $u_id, $u_enrol, $table) {
         $query = "DELETE FROM $table WHERE user_id=$u_id AND course_id=$c_id";
     }
     if ($mysqli->query($query) === FALSE) {
-        echo json_encode(array($query, $mysqli->error));
+        echo json_encode(array("FAILED"));
     } else {
-        echo json_encode(array("Enrolment Set!"));
+        echo json_encode(array("SUCCESS"));
     }
 }
 
