@@ -38,7 +38,7 @@
                 </div>
                 <div class="feature">
                     <i class="fa fa-check"></i>
-                    <h3>Set Deadlines</h3>
+                    <h3>Automarked</h3>
                     <p>Automatically graded assignments with instant results.</p>
                 </div>
                 <div class="feature">
