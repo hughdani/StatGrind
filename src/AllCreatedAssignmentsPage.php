@@ -10,7 +10,7 @@
 
 <h2>List of Created Assignments</h2>
 <?php
-include_once 'database.php';
+require_once 'Database.php';
 $db = new database();
 $mysqli = $db->getconn();
 
