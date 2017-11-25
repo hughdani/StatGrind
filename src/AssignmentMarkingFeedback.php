@@ -40,7 +40,7 @@ function display_mark_and_feedback($current_time, $student_id){
 ?>
 	<form method='post'>
 		View Mark/Feedback for: 
-		<select name="selectedAssignment" onchange="this.form.submit();">
+		<select name="select_assignment" onchange="this.form.submit();">
 			<option disabled value="" selected hidden>Select Assignment</option>
 			<?php 
 			// Display open assignments.
@@ -48,8 +48,8 @@ function display_mark_and_feedback($current_time, $student_id){
 			$sql = "SELECT assignment_id, start_date FROM assignments";
 			$result = $mysqli->query($sql);
 			while ($row = $result->fetch_row()){
-				if ($current_time > $row["start_date"]) {
-					echo "<option value='".$row["assignment_id"]."''> Assignment". $row["assignment_id"] . "</option>";
+				if ($current_time > $row['start_date']) {
+					echo "<option value='".$row[0]."''> Assignment ". $row[0] . "</option>";
 				}
 			}
 			?>
@@ -63,16 +63,16 @@ function display_mark_and_feedback($current_time, $student_id){
 		$sql = "SELECT result, attempt_id, feedback FROM results WHERE attempt_id = (SELECT MAX(attempt_id) FROM results WHERE student_id = '$student_id' AND assignment_id = $assignment_id)";
 		$result2 = $mysqli->query($sql);
 		$row2 = $result2->fetch_row();
-		$feedback = $row2["feedback"];
-		$attempt_id = $row2["attempt_id"];
-		$mark = $row2["result"];
+		$feedback = $row2[2];
+		$attempt_id = $row2[1];
+		$mark = $row2[0];
 		echo "Mark: " . $mark . "<br>Number of attempts: " . $attempt_id . "<br>";
 		echo "Instructor feedback: " . $feedback . "<br>";	
 ?>	
     	<input type="hidden" name="student_id" id="student_id" value="<?php echo $student_id; ?>"/>
     	<input type="hidden" name="attempt_id" id="attempt_id" value="<?php echo $attempt_id; ?>"/>
-		<input id="newmark" name="newmark" type='text' class='form-control' text="<?php echo $mark; ?>">
-  		<textarea id="feedback" name="feedback" class='form-control' rows='5' text="<?php echo $feedback; ?>"></textarea>
+		<input id="newmark" name="newmark" type='text' class='form-control' value="<?php echo $mark; ?>">
+  		<textarea id="feedback" name="feedback" class='form-control' rows='5'><?php echo $feedback; ?></textarea>
   		<input type="submit" class="btn btn-default" value="Submit Update"/>
     </form>
 <?php
