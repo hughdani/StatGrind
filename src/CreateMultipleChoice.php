@@ -9,10 +9,10 @@
         $(document).ready(function(){
             // construct the question to send         
             $("#submit_question").click(function(){              
-                var question = $("#mc_question").val() + "\n";
+                var question = $("#mc_question").val() + "<br>";
                 var option_counter = 1;
                 $('.option').each(function() {
-                    question += option_counter + ") " + $(this).val() + "\n";
+                    question += option_counter + ") " + $(this).val() + "<br>";
                     option_counter++;
                 })
                 // update post variables to have the correct question and answer
