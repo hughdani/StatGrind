@@ -60,8 +60,8 @@ function display_mark_and_feedback(){
 		<br>
 <?php
 
-	if(isset($_POST['selectedAssignment'])){
-		$assignment_id = $_POST['selectedAssignment'];
+	if(isset($_POST['select_assignment'])){
+		$assignment_id = $_POST['select_assignment'];
 		echo "<h2>".$db->getAssignmentTitle($assignment_id)."</h2><br>";
 		// Select all student attempts for this assignment.
 		$sql = "SELECT results.student_id, results.assignment_id, results.result, results.feedback, results.attempt_id from (SELECT student_id, assignment_id, max(attempt_id) as 'most_recent' FROM `results` group by student_id, assignment_id) T LEFT JOIN results on most_recent = attempt_id where results.assignment_id = $assignment_id";
@@ -90,9 +90,8 @@ function display_mark_and_feedback(){
 	$mysqli->close();
 }
 
-
 display_mark_and_feedback();
-
+?>
 
 </div>
 </body>
