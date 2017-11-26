@@ -18,16 +18,12 @@
                 // update post variables to have the correct question and answer
                 $("#questionText").val(question);
                 $("#questionFormula").val($("#correct_opt").val());
-
-                alert(question);
-                alert($("#questionFormula").val());
             });    
         });
     </script>
-
 </head>
-<body>
 
+<body>
 <!-- Multiple Choice -->
 <div class="jumbotron text-center">
     <p>Multiple Choice Creator</p> 
@@ -39,7 +35,7 @@
             <label for="num_options"> Number of Options:</label>
             <input class="form-control" type="number" id="num_options" name="num_options" min="2" required>
             <br />
-            <input type="submit" class="btn btn-default" name="new_mc" id="new_mc" value="Create Multiple Choice Question"> 
+            <input type="submit" class="btn btn-default" name="new_mc" id="new_mc" value="Create"> 
         </div>
     </form>
 
@@ -66,12 +62,11 @@
                 <label for="correct_opt">Correct Option Number </label>
                 <select class="form-control" id="correct_opt">
 
-                <!-- Set of Correct Options -->
+                <!-- Select from a set of correct options -->
                 <?php for($i = 1; $i <= $num_options; $i++) : ?>
                     <option><?=$i?></option>
                 <?php endfor; ?>         
             
-                <!-- questionFormula set to dummy filler value for it to work with existing PreviewQuestion.php -->
                 <input class='hidden' name=questionText id=questionText value="">
                 <input class='hidden' name=questionFormula id=questionFormula value="">
                 <br />
