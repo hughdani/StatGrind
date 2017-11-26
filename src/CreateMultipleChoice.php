@@ -29,11 +29,11 @@
 <body>
 
 <!-- Multiple Choice -->
-<div class="container-fluid">
-    <div class="jumbotron text-center">
-        <p>Multiple Choice Creator</p> 
-    </div>
-    
+<div class="jumbotron text-center">
+    <p>Multiple Choice Creator</p> 
+</div>
+
+<div class="container-fluid"> 
     <form method="post">
         <div class="form-group">
             <label for="num_options"> Number of Options:</label>
