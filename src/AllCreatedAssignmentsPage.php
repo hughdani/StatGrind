@@ -11,9 +11,10 @@
 <h2>List of Created Assignments</h2>
 <?php
 
-include_once 'Database.php';
-$db = new Database();
+require_once 'Database.php';
+$db = new database();
 $mysqli = $db->getconn();
+
 ?>
 
 <?php foreach ($db->query("SELECT * FROM assignments") as $a) { ?>

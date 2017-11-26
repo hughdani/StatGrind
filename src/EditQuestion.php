@@ -8,8 +8,8 @@
 <form method='post'>
 
 <?php
-include_once 'database.php';
-include_once 'filemanager.php';
+require_once 'Database.php';
+require_once 'Utils.php';
 $db = new database();
 if (isset($_POST['question_id'])):
 	$q_id =  $_POST['question_id'];

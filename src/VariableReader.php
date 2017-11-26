@@ -1,6 +1,6 @@
 <?php
 // Import WolframAlpha API
-include 'dependencies/wa_wrapper/WolframAlphaEngine.php';
+require_once 'dependencies/wa_wrapper/WolframAlphaEngine.php';
 
 /**
  * Parse and generate random variables in question and formula text.

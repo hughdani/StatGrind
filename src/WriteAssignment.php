@@ -71,7 +71,7 @@ if (strpos($question_file, 'ANSWER:') !== false) {
 }
 
 // Insert variable interpetor.
-include 'VariableReader.php';
+require_once 'VariableReader.php';
 $genquestion = varreader($q[0], $q[1]);
 
 // Display generated question
