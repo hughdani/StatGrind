@@ -28,10 +28,6 @@
 </head>
 <body>
 
-<form action="SelectQuestionType.php" method="post">
-    <input type="submit" class="btn btn-default" id="refresh" value="Refresh">
-</form>
-
 <!-- Multiple Choice -->
 <div class="container-fluid">
     <div class="jumbotron text-center">
@@ -45,6 +41,10 @@
             <br />
             <input type="submit" class="btn btn-default" name="new_mc" id="new_mc" value="Create Multiple Choice Question"> 
         </div>
+    </form>
+
+    <form action="SelectQuestionType.php" method="post">
+        <input type="submit" class="btn btn-default" id="cancel" value="Cancel">
     </form>
 
     <?php if(isset($_POST["new_mc"])) : ?>
@@ -77,13 +77,9 @@
                 <br />
                 <input type='submit' class='btn btn-default' id="submit_question" value='Submit'> 
             </div>
-            <h3>Summary</h3>
-            <div>Options: <?=$_POST["num_options"]?> </div>
-        </form>
-    
+        </form>    
     <?php endif; ?>
 </div>
 
 </body>
 </html>
-<!-- need to submit with the correct option, change previewquestion.php to handle this case -->
