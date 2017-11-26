@@ -11,7 +11,7 @@
             $("#submit_question").click(function(){              
                 var question = $("#mc_question").val() + "\n";
                 var option_counter = 1;
-                $('.option').each(function () {
+                $('.option').each(function() {
                     question += option_counter + ") " + $(this).val() + "\n";
                     option_counter++;
                 })

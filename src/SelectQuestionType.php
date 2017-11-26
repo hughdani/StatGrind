@@ -21,6 +21,10 @@
         <form action="CreateMultipleChoice.php" method="post">
             <input type="submit" class="btn btn-default" value="Multiple Choice">
         </form>
+        
+        <form action="AccountLogin.php" method="post">
+            <input type="submit" class="btn btn-default" value="Cancel">
+        </form>
     </div>
 
 </body>
