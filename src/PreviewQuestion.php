@@ -70,7 +70,7 @@
                 //echo $answer . "<br>";
 
                 $qanda = $_POST['questionText'] . "<br> FORMULA: " . $_POST['questionFormula'];
-                echo $qanda;
+
                 // Save question to file.
                 saveString($dir . $file_name, $qanda); // saves the string in the textarea into the file
                 //echo $qanda . "<br>";
