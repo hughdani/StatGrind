@@ -38,8 +38,8 @@ if (isset($_POST['questions']))
 	$results = [];
 	$mysqli = new mysqli("localhost", "root", "R0binson", "CSCC01");
 	$result = $mysqli->query("SELECT in_assignment.question_id, location FROM in_assignment LEFT JOIN questions ON in_assignment.question_id=questions.question_id WHERE assignment_id = $assignment_id");
-	while ($row = $result->fetch_row()) {
-		$questions[] = [$row[0], $row[1]];
+	while ($row = $result->fetch_assoc()) {
+		$questions[] = [$row["question_id"], $row["location"]];
 	}
 	$mysqli->close();
 }

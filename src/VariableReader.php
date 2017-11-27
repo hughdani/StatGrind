@@ -56,6 +56,7 @@ function varreader($question_text, $formula) {
 	$return_array = array();
 	$return_array[] = $return_text;
 	$return_array[] = $formula;
+	$return_array[] = $numbvar;
 	return $return_array;
 }
 

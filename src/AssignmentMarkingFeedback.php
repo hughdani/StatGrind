@@ -58,11 +58,11 @@ function update_mark_and_feedback($new_mark, $new_feedback, $attempt_id){
 			if ($attempts > 0) {
 				$mark = 0;
 				$attempt_id = 0;
-				while ($row2 = $result2->fetch_row()) {
-					if ($row2[1] > $attempt_id) {
-						$mark = $row2[0];
-						$attempt_id = $row2[1];
-						$feedback = $row2[2];
+				while ($row2 = $result2->fetch_assoc()) {
+					if ($row2["attempt_id"] > $attempt_id) {
+						$mark = $row2["result"];
+						$attempt_id = $row2["attempt_id"];
+						$feedback = $row2["feedback"];
 					}
 				}
 			} else {
@@ -94,8 +94,8 @@ function display_mark_and_feedback(){
 			$mysqli = new mysqli("localhost", "root", "R0binson", "CSCC01");
 			$sql = "SELECT assignment_id, start_date FROM assignments";
 			$result = $mysqli->query($sql);
-			while ($row = $result->fetch_row()){
-				echo "<option value='".$row[0]."''> Assignment ". $row[0] . "</option>";
+			while ($row = $result->fetch_assoc()){
+				echo "<option value='".$row["assignment_id"]."''> Assignment ". $row["assignment_id"] . "</option>";
 			}
 			?>
 		</select>

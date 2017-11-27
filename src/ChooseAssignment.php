@@ -39,17 +39,17 @@ if (isset($_POST['search_param'])) {
 
 $assignments = $mysqli->query($sql);
 // Loop through and display each assignment
-while ($row = $assignments->fetch_row()) {
-	$assignment_id = $row[0];
+while ($row = $assignments->fetch_assoc()) {
+	$assignment_id = $row["assignment_id"];
 	$assignment_title = $db->getAssignmentTitle($assignment_id);
-	$end_date = $row[1];
+	$end_date = $row["end_date"];
 	echo "<h2>$assignment_title </h2><br>";
 	// Get previous attempt mark
 	$sql = "SELECT result FROM results WHERE student_id = '$student_id' AND assignment_id = $assignment_id ORDER BY attempt_id DESC";
 	$result = $mysqli->query($sql);
 	$attempts = $result->num_rows;
 	if ($attempts > 0){
-		$mark = $result->fetch_row()[0];
+		$mark = $result->fetch_assoc()["result"];
 	} else {
 		$mark = "N/A";
 	}

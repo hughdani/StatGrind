@@ -68,11 +68,11 @@ if (isset($_POST['search_param'])) {
 
 $result = $mysqli->query($sql);
 // Display open assignments.
-while ($row = $result->fetch_row()) {
-	$start_date = $row[1];
-	$end_date = $row[2];
-	$assignment_title = $db->getAssignmentTitle($row[0]);
-	if ($current_time > $row[1]) {
+while ($row = $result->fetch_assoc()) {
+	$start_date = $row["start_date"];
+	$end_date = $row["end_date"];
+	$assignment_title = $db->getAssignmentTitle($row["assignment_id"]);
+	if ($current_time > $row["start_date"]) {
 		echo "<h2>$assignment_title</h2>";
 		// Select all student attempts for this assignment.
 		$sql = "SELECT result, attempt_id, feedback FROM results WHERE student_id = '$student_id' AND assignment_id = $row[0]";
@@ -82,11 +82,11 @@ while ($row = $result->fetch_row()) {
 		if ($attempts > 0) {
 			$mark = 0;
 			$attempt_id = 0;
-			while ($row2 = $result2->fetch_row()) {
-				if ($row2[1] > $attempt_id) {
-					$mark = $row2[0];
-					$attempt_id = $row2[1];
-					$feedback = $row2[2];
+			while ($row2 = $result2->fetch_assoc()) {
+				if ($row2["attempt_id"] > $attempt_id) {
+					$mark = $row2["result"];
+					$attempt_id = $row2["attempt_id"];
+					$feedback = $row2["feedback"];
 				}
 			}
 		} else {

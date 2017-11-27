@@ -29,8 +29,8 @@ $db = new Database();
 				$mysqli = new mysqli("localhost", "root", "R0binson", "CSCC01");
 				$sql = "SELECT assignment_id FROM assignments";
 				$result = $mysqli->query($sql);
-				while ($row = $result->fetch_row()){
-				echo "<option value='".$row[0]."''> Assignment". $row[0] . "</option>";
+				while ($row = $result->fetch_assoc()){
+				echo "<option value='".$row["assignment_id"]."''> Assignment". $row["assignment_id"] . "</option>";
 				}
 				?>
 			</select>
@@ -47,8 +47,8 @@ $db = new Database();
 					$attempts = $result2->num_rows;
 					$assignment_total = 0;
 					// Sum up the total marks for the current assignment
-					while ($row1 = $result2->fetch_row()){
-						$assignment_total += $row1[0];
+					while ($row1 = $result2->fetch_assoc()){
+						$assignment_total += $row1["result"];
 					}
 
 					// Get the number of students in the db, account_type = 2 is for students
@@ -56,7 +56,7 @@ $db = new Database();
 					$result3 = $mysqli->query($sql);
 					$num_of_students = $result3->num_rows;
 
-					while($row2 = $result3->fetch_row()){
+					while($row2 = $result3->fetch_assoc()){
 						$sql = "SELECT COUNT(student_id) FROM results WHERE student_id IN (SELECT user_id FROM users WHERE account_type = 2) and assignment_id = $selected_id";
 						$result4 = $mysqli->query($sql);
 						$num_of_participate = ($result4->fetch_row())[0];
@@ -77,14 +77,14 @@ $db = new Database();
 							<th>Assignment Number</th>
 							<th>Average Mark</th>
 						</tr>";
-						while ($row = $result->fetch_row()) {		
-							$sql = "SELECT result FROM results WHERE assignment_id = $row[0]";
+						while ($row = $result->fetch_assoc()) {		
+							$sql = "SELECT result FROM results WHERE assignment_id = $row['assignment_id']";
 							$result5 = $mysqli->query($sql);
 							$attempts = $result5->num_rows;
 							$assignment_total = 0;
 							// Sum up the total marks for the current assignment
-							while ($row3 = $result5->fetch_row()){
-								$assignment_total += $row3[0];
+							while ($row3 = $result5->fetch_assoc()){
+								$assignment_total += $row3["result"];
 							}
 							// Get the number of students in the db, account_type = 2 is for students
 							$sql = "SELECT username FROM users WHERE account_type = 2";
