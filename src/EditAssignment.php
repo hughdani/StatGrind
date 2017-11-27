@@ -153,7 +153,7 @@ $assignment_title = $db->getAssignmentTitle($assignment_id);
 			$filetxt = file_get_contents($row["location"]);
 			$q = explode("FORMULA:", $filetxt);
 			echo $q[0] . "<br><br>";
-			echo "ANSWER: " . $q[1] . "<br>";
+			echo "FORMULA: " . $q[1] . "<br>";
 			$i = $i + 1;
 			?>
 			<form action="EditAssignment.php" method="post">
