@@ -1,3 +1,15 @@
+<head>
+<title>U2-create-new-assignment</title>
+<link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet">
+<link href="css/bootstrap-datetimepicker.min.css" rel="stylesheet">
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/transition.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/collapse.js"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+<script src="js/moment.min.js"></script>
+<script src="js/bootstrap-datetimepicker.js"></script>
+<link rel="stylesheet" href="css/main.css" />
+</head>
 <?php
 require_once 'Database.php';
 require_once 'User.php';
@@ -14,7 +26,6 @@ if (!isset($_SESSION['user'])) {
 $user = $_SESSION['user'];
 $user_id = $user->getUserId();
 
-create_head('New Assignment');
 $sql = "SELECT courses.course_id, courses.course_name
     FROM courses 
     INNER JOIN teaching_course ON courses.course_id = teaching_course.course_id
@@ -67,7 +78,7 @@ $courses = $db->query($sql);
          </div>
       </div>
       Course:
-      <select name="select_course">
+      <select name="course_id">
       <option disabled value="" selected hidden>Select Course</option>
 <?php while ($c = $courses->fetch_assoc()): ?>
       <option value=<?=$c['course_id']?>> <?= $c['course_name'] ?> </option>
