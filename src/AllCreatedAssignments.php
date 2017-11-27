@@ -10,7 +10,7 @@ if (!isset($_SESSION['user'])) {
     header("Location: Forbidden.php");
 }
 
-create_head('List of Created Assignments');
+//create_head('List of Created Assignments');
 $db = new database();
 
 $user = $_SESSION['user'];
