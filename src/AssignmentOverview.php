@@ -73,7 +73,7 @@ while ($row = $result->fetch_row()) {
 	$end_date = $row[2];
 	$assignment_title = $db->getAssignmentTitle($row[0]);
 	if ($current_time > $row[1]) {
-		echo "<h2>$assignment_title</h2><br>";
+		echo "<h2>$assignment_title</h2>";
 		// Select all student attempts for this assignment.
 		$sql = "SELECT result, attempt_id, feedback FROM results WHERE student_id = '$student_id' AND assignment_id = $row[0]";
 		$result2 = $mysqli->query($sql);
@@ -95,7 +95,7 @@ while ($row = $result->fetch_row()) {
 		}
 		echo "Available from : " . $start_date . " to " . $end_date . "<br>";
 		echo "Mark: " . $mark . "<br>Number of attempts: " . $attempts . "<br>";
-		echo "Instructor feedback: " . $feedback . "<br>";
+		echo "Instructor feedback: " . $feedback . "<br><br><br><br>";
 	}
 	
 }
