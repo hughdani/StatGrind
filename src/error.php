@@ -66,7 +66,7 @@ switch($error_status)
     if (!isset($_SESSION)) {
         session_start();
     }
-    } elseif (!$db->pagePermission(basename($redirect_to), $_SESSION['user'])) {
+    if (!$db->pagePermission(basename($redirect_to), $_SESSION['user'])) {
         ?>
         <p>Click <a href="<?php echo ($redirect_to); ?>">here</a> to return to the home page</p>
         <?php
