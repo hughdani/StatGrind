@@ -1,9 +1,14 @@
 <?php 
-
 require_once 'Database.php';
-$db = new Database();
-$mysqli = $db->getconn();
+require_once 'User.php';
+require_once 'Utils.php';
 
+if (!isset($_SESSION)) {
+    session_start();
+}
+if (!isset($_SESSION['user'])) {
+    header("Location: Forbidden.php");
+}
 // Determine assignment_id.
 if (isset($_POST['assignment_id']))
 {
@@ -11,6 +16,21 @@ if (isset($_POST['assignment_id']))
 } else {
 	$assignment_id = 1;
 }
+
+create_head('Write Assignment');
+echo "<body>";
+
+$db = new Database();
+$mysqli = $db->getconn();
+$user = $_SESSION['user'];
+$first_name = $user->getFirstName();
+$account_type = $user->getAccountType();
+$header_text = "Write ".$db->getAssignmentTitle($assignment_id);
+
+include("NavigationBar.php");
+create_site_header($header_text);
+
+
 // Determine student_id.
 if (isset($_POST['student_id']))
 {
@@ -22,7 +42,10 @@ if (isset($_POST['student_id']))
 // If this is not the first question.
 if (isset($_POST['questions']))
 {
-	$i = $_POST['index'];
+	$i = $_POST['inde<div class="container-fluid">
+<section class="wrapper style2 special">
+<div class="inner narrow">
+x'];
 	$questions = unserialize($_POST['questions']);
 	$results = unserialize($_POST['results']);
 	// Determine result of last question.
@@ -44,19 +67,10 @@ if (isset($_POST['questions']))
 }
 ?>
 
-<html>
-<head>
-    <title>Write <?= $db->getAssignmentTitle($assignment_id); ?></title>
-    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet">
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
-    <link rel="stylesheet" href="css/main.css" />
-</head>
-<body>
 <div class="container-fluid">
+<section class="wrapper style2 special">
+<div class="inner narrow">
 
-	<div class="jumbotron">
-		<h1>Write <?= $db->getAssignmentTitle($assignment_id); ?></h1>
-	</div>
 
 <?php
 // Display question
@@ -123,13 +137,8 @@ $i = $i + 1;
 ?>
 
 
-
-
-
-
-
-
-
+</div>
+</section>
 </div>
 </body>
 </html>
