@@ -47,8 +47,8 @@ function display_mark_and_feedback(){
 			// Display open assignments.
 			$sql = "SELECT assignment_id, start_date FROM assignments";
 			$result = $db->query($sql);
-			while ($row = $result->fetch_row()){
-				echo "<option value='".$row[0]."''> Assignment ". $row[0] . "</option>";
+			while ($row = $result->fetch_assoc()){
+				echo "<option value='".$row["assignment_id"]."''> Assignment ". $row["assignment_id"] . "</option>";
 			}
 			?>
 		</select>
