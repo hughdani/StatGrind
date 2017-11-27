@@ -1,26 +1,14 @@
-<html>
-<head>
-    <title>Select Assignment</title>
-    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet">
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
-    <link rel="stylesheet" href="css/main.css" />
-</head>
-<body>
-
-<div class="container-fluid">
-
-	<div class="jumbotron">
-		<h1>Available Assignments</h1>
-	</div>
 <?php
-
-include 'Database.php';
+require_once 'Database.php';
+require_once 'User.php';
+require_once 'Utils.php';
 $db = new Database();
+$mysqli = $db->getconn();
 
-// Get user_id
-if (isset($_POST['student_id'])) {
-	$student_id = $_POST['student_id'];
+if (!isset($_SESSION)) {
+    session_start();
 }
+create_head('Choose Assignment');
 ?>
 Find assignment:
 <form action="ChooseAssignment.php" method="post">
@@ -29,14 +17,12 @@ Find assignment:
 </form>
 <?php
 // Select all assignments where the end date hasn't passed
-$mysqli = new mysqli("localhost", "root", "R0binson", "CSCC01");
-$sql = "SELECT assignment_id, end_date FROM assignments WHERE end_date > NOW() AND start_date <= NOW() AND visibility=true";
+$sql = "SELECT assignment_id, end_date FROM assignments WHERE end_date > NOW() AND start_date <= NOW() AND visible=true";
 
 //Apply search params if any
 if (isset($_POST['search_param'])) {
-	$sql = $sql . "AND tag LIKE '%".$_POST['search_param']."%' OR title LIKE '%".$_POST['search_param']."%'";
+	$sql = $sql . " AND tag LIKE '%".$_POST['search_param']."%' OR title LIKE '%".$_POST['search_param']."%'";
 }
-
 $assignments = $mysqli->query($sql);
 // Loop through and display each assignment
 while ($row = $assignments->fetch_assoc()) {
@@ -62,12 +48,8 @@ while ($row = $assignments->fetch_assoc()) {
         echo "</form><br>";
 	
 }
-$mysqli->close();
 
 ?>
-
-
-
 </div>
 </body>
 </html>

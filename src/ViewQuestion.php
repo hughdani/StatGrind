@@ -5,12 +5,14 @@
 </head>
 <body>
 <?php
+    require_once 'Database.php';
+    $db = new Database();
+
 	// get question ID
 	$questionID = $_POST['questionID'];
 	
 	// get filename for question
-	$mysqli = new mysqli("localhost", "root", "R0binson", "CSCC01");
-	$result = $mysqli->query("SELECT * FROM questions WHERE question_id = " . $questionID);
+	$result = $db->query("SELECT * FROM questions WHERE question_id = " . $questionID);
 	
 	// get question text from file
 	$file = fopen($result->location, "r") or die("Unable to open file!");

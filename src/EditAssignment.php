@@ -42,9 +42,9 @@ if (isset($_POST['assignment_tag'])) {
 // Insert new assignment into assignments table and and select the new assignment_id
 if (isset($_POST['starttime']))
 {
-	$start = converttime($_POST['starttime']);
-	$end = converttime($_POST['endtime']);
-	$sql = "INSERT INTO assignments (start_date, end_date, tag, course_id, title) VALUES ('$start', '$end', '$assignment_tag', $course_id, '$assignment_title')";
+	$start = $_POST['starttime'];
+	$end = $_POST['endtime'];
+	$sql = "INSERT INTO assignments (start_date, end_date, tag, course_id, title) VALUES (STR_TO_DATE('$start', '%m/%d/%Y %h:%i %p'), STR_TO_DATE('$end', '%m/%d/%Y %h:%i %p'), '$assignment_tag', $course_id, '$assignment_title')";
 	$mysqli->query($sql);
 	$assignment_id = $mysqli->insert_id;
 }
