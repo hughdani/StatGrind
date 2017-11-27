@@ -18,6 +18,14 @@ $mysqli = $db->getconn();
 
 $user = $_SESSION['user'];
 create_head('Edit Assignment');
+echo "<body>";
+$user = $_SESSION['user'];
+$first_name = $user->getFirstName();
+$account_type = $user->getAccountType();
+$header_text = "Edit Assignment";
+
+include("NavigationBar.php");
+create_site_header($header_text);
 
 // If editing existing assignment, get id and title
 if (isset($_POST['assignment_id'])) {
@@ -140,8 +148,9 @@ $assignment_title = $db->getAssignmentTitle($assignment_id);
 
 
 <body>
-
 <div class="container-fluid">
+<section class="wrapper style2 special">
+<div class="inner narrow">
 
 	<div class="jumbotron">
 		<?php if ($assignment_title != ""): ?>
@@ -187,6 +196,8 @@ $assignment_title = $db->getAssignmentTitle($assignment_id);
 		<input type="submit" class="btn btn-default" value="Submit Assignment">
 	</form>
 
+</div>
+</section>
 </div>
 </body>
 </html>

@@ -28,7 +28,6 @@ $header_text = "Course Management";
 include("NavigationBar.php");
 create_site_header($header_text);
 
-
 // Update records before pulling them if posting back to the same page
 if (isset($_POST['up_course'])) {
     $course_id = $_POST['course_id'];

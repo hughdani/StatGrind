@@ -1,27 +1,33 @@
 <?php
- 	require_once 'Database.php';
-	require_once 'User.php';
-	require_once 'Utils.php';
-	$db = new Database();
+require_once 'Database.php';
+require_once 'User.php';
+require_once 'Utils.php';
 
-	if (!isset($_SESSION)) {
-  		session_start();
-	}
-	if (!isset($_SESSION['user'])) {
-	    header("Location: error.php?error_status=401");
-	    exit();
-	} elseif (!$db->pagePermission(basename(__FILE__), $_SESSION['user'])) {
-	    header("Location: error.php?error_status=403");
-	    exit();
-	}
+if (!isset($_SESSION)) {
+    session_start();
+}
+if (!isset($_SESSION['user'])) {
+    header("Location: error.php?error_status=401");
+    exit();
+} elseif (!$db->pagePermission(basename(__FILE__), $_SESSION['user'])) {
+    header("Location: error.php?error_status=403");
+    exit();
+}
+
+create_head('Edit Question');
+echo "<body>";
+$user = $_SESSION['user'];
+$first_name = $user->getFirstName();
+$account_type = $user->getAccountType();
+$header_text = "Edit Question";
+
+include("NavigationBar.php");
+create_site_header($header_text);
 ?>
-<title>Edit Question</title>
-    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet">
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
-    <link rel="stylesheet" href="css/main.css" />
-</head>
+<div class="container-fluid">
+<section class="wrapper style2 special">
+<div class="inner narrow">
 
-<h1>Edit Question</h1>
 <form method='post'>
 
 <?php
@@ -63,3 +69,6 @@ endif;
 <form method='post' action='AllCreatedQuestions.php'>
 <input type='submit' value='Back'>
 </form>
+</div>
+</section>
+</div>
