@@ -4,7 +4,7 @@ $server_url = "http://thatbitcoinguy.com/L02_01/src/";
 $redirect_url = $_SERVER["REDIRECT_URL"];
 
 $error_status = getenv("REDIRECT_STATUS");
-if(isset($_REQUEST['error_status'])){$error_status=$_REQUEST['error_status'];}
+if(isset($_GET['error_status'])){$error_status=$_GET['error_status'];}
 
 switch($error_status)
 {

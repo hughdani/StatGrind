@@ -1,23 +1,15 @@
 <?php
-	include 'Database.php';
-	include 'User.php';
+	require_once 'Database.php';
 	$db = new Database();
-	if(empty($_SESSION['user']))
-	{
-		$user = new NullUser();
+	if (!isset($_SESSION)) {
+	    session_start();
 	}
-	else
-	{	
-		$user = $_SESSION['user'];
+	if (!isset($_SESSION['user'])) {
+	    header("Location: error.php?error_status=401");
+	} elseif (!$db->pagePermission(basename($_SERVER['PHP_SELF']), $_SESSION['user'])) {
+	    header("Location: error.php?error_status=401");
+	}
 
-	}
-	$current_page_name = basename($_SERVER['PHP_SELF']);
-	if($db->pagePermission($current_page_name, $user) == 0)
-	{
-		header('HTTP/1.1 403 FORBIDDEN', True, 403);
-		header("Location: error.php");
-		exit();
-	}
 ?>
 <html>
 <head>
@@ -34,7 +26,6 @@
 		<h1>Assignment Marking/Feedback</h1>
 	</div>
 <?php
-
 
 /**
  * Update the mark and feedback for the selected student's assignment
@@ -57,7 +48,6 @@ if(isset($_POST['update_result'])){
 
 /**
  * Display the dropdown for selecting assignment and display the mark/feedback of the selected assignment
- *
  */
 function display_mark_and_feedback(){
 ?>

@@ -91,13 +91,3 @@ class Student extends User
         $this->account_type = self::USER_TYPE;
     }
 }
-
-class NullUser extends User
-{
-    const USER_TYPE = -1;
-    public function __construct($user_id=0, $user_name="dummy_id", $first_name="dummy_first", $last_name="dummy_last")
-    {
-        parent::__construct($user_id, $user_name, $first_name, $last_name);
-        $this->account_type = self::USER_TYPE;
-    }
-}
