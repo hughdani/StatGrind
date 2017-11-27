@@ -30,8 +30,6 @@ $sql = "SELECT questions.question_id, questions.location, questions.tag, questio
     INNER JOIN assignments ON in_assignment.assignment_id = assignments.assignment_id
     INNER JOIN teaching_course ON assignments.course_id = teaching_course.course_id
     WHERE teaching_course.user_id = $user_id";
-echo $sql;
-
 if (isset ($_POST['tag'])) {
     $tag = $_POST['tag'];
     $sql = $sql . " AND questions.tag = '$tag'";

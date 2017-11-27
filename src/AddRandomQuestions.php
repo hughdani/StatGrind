@@ -8,7 +8,7 @@
 
 <?php
 
-include 'Database.php';
+require_once 'Database.php';
 $db = new Database();
 
 	$assignment_id = $_POST['assignment_id'];

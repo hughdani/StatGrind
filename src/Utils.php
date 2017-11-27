@@ -63,20 +63,40 @@ function save_question($path, $text, $formula) {
 	return (file_put_contents($path, $contents));
 }
 
-// Convert starttime to sql datetime format
-// 10/25/2017 9:31 PM to 2017-10-25 21:31:00
-function converttime($time) {
-	$part = explode(" ", $time);
-	$date = explode("/", $part[0]);
-	$time = explode(":", $part[1]);
-	if ($part[2] == "PM") {
-		$time[0] = $time[0] + 12;
+function current_time() {
+	// Get current time, convert to 24hr.
+	$current_time = date("Y-m-d h:i:sa");
+	$edit_time = explode(" ", $current_time);
+	$edit_hour = explode(":", $edit_time[1]);
+	if ($edit_hour[2][2] == "p") {
+		$new_hour = $edit_hour[0] + 12;
+		$current_time = $edit_time[0] . " " . $new_hour . ":" . $edit_hour[1] . ":" . $edit_hour[2][0] .  $edit_hour[2][1];
 	} else {
-		if (strlen($time[0]) == 1){
-			$time[0] = "0" . $time[0];
-		}
+		$current_time = $edit_time[0] . " " . $edit_hour[0] . ":" . $edit_hour[1] . ":" . $edit_hour[2][0] .  $edit_hour[2][1];
 	}
-	$newtime = $date[2] . "-" . $date[0] . "-" . $date[1] . " " . $time[0] . ":" . $time[1] . ":00";
-	return $newtime;	
+    return $current_time;
+}
+
+function GetAssignment(){
+    global $db;
+    // get assignment ID
+    $assignment_id = $_POST['assignment_id'];
+    echo "<h3><b>Assignment $assignment_id</b></h3><br>";
+
+    // get filename for question
+    $sql = "SELECT location FROM in_assignment LEFT JOIN questions ON in_assignment.question_id=questions.question_id WHERE in_assignment.assignment_id = " . $assignment_id;
+    $result = $db->query($sql);
+    
+    if(mysqli_num_rows($result) > 0){
+        $qNum = 1;
+        // display each questions from their text file location
+        while($row = mysqli_fetch_assoc($result)){
+            echo "<div> <b>Question</b> $qNum<br>";
+            $file = file_get_contents($row['location']);
+            $question_text = explode("ANSWER:", $file);
+            echo "ANSWER:" . $question_text[1] . "<br><br><div>";
+            $qNum = $qNum + 1;
+        }
+    }
 }
 ?>

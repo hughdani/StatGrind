@@ -14,8 +14,9 @@
 	</div>
 <?php
 
-include 'Database.php';
+require_once 'Database.php';
 $db = new Database();
+$mysqli = $db->getconn();
 
 
 // Get student_id
@@ -30,10 +31,8 @@ if (isset($_POST['student_id'])) {
 if (isset($_POST['result'])) {
 	$result = $_POST['result'];
 	$assignment_id = $_POST['assignment_id'];
-	$mysqli = new mysqli("localhost", "root", "R0binson", "CSCC01");
 	$sql = "INSERT INTO results (student_id, assignment_id, result) VALUES ('$student_id', $assignment_id, $result)";
 	$mysqli->query($sql);
-	$mysqli->close();
 }
 
 // Get current time, convert to 24hr.
@@ -57,7 +56,6 @@ Find assignment:
 
 <?php
 // Select all assignment from assignment table.
-$mysqli = new mysqli("localhost", "root", "R0binson", "CSCC01");
 $sql = "SELECT assignment_id, start_date, end_date FROM assignments";
 
 //Apply search params if any
@@ -99,7 +97,6 @@ while ($row = $result->fetch_row()) {
 	}
 	
 }
-$mysqli->close();
 
 ?>
 

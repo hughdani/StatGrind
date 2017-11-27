@@ -7,8 +7,9 @@
 </head>
 
 <?php
-include 'Database.php';
+require_once 'Database.php';
 $db = new Database();
+$mysqli = $db0->getconn();
 ?>
 
 <body>
@@ -26,9 +27,7 @@ $db = new Database();
 				<option disabled value="" selected hidden>Select Assignment</option>
 				<option value="All Assignments">All Assignments</option>
 				<?php 
-				$mysqli = new mysqli("localhost", "root", "R0binson", "CSCC01");
 				$sql = "SELECT assignment_id FROM assignments";
-				$result = $mysqli->query($sql);
 				while ($row = $result->fetch_row()){
 				echo "<option value='".$row[0]."''> Assignment". $row[0] . "</option>";
 				}
