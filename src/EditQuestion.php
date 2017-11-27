@@ -1,3 +1,20 @@
+<?php
+ 	require_once 'Database.php';
+	require_once 'User.php';
+	require_once 'Utils.php';
+	$db = new Database();
+
+	if (!isset($_SESSION)) {
+  		session_start();
+	}
+	if (!isset($_SESSION['user'])) {
+	    header("Location: error.php?error_status=401");
+	    exit();
+	} elseif (!$db->pagePermission(basename(__FILE__), $_SESSION['user'])) {
+	    header("Location: error.php?error_status=403");
+	    exit();
+	}
+?>
 <title>Edit Question</title>
     <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet">
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
@@ -8,9 +25,6 @@
 <form method='post'>
 
 <?php
-require_once 'Database.php';
-require_once 'Utils.php';
-$db = new database();
 if (isset($_POST['question_id'])):
 	$q_id =  $_POST['question_id'];
 	$q = $db->query("SELECT * FROM questions WHERE question_id=$q_id");

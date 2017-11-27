@@ -1,3 +1,20 @@
+<?php
+  require_once 'Database.php';
+  require_once 'User.php';
+  require_once 'Utils.php';
+  $db = new Database();
+
+  if (!isset($_SESSION)) {
+      session_start();
+  }
+  if (!isset($_SESSION['user'])) {
+      header("Location: error.php?error_status=401");
+      exit();
+  } elseif (!$db->pagePermission(basename(__FILE__), $_SESSION['user'])) {
+      header("Location: error.php?error_status=403");
+      exit();
+  }
+?>
 <head>
 <title>Create New Assignment</title>
 <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet">
@@ -11,18 +28,6 @@
 <link rel="stylesheet" href="css/main.css" />
 </head>
 <?php
-require_once 'Database.php';
-require_once 'User.php';
-require_once 'Utils.php';
-$db = new Database();
-
-if (!isset($_SESSION)) {
-    session_start();
-}
-if (!isset($_SESSION['user'])) {
-    header("Location: Forbidden.php");
-}
-
 $user = $_SESSION['user'];
 $user_id = $user->getUserId();
 
