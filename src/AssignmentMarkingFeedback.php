@@ -1,10 +1,5 @@
 <?php
-	require_once 'Database.php';
-	require_once 'User.php';
-	require_once 'Utils.php';
-	$db = new Database();
-
-	check_user_permission(basename(__FILE__));
+include(permission.php);
 ?>
 <html>
 <head>

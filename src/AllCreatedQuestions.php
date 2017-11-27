@@ -12,7 +12,7 @@ if (!isset($_SESSION['user'])) {
 } elseif (!$db->pagePermission(basename(__FILE__), $_SESSION['user'])) {
     header("Location: error.php?error_status=403");
 }*/
-check_user_permission(basename(__FILE__));
+include(permissions.php);
 
 create_head('All Created Questions');
 ?>

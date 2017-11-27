@@ -9,7 +9,7 @@ require_once 'Utils.php';
 if (!isset($_SESSION['user'])) {
     header("Location: error.php");
 }*/
-check_user_permission(basename(__FILE__));
+include(permissions.php);
 
 create_head('Home');
 
