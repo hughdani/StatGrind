@@ -1,30 +1,27 @@
-<html>
-<head>
-  <title>Create New Account</title>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
-  <link rel="stylesheet" href="css/main.css" />
-</head>
 <?php
+require_once 'Database.php';
+require_once 'User.php';
+require_once 'Utils.php';
+$db = new Database();
+$mysqli = $db->getconn();
 
-function available($user_name)
-	{
-	$mysqli = new mysqli("localhost", "root", "R0binson", "CSCC01");
-	$sql = "SELECT username FROM users WHERE username = '$user_name'";
-	$num_rows = $mysqli->query($sql)->num_rows;
-	$mysqli->close();
-	return ($num_rows == 0);
-	}
+if (!isset($_SESSION)) {
+    session_start();
+}
 
-function register($username, $password, $first_name, $last_name, $account_type)
-	{
-	$mysqli = new mysqli("localhost", "root", "R0binson", "CSCC01");
-	$sql = "INSERT INTO users (username, password, first_name, last_name, account_type) VALUES ('$username', '$password', '$first_name', '$last_name', $account_type)";
-	$mysqli->query($sql);
-	$mysqli->close();
-	return;
-	}
+create_head('Create Account');
+
+function available($user_name) {
+    global $mysqli;
+    $sql = "SELECT username FROM users WHERE username = '$user_name'";
+    $num_rows = $mysqli->query($sql)->num_rows;
+    return ($num_rows == 0);
+}
+function register($username, $password, $first_name, $last_name, $account_type) {
+    global $mysqli;
+    $sql = "INSERT INTO users (username, password, first_name, last_name, account_type) VALUES ('$username', '$password', '$first_name', '$last_name', $account_type)";
+    $mysqli->query($sql);
+}
 
 $err_msg = "";
 $err_clr = "red";

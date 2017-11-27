@@ -36,8 +36,10 @@ $courses = $db->query($sql);
    <div class="jumbotron">
       <h1>Create Assignment</h1>
    </div>
-   <h2>Start Time</h2>
    <form action="EditAssignment.php" method="post">
+		<h2>Assignment Title:</h2>
+		<input type="text" name="assignment_title" id="assignment_title" placeholder="Assignment Title">
+       <h2>Start Time</h2>
       <div class="container">
          <div class="row">
             <div class='col-sm-6'>

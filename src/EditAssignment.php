@@ -42,9 +42,9 @@ if (isset($_POST['assignment_tag'])) {
 // Insert new assignment into assignments table and and select the new assignment_id
 if (isset($_POST['starttime']))
 {
-	$start = converttime($_POST['starttime']);
-	$end = converttime($_POST['endtime']);
-	$sql = "INSERT INTO assignments (start_date, end_date, tag, course_id, title) VALUES ('$start', '$end', '$assignment_tag', $course_id, '$assignment_title')";
+	$start = $_POST['starttime'];
+	$end = $_POST['endtime'];
+	$sql = "INSERT INTO assignments (start_date, end_date, tag, course_id, title) VALUES (STR_TO_DATE('$start', '%m/%d/%Y %h:%i %p'), STR_TO_DATE('$end', '%m/%d/%Y %h:%i %p'), '$assignment_tag', $course_id, '$assignment_title')";
 	$mysqli->query($sql);
 	$assignment_id = $mysqli->insert_id;
 }
@@ -67,7 +67,7 @@ if (isset($_POST['question_text']))
 	$file_name = "/question" . (iterator_count($fi) + 1) . ".txt";
 
 	// Append answer to question.
-	$qanda = $_POST['question_text'] . "\n\n\n\n ANSWER: " . $_POST['question_formula'];
+	$qanda = $_POST['question_text'] . "<br> FORMULA: " . $_POST['question_formula'];
 
 	// Save question to file.
 	$location = $dir . $file_name;
@@ -151,7 +151,7 @@ $assignment_title = $db->getAssignmentTitle($assignment_id);
 		while ($row = $result->fetch_assoc()) {
 			echo "<h2>Question $i</h2><br>";
 			$filetxt = file_get_contents($row["location"]);
-			$q = explode("ANSWER:", $filetxt);
+			$q = explode("FORMULA:", $filetxt);
 			echo $q[0] . "<br><br>";
 			echo "ANSWER: " . $q[1] . "<br>";
 			$i = $i + 1;
