@@ -57,12 +57,6 @@ switch($error_status)
 <h1>Seems like something went wrong.</h1>
 <p>The URL you requested was not found. <?PHP echo($explanation); ?></p>
 
-<?php if(isset($_SESSION['user'])){
-	$user = $_SESSION['user'];
-	if($user->getAccountType() != -1) { ?>
-		<p><strong>Click <a href="<?php echo ($redirect_to); ?>">here</a> to return to the home page</strong> </p>
-<?php }
-} ?>
 <p>Click <a href="<?php echo ($server_url); ?>">here</a> to return to the login page</p>
 
 <hr />
