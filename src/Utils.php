@@ -93,8 +93,8 @@ function GetAssignment(){
         while($row = mysqli_fetch_assoc($result)){
             echo "<div> <b>Question</b> $qNum<br>";
             $file = file_get_contents($row['location']);
-            $question_text = explode("ANSWER:", $file);
-            echo "ANSWER:" . $question_text[1] . "<br><br><div>";
+            $question_text = explode("FORMULA:", $file);
+            echo "FORMULA:" . $question_text[1] . "<br><br><div>";
             $qNum = $qNum + 1;
         }
     }
