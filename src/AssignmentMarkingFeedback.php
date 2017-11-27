@@ -1,13 +1,18 @@
 <?php
 	require_once 'Database.php';
 	$db = new Database();
+
 	if (!isset($_SESSION)) {
-	    session_start();
+  		session_start();
 	}
 	if (!isset($_SESSION['user'])) {
+	    header("HTTP/1.1 401 Unauthorized");
 	    header("Location: error.php?error_status=401");
-	} elseif (!$db->pagePermission(basename($_SERVER['PHP_SELF']), $_SESSION['user'])) {
+	    exit();
+	} elseif (!$db->pagePermission(basename(__FILE__), $_SESSION['user'])) {
+	    header("HTTP/1.1 401 Unauthorized");
 	    header("Location: error.php?error_status=401");
+	    exit();
 	}
 
 ?>
