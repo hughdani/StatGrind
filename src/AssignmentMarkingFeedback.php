@@ -1,3 +1,24 @@
+<?php
+	include 'Database.php';
+	include 'User.php';
+	$db = new Database();
+	if(empty($_SESSION['user']))
+	{
+		$user = new NullUser();
+	}
+	else
+	{	
+		$user = $_SESSION['user'];
+
+	}
+	$current_page_name = basename($_SERVER['PHP_SELF']);
+	if($db->pagePermission($current_page_name, $user) == 0)
+	{
+		header('HTTP/1.1 403 FORBIDDEN', True, 403);
+		header("Location: error.php");
+		exit();
+	}
+?>
 <html>
 <head>
     <title>Assignment Marking Feedback</title>
@@ -14,8 +35,6 @@
 	</div>
 <?php
 
-	include 'Database.php';
-	$db = new Database();
 
 /**
  * Update the mark and feedback for the selected student's assignment
@@ -31,7 +50,7 @@ function update_mark_and_feedback($new_mark, $new_feedback, $attempt_id){
 	$mysqli->close();
 }
 
-if(isset($_POST['attempt_id'])){
+if(isset($_POST['update_result'])){
 	update_mark_and_feedback($_POST['newmark'], $_POST['feedback'],$_POST['attempt_id']);
 }
 
@@ -67,7 +86,7 @@ function display_mark_and_feedback(){
 		$sql = "SELECT results.student_id, results.assignment_id, results.result, results.feedback, results.attempt_id from (SELECT student_id, assignment_id, max(attempt_id) as 'most_recent' FROM `results` group by student_id, assignment_id) T LEFT JOIN results on most_recent = attempt_id where results.assignment_id = $assignment_id";
 		$result = $mysqli->query($sql);
 		while($row = $result->fetch_assoc()){ ?>
-	<form id="update_result" method='post'>
+		<form id="update_result" method='post'>
 			<?php
 			$student_id = $row['student_id'];
 			$feedback = $row['feedback'];
