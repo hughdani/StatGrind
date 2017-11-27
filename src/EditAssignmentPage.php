@@ -206,7 +206,7 @@ $assignment_title = $db->getAssignmentTitle($assignment_id);
 		echo "<h2>Question $i</h2>";
 	?>
 
-	<form action="CreateQuestion.php" method="post">
+	<form action="SelectQuestionType.php" method="post">
 		<input type="hidden" name="assignment_id" id="assignment_id" value="<?= $assignment_id; ?>"/>
 		<input type="submit" class="btn btn-default" value="Create New Question">
 	</form>

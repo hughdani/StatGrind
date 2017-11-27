@@ -10,7 +10,7 @@
     <!-- Banner -->
     <section id="banner">
         <h2>Welcome to <strong>StatGrind</strong></h2>
-        <p>Brought to you by The Code Monekeys</p>
+        <p>Brought to you by The Code Monkeys</p>
         <ul class="actions">
             <li>
                 <a class="button special" href="AccountLogin.php">Log In</a>
@@ -38,7 +38,7 @@
                 </div>
                 <div class="feature">
                     <i class="fa fa-check"></i>
-                    <h3>Set Deadlines</h3>
+                    <h3>Automarked</h3>
                     <p>Automatically graded assignments with instant results.</p>
                 </div>
                 <div class="feature">

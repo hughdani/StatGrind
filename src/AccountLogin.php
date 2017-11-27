@@ -96,7 +96,7 @@ if (isset($_POST["login_attempt"])) {
 } ?>/>
       <input type="submit" value ="Create a New Assignment">
     </form>
-    <form action="CreateQuestion.php" method="post" <?php if (isset($userid)) {
+    <form action="SelectQuestionType.php" method="post" <?php if (isset($userid)) {
     echo visibility_tag($userid, "course_management_perm");
 } ?>>
       <input type="hidden" name="user_id" id="user_id" <?php if (isset($userid)) {
