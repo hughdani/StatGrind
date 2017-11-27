@@ -12,7 +12,7 @@ $user_id = $_SESSION['user_id'];
 
 $user_id = 128; //TMP
 
-include 'Database.php';
+require_once 'Database.php';
 $db = new Database();
 
 // Get user's rank and total score

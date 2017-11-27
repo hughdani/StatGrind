@@ -17,41 +17,6 @@
     <!-- Question Variables -->
     <div class="form-row">
       <h4>Add Random Variable</h4>
-      <!-- <div class="form-row">
-        <ul class="list-group" id="varList">
-          <li class="list-group-item"> 
-          </li>
-        </ul>
-      </div>
-      <div class="col-xs-4">
-        <div class="dropdown">
-          <button class="btn btn-default dropdown-toggle" type="button" id="ddlVarTyoe" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
-          Type
-          <span class="caret"></span>
-          </button>
-          <ul class="dropdown-menu" aria-labelledby="dropdownMenu1">
-            <li><a>Type</a></li>
-            <li role="separator" class="divider"></li>
-            <li><a id="selRealVal">Value</a></li>
-            <li><a id="selIntVal">Matrix</a></li>
-          </ul>
-        </div>
-      </div>
-      <div class="col-xs-1">
-        <div class="dropdown">
-          <button class="btn btn-default dropdown-toggle" type="button" id="ddlVarType" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
-          Domain
-          <span class="caret"></span>
-          </button>
-          <ul id="dommenu" class="dropdown-menu" aria-labelledby="dropdownMenu1">
-            <li><a>Domain</a></li>
-            <li role="separator" class="divider"></li>
-            <li><a>Integer</a></li>
-            <li><a>Real</a></li>
-            <li><a>Complex</a></li>
-          </ul>
-        </div>
-      </div> -->
 	  <div class="col-xs-2">
 	  <label for="sel1">Domain:</label>
 		<select class="form-control" id="sel1">
@@ -60,12 +25,6 @@
 		</select>
 	  </div>
       <div class="col-xs-4">
-        <!-- <div class="form-row">
-          <div class="checkbox">
-          <label><input type="checkbox" value="">Randomize Between:</label>
-          </div>
-        </div> 
-        <div class="form-row"> -->
           <div class="col-xs-6">
 		  <label for="lowBound">Min:</label>
 		  <input class="form-control" id="lowBound" name="lowBound" type="text" value="">
@@ -74,7 +33,6 @@
 		  <label for="upBound">Max:</label>
           <input class="form-control" id="upBound" name="upBound" type="text" value="">
           </div>
-        <!-- </div> -->
       </div>
 	  <br>
       <div class="form-row">

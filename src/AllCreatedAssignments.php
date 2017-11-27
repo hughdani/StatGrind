@@ -28,7 +28,7 @@ $assignments = $db->query($sql);
             <br> start date: <?= $a['start_date']; ?>
             <br> end date: <?= $a['end_date']; ?>
             <br> <label class='form-check-label'>
-        <input name='vis-$a_id' type='checkbox' value=$a_id class='chk-vis form-check-input' <?= ($a['visible']) ? 'checked' : '' ?> >
+        <input name='vis-$a_id' type='checkbox' value=<?= $a['assignment_id'] ?> class='chk-vis form-check-input' <?= ($a['visible']) ? 'checked' : '' ?> >
             Visible
             </label><br>
         </form>
