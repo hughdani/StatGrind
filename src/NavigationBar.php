@@ -12,7 +12,7 @@
       <a class="navbar-brand" href="AccountLogin.php"><span class="glyphicon glyphicon-home"></span> StatGrind</a>
     </div>
     <ul class="nav navbar-nav">
-      <li><a href="NewAssignmentPage.php"><span class="glyphicon glyphicon-plus"></span> New Assignment</a></li>
+      <li><a href="NewAssignment.php"><span class="glyphicon glyphicon-plus"></span> New Assignment</a></li>
       <li><a href="CreateQuestion.php"><span class="glyphicon glyphicon-plus"></span> New Question</a></li>
       <li><a href="AssignmentMarkingFeedback.php"><span class="glyphicon glyphicon-check"></span> Marking & Feedback</a></li>
       <li><a href="EditCourses.php"><span class="glyphicon glyphicon-cog"></span> Manage Course</a></li>

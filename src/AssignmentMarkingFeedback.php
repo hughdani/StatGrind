@@ -46,8 +46,9 @@ function update_mark_and_feedback($new_mark, $new_feedback, $attempt_id){
 	$mysqli->close();
 }
 
-if(isset($_POST['update_result'])){
-	update_mark_and_feedback($_POST['newmark'], $_POST['feedback'],$_POST['attempt_id']);
+
+if(isset($_POST['attempt_id'])){
+	update_mark_and_feedback($_POST['new_mark'], $_POST['feedback'],$_POST['attempt_id']);
 }
 
 
@@ -93,7 +94,7 @@ function display_mark_and_feedback(){
     			<input type="hidden" name="attempt_id" id="attempt_id" value="<?php echo $attempt_id; ?>"/>
     			<input type="hidden" name="select_assignment" id="select_assignment" value="<?php echo $assignment_id; ?>"/>
 			Mark:
-			<input id="newmark" name="newmark" type='text' class='form-control' value="<?php echo $mark; ?>">
+			<input id="new_mark" name="new_mark" type='text' class='form-control' value="<?php echo $mark; ?>">
 			Feedback:
   			<textarea id="feedback" name="feedback" type='text' class='form-control' form='update_result' rows='5' ><?php echo $feedback; ?></textarea>
   			<input type="submit" class="btn btn-default" value="Submit Update"/>

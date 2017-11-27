@@ -1,43 +1,28 @@
-<html>
-<head>
-    <title>edit assignment</title>
-    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet">
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
-    <link rel="stylesheet" href="css/main.css" />
-</head>
-
-<?php 
-
-include 'Database.php';
+<?php
+require_once 'Database.php';
+require_once 'User.php';
+require_once 'Utils.php';
 $db = new Database();
+$mysqli = $db->getconn();
 
-// Set $assignment_id
+if (!isset($_SESSION)) {
+    session_start();
+}
+
+$user = $_SESSION['user'];
+create_head('Edit Assignment');
+
+// If editing existing assignment, get id and title
 if (isset($_POST['assignment_id'])) {
 	$assignment_id = $_POST['assignment_id'];
 } else {
 	$assignment_id = 1;
 }
 
-// Convert starttime to sql datetime format
-// 10/25/2017 9:31 PM to 2017-10-25 21:31:00
-function converttime($time) {
-	$part = explode(" ", $time);
-	$date = explode("/", $part[0]);
-	$time = explode(":", $part[1]);
-	if ($part[2] == "PM") {
-		$time[0] = $time[0] + 12;
-	} else {
-		if (strlen($time[0]) == 1){
-			$time[0] = "0" . $time[0];
-		}
-	}
-	$newtime = $date[2] . "-" . $date[0] . "-" . $date[1] . " " . $time[0] . ":" . $time[1] . ":00";
-	return $newtime;	
-}
-
-// function that takes in a string and store into a file
-function saveString($filename, $questionInput) {
-  file_put_contents($filename, $questionInput);
+if (isset($_POST['course_id'])) {
+    $course_id = $_POST['course_id'];
+} else {
+    $course_id = 1;
 }
 
 // Get assignment title if defined
@@ -54,21 +39,18 @@ if (isset($_POST['assignment_tag'])) {
 	$assignment_tag = "";
 }
 
-// Insert new assignment into assignments table
+// Insert new assignment into assignments table and and select the new assignment_id
 if (isset($_POST['starttime']))
 {
 	$start = converttime($_POST['starttime']);
 	$end = converttime($_POST['endtime']);
-	$assignment_id = $_POST['assignment_id'];
-	
-	$mysqli = new mysqli("localhost", "root", "R0binson", "CSCC01");
-	$sql = "INSERT INTO assignments (assignment_id, start_date, end_date, tag, title) VALUES ($assignment_id, '$start', '$end', '$assignment_tag', '$assignment_title')";
+	$sql = "INSERT INTO assignments (start_date, end_date, tag, course_id, title) VALUES ('$start', '$end', '$assignment_tag', $course_id, '$assignment_title')";
 	$mysqli->query($sql);
-	$mysqli->close();
+	$assignment_id = $mysqli->insert_id;
 }
 
 // Save new question to questions table
-if (isset($_POST['questionText']))
+if (isset($_POST['question_text']))
 {
 
 	$dir = 'questions';
@@ -85,53 +67,43 @@ if (isset($_POST['questionText']))
 	$file_name = "/question" . (iterator_count($fi) + 1) . ".txt";
 
 	// Append answer to question.
-	$qanda = $_POST['questionText'] . "\n\n\n\n ANSWER: " . $_POST['questionFormula'];
+	$qanda = $_POST['question_text'] . "\n\n\n\n ANSWER: " . $_POST['question_formula'];
 
 	// Save question to file.
 	$location = $dir . $file_name;
-	saveString($location, $qanda); // saves the string in the textarea into the file
+	file_put_contents($location, $qanda); // saves the string in the textarea into the file
 
 	// Insert question into question table
-	$mysqli = new mysqli("localhost", "root", "R0binson", "CSCC01");
 	$assignment_id = $_POST['assignment_id'];
 	$sql = "INSERT INTO questions (location) VALUES ('$location')";
 	$mysqli->query($sql);
 
-	$sql = "SELECT question_id, location FROM questions WHERE location = '$location'";
-	$row = $mysqli->query($sql)->fetch_assoc();
-	$new_question_id = $row["question_id"];
+	$new_question_id = $mysqli->insert_id;
 
 	$sql = "INSERT INTO in_assignment (assignment_id, question_id) VALUES ($assignment_id, $new_question_id)";
 	$mysqli->query($sql);
-
-	$mysqli->close();
-	
 }
 
 // if question was selected, save that question
 if (isset($_POST['question_id']))
 {
-	
 	// Insert question into question table
-	$mysqli = new mysqli("localhost", "root", "R0binson", "CSCC01");
 	$question_id = $_POST['question_id'];
 	$assignment_id = $_POST['assignment_id'];
 	$sql = "INSERT INTO in_assignment (assignment_id, question_id) VALUES ($assignment_id, $question_id)";
 	$mysqli->query($sql);
-	$mysqli->close();
 	
 }
 
 // if a number of random questions was selected, save those questions.
 if (isset($_POST['num_questions']))
 {
-	$mysqli = new mysqli("localhost", "root", "R0binson", "CSCC01");
 	for ($i = 1; $i <= $_POST['num_questions']; $i++) {
 		$sql = "SELECT question_id FROM questions";
 		
 		// Apply filter if any
-		if (isset($_POST['questionTag'])){
-			$filter = $_POST['questionTag'];
+		if (isset($_POST['question_tag'])){
+			$filter = $_POST['question_tag'];
 			$sql = $sql . " WHERE tag LIKE '%$filter%'";
 		}
 		
@@ -144,25 +116,16 @@ if (isset($_POST['num_questions']))
 				VALUES ($assignment_id, $question_id)";
 		$mysqli->query($insertsql);
 	}
-	$mysqli->close();
 }
 
 // if question was removed, remove that question
 if (isset($_POST['map_id']))
 {
 	// Insert question into question table
-	$mysqli = new mysqli("localhost", "root", "R0binson", "CSCC01");
 	$map_id = $_POST['map_id'];
 	$sql = "DELETE FROM in_assignment WHERE map_id = $map_id";
 	$mysqli->query($sql);
-	$mysqli->close();
 
-}
-// If editing existing assignment, get id and title
-if (isset($_POST['assignment_id'])) {
-	$assignment_id = $_POST['assignment_id'];
-} else {
-	$assignment_id = 1;
 }
 $assignment_title = $db->getAssignmentTitle($assignment_id);
 
@@ -184,7 +147,6 @@ $assignment_title = $db->getAssignmentTitle($assignment_id);
 	<?php
 		$i = 1;
 		// Grab questions with correct assignment_id.
-		$mysqli = new mysqli("localhost", "root", "R0binson", "CSCC01");
 		$result = $mysqli->query("SELECT in_assignment.question_id, location, map_id FROM in_assignment LEFT JOIN questions ON in_assignment.question_id=questions.question_id WHERE assignment_id = $assignment_id");
 		while ($row = $result->fetch_assoc()) {
 			echo "<h2>Question $i</h2><br>";
@@ -194,14 +156,13 @@ $assignment_title = $db->getAssignmentTitle($assignment_id);
 			echo "ANSWER: " . $q[1] . "<br>";
 			$i = $i + 1;
 			?>
-			<form action="EditAssignmentPage.php" method="post">
-				<input type="hidden" name="assignment_id" id="assignment_id" value="<?= $assignment_id; ?>"/>
+			<form action="EditAssignment.php" method="post">
+				<input type="hidden" name="assignment_id" id="assignment_id" value="<?= $assignment_id ?>"/>
 				<input type="hidden" name="map_id" id="map_id" value="<?= $row["map_id"]; ?>"/>
 				<input type="submit" class="btn btn-default" value="Remove Question">
 			</form>
 			<?php
 		}
-		$mysqli->close();		
 		echo "<br><br>";
 		echo "<h2>Question $i</h2>";
 	?>
@@ -210,11 +171,11 @@ $assignment_title = $db->getAssignmentTitle($assignment_id);
 		<input type="hidden" name="assignment_id" id="assignment_id" value="<?= $assignment_id; ?>"/>
 		<input type="submit" class="btn btn-default" value="Create New Question">
 	</form>
-	<form action="SelectQuestionPage.php" method="post">
+	<form action="SelectQuestion.php" method="post">
 		<input type="hidden" name="assignment_id" id="assignment_id" value="<?= $assignment_id; ?>"/>
 		<input type="submit" class="btn btn-default" value="Select Question">
 	</form>
-	<form action="ConfirmCreateAssignmentPage.php" method="post">
+	<form action="ConfirmCreateAssignment.php" method="post">
 		<input type="hidden" name="assignment_id" id="assignment_id" value="<?= $assignment_id; ?>"/>
 		<input type="submit" class="btn btn-default" value="Submit Assignment">
 	</form>

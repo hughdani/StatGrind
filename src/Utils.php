@@ -12,10 +12,9 @@ function create_head($title)
     echo "</head>";
 }
 
-function create_page_link($page_file, $page_name, $user) {
+function create_page_link($page_file, $page_name) {
     global $db;
-    $vis = !$db->pagePermission($page_file, $user) ? "style='display:none'" : "";
-    echo "<form action='$page_file' method='post' $vis>";
+    echo "<form action='$page_file' method='post'>";
     echo "<input type=submit value='$page_name'>";
     echo "</form>";
 }
@@ -62,5 +61,22 @@ function load_question($path) {
 function save_question($path, $text, $formula) {
         $contents = $text . "<br> FORMULA: " . $formula;
 	return (file_put_contents($path, $contents));
+}
+
+// Convert starttime to sql datetime format
+// 10/25/2017 9:31 PM to 2017-10-25 21:31:00
+function converttime($time) {
+	$part = explode(" ", $time);
+	$date = explode("/", $part[0]);
+	$time = explode(":", $part[1]);
+	if ($part[2] == "PM") {
+		$time[0] = $time[0] + 12;
+	} else {
+		if (strlen($time[0]) == 1){
+			$time[0] = "0" . $time[0];
+		}
+	}
+	$newtime = $date[2] . "-" . $date[0] . "-" . $date[1] . " " . $time[0] . ":" . $time[1] . ":00";
+	return $newtime;	
 }
 ?>

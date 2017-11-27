@@ -22,7 +22,7 @@ $db = new Database();
 	<form method="post">
 		<div>
 			View statistics for: 
-			<select name="selectAssignment" onchange="this.form.submit();">
+			<select name="select_assignment" onchange="this.form.submit();">
 				<option disabled value="" selected hidden>Select Assignment</option>
 				<option value="All Assignments">All Assignments</option>
 				<?php 
@@ -45,10 +45,10 @@ $db = new Database();
 					$sql = "SELECT result FROM results WHERE assignment_id = $selectedId";
 					$result2 = $mysqli->query($sql);
 					$attempts = $result2->num_rows;
-					$assignmentTotal = 0;
+					$assignment_total = 0;
 					// Sum up the total marks for the current assignment
 					while ($row1 = $result2->fetch_row()){
-						$assignmentTotal += $row1[0];
+						$assignment_total += $row1[0];
 					}
 
 					// Get the number of students in the db, account_type = 2 is for students
@@ -57,12 +57,12 @@ $db = new Database();
 					$num_of_students = $result3->num_rows;
 
 					while($row2 = $result3->fetch_row()){
-						$sql = "SELECT COUNT(student_id) FROM results WHERE student_id IN (SELECT user_id FROM users WHERE account_type = 2) and assignment_id = $selectedId";
+						$sql = "SELECT COUNT(student_id) FROM results WHERE student_id IN (SELECT user_id FROM users WHERE account_type = 2) and assignment_id = $selected_id";
 						$result4 = $mysqli->query($sql);
 						$num_of_participate = ($result4->fetch_row())[0];
 					}
 
-					$average = $assignmentTotal / $num_of_students;
+					$average = $assignment_total / $num_of_students;
 					echo "Number of registered students: " . $num_of_students . "<br> Total number of attempts for this assignment: " . $attempts . "<br> Average attempts: " . $attempts/$num_of_students . "<br> Assignment average: " . $average . "<br>" . $num_of_participate . " out of " . $num_of_students . " registered students participated in this assignment <br>";
 					
 
@@ -81,16 +81,16 @@ $db = new Database();
 							$sql = "SELECT result FROM results WHERE assignment_id = $row[0]";
 							$result5 = $mysqli->query($sql);
 							$attempts = $result5->num_rows;
-							$assignmentTotal = 0;
+							$assignment_total = 0;
 							// Sum up the total marks for the current assignment
 							while ($row3 = $result5->fetch_row()){
-								$assignmentTotal += $row3[0];
+								$assignment_total += $row3[0];
 							}
 							// Get the number of students in the db, account_type = 2 is for students
 							$sql = "SELECT username FROM users WHERE account_type = 2";
 							$result3 = $mysqli->query($sql);
 							$num_of_students = $result3->num_rows;
-							$average = $assignmentTotal / $num_of_students;
+							$average = $assignment_total / $num_of_students;
 							// set the new table row
 							echo "<tr>
 									<th>Assignment ". $row[0] . "</th>

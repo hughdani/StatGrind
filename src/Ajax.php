@@ -1,5 +1,6 @@
 <?php
-$mysqli = new mysqli('localhost', 'root', 'R0binson', 'CSCC01');
+require_once 'Database.php';
+$db = new Database();
 
 /**
  * Set the visibility of an assignment
@@ -8,9 +9,9 @@ $mysqli = new mysqli('localhost', 'root', 'R0binson', 'CSCC01');
  * @param $a_vis: the visibility status to set
  */
 function set_visibility($a_id, $a_vis) {
-    global $mysqli;
-    $query = "UPDATE assignments SET visible=$a_vis WHERE assignment_id=$a_id";
-    if ($mysqli->query($query) === FALSE) {
+    global $db;
+    $sql = "UPDATE assignments SET visible=$a_vis WHERE assignment_id=$a_id";
+    if ($db->query($sql) === FALSE) {
         echo json_encode(array("FAILED"));
     } else {
         echo json_encode(array("SUCCESS"));
@@ -26,13 +27,13 @@ function set_visibility($a_id, $a_vis) {
  * @param $table:   the table to put user and course enrolment in
  */
 function set_enrolment($c_id, $u_id, $u_enrol, $table) {
-    global $mysqli;
+    global $db;
     if ($u_enrol) {
-        $query = "INSERT INTO $table (user_id, course_id) VALUES ($u_id, $c_id)";
+        $sql = "INSERT INTO $table (user_id, course_id) VALUES ($u_id, $c_id)";
     } else {
-        $query = "DELETE FROM $table WHERE user_id=$u_id AND course_id=$c_id";
+        $sql = "DELETE FROM $table WHERE user_id=$u_id AND course_id=$c_id";
     }
-    if ($mysqli->query($query) === FALSE) {
+    if ($db->query($sql) === FALSE) {
         echo json_encode(array("FAILED"));
     } else {
         echo json_encode(array("SUCCESS"));
@@ -45,5 +46,4 @@ if (isset($_POST['f_set_enrolment'])) {
 if (isset($_POST['f_set_visibility'])) {
     set_visibility($_POST['a_id'], $_POST['a_vis']);
 }
-$mysqli->close();
 ?>
