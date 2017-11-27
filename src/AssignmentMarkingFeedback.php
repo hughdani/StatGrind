@@ -44,10 +44,12 @@ function update_mark_and_feedback($new_mark, $new_feedback, $attempt_id){
 =======
 	$sql = "SELECT assignment_id, start_date FROM assignments";
 	$result = $mysqli->query($sql);
+	include 'Utils.php';
+	$current_time = converttime(date("Y-m-d h:i:sa"));
 	// Display open assignments.
-	while ($row = $result->fetch_row()) {
-		if ($current_time > $row[1]) {
-			echo "<h2>".$db->getAssignmentTitle($row[0])."</h2><br>";
+	while ($row = $result->fetch_assoc()) {
+		if ($current_time > $row["start_date"]) {
+			echo "<h2>".$db->getAssignmentTitle($row["assignment_id"])."</h2><br>";
 			// Select all student attempts for this assignment.
 			$sql = "SELECT result, attempt_id, feedback FROM results WHERE student_id = '$student_id' AND assignment_id = $row[0]";
 			$result2 = $mysqli->query($sql);

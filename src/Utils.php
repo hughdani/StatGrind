@@ -66,17 +66,14 @@ function save_question($path, $text, $formula) {
 // Convert starttime to sql datetime format
 // 10/25/2017 9:31 PM to 2017-10-25 21:31:00
 function converttime($time) {
-	$part = explode(" ", $time);
-	$date = explode("/", $part[0]);
-	$time = explode(":", $part[1]);
-	if ($part[2] == "PM") {
-		$time[0] = $time[0] + 12;
-	} else {
-		if (strlen($time[0]) == 1){
-			$time[0] = "0" . $time[0];
-		}
-	}
-	$newtime = $date[2] . "-" . $date[0] . "-" . $date[1] . " " . $time[0] . ":" . $time[1] . ":00";
-	return $newtime;	
+$edit_time = explode(" ", $time);
+$edit_hour = explode(":", $edit_time[1]);
+if ($edit_hour[2][2] == "p") {
+	$new_hour = $edit_hour[0] + 12;
+	$current_time = $edit_time[0] . " " . $new_hour . ":" . $edit_hour[1] . ":" . $edit_hour[2][0] .  $edit_hour[2][1];
+} else {
+	$current_time = $edit_time[0] . " " . $edit_hour[0] . ":" . $edit_hour[1] . ":" . $edit_hour[2][0] .  $edit_hour[2][1];
+}
+return $current_time
 }
 ?>

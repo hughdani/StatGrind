@@ -37,15 +37,9 @@ if (isset($_POST['result'])) {
 }
 
 // Get current time, convert to 24hr.
-$current_time = date("Y-m-d h:i:sa");
-$edit_time = explode(" ", $current_time);
-$edit_hour = explode(":", $edit_time[1]);
-if ($edit_hour[2][2] == "p") {
-	$new_hour = $edit_hour[0] + 12;
-	$current_time = $edit_time[0] . " " . $new_hour . ":" . $edit_hour[1] . ":" . $edit_hour[2][0] .  $edit_hour[2][1];
-} else {
-	$current_time = $edit_time[0] . " " . $edit_hour[0] . ":" . $edit_hour[1] . ":" . $edit_hour[2][0] .  $edit_hour[2][1];
-}
+include 'Utils.php';
+$current_time = converttime(date("Y-m-d h:i:sa"));
+
 ?>
 
 Find assignment:
@@ -75,7 +69,7 @@ while ($row = $result->fetch_assoc()) {
 	if ($current_time > $row["start_date"]) {
 		echo "<h2>$assignment_title</h2>";
 		// Select all student attempts for this assignment.
-		$sql = "SELECT result, attempt_id, feedback FROM results WHERE student_id = '$student_id' AND assignment_id = $row[0]";
+		$sql = "SELECT result, attempt_id, feedback FROM results WHERE student_id = '$student_id' AND assignment_id = $row['assignment_id']";
 		$result2 = $mysqli->query($sql);
 		$attempts = $result2->num_rows;
 		// Determine last attempt.
