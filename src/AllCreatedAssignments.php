@@ -1,34 +1,50 @@
-<?php 
-require_once 'Database.php';
-require_once 'User.php';
-require_once 'Utils.php';
+<?php
+    require_once 'Database.php';
+    require_once 'User.php';
+    require_once 'Utils.php';
+    $db = new Database();
 
-if (!isset($_SESSION)) {
-    session_start();
-}
-if (!isset($_SESSION['user'])) {
-    header("Location: Forbidden.php");
-}
+    if (!isset($_SESSION)) {
+        session_start();
+    }
+    if (!isset($_SESSION['user'])) {
+        header("Location: error.php?error_status=401");
+        exit();
+    } elseif (!$db->pagePermission(basename(__FILE__), $_SESSION['user'])) {
+        header("Location: error.php?error_status=403");
+        exit();
+    }
 
 create_head('List of Created Assignments');
-$db = new database();
 
 $user = $_SESSION['user'];
 $user_id = $user->getUserId();
+$first_name = $user->getFirstName();
+$account_type = $user->getAccountType();
+$header_text = "All Created Assignments";
+
+
+include("NavigationBar.php");
+create_site_header($header_text);
 
 $sql = "SELECT assignment_id, start_date, end_date, visible ";
 $sql = $sql . "FROM assignments INNER JOIN teaching_course ON assignments.course_id = teaching_course.course_id ";
 $sql = $sql . "WHERE teaching_course.user_id = $user_id";
 $assignments = $db->query($sql);
 ?>
+
+<div class="container-fluid">
+<section class="wrapper style2 special">
+<div class="inner narrow">
 <?php if ($assignments->num_rows > 0): ?>
     <?php while ($a = $assignments->fetch_assoc()): ?>
         <form method='post' action=''>
         <br> id: <?= $a['assignment_id']; ?>
             <br> start date: <?= $a['start_date']; ?>
             <br> end date: <?= $a['end_date']; ?>
-            <br> <label class='form-check-label'>
-        <input name='vis-$a_id' type='checkbox' value=<?= $a['assignment_id'] ?> class='chk-vis form-check-input' <?= ($a['visible']) ? 'checked' : '' ?> >
+            <br> 
+            <input name='vis-$a_id' id='a-<?= $a['assignment_id'];?>' type='checkbox' value=<?= $a['assignment_id'] ?> class='chk-vis form-check-input' <?= ($a['visible']) ? 'checked' : '' ?> >
+	    <label for='a-<?= $a['assignment_id'];?>'>
             Visible
             </label><br>
         </form>
@@ -41,6 +57,9 @@ $assignments = $db->query($sql);
 create_page_link("NewAssignment.php", "New Assignment");
 create_page_link("Home.php", "Home");
 ?>
+</div>
+</section>
+</div>
 
 <script>
 $(document).ready(function() {

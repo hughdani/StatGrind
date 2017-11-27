@@ -1,18 +1,35 @@
-<html>
-<head>
-  <title>Question Creator</title>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
-  <link rel="stylesheet" href="css/main.css" />
-</head>
-<body>
+<?php
+require_once 'Database.php';
+require_once 'User.php';
+require_once 'Utils.php';
 
-<div class="jumbotron text-center">
-  <p>Question Creator</p> 
-</div>
+if (!isset($_SESSION)) {
+    session_start();
+}
+if (!isset($_SESSION['user'])) {
+    header("Location: error.php?error_status=401");
+    exit();
+} elseif (!$db->pagePermission(basename(__FILE__), $_SESSION['user'])) {
+    header("Location: error.php?error_status=403");
+    exit();
+}
+
+create_head('Question Creator');
+echo "<body>";
+
+$db = new Database();
+$user = $_SESSION['user'];
+$first_name = $user->getFirstName();
+$account_type = $user->getAccountType();
+$header_text = "Question Creator";
+
+include("NavigationBar.php");
+create_site_header($header_text);
+?>
   
-<div class="container">
+<div class="container-fluid">
+<section class="wrapper style2 special">
+<div class="inner narrow">
   <form method="post" action="EditAssignment.php" name="form1">
     <!-- Question Variables -->
     <div class="form-row">
@@ -118,6 +135,8 @@
       <button type="submit" class="btn btn-primary" name="submit" value="submit"> Create </button>
     </div>
   </form>
+</div>
+</section>
 </div>
 
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>

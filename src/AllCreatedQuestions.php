@@ -2,20 +2,35 @@
 require_once 'Database.php';
 require_once 'User.php';
 require_once 'Utils.php';
-$db = new Database();
-$mysqli = $db->getconn();
 
 if (!isset($_SESSION)) {
     session_start();
 }
 if (!isset($_SESSION['user'])) {
-    header("Location: Forbidden.php");
+    header("Location: error.php?error_status=401");
+    exit();
 } elseif (!$db->pagePermission(basename(__FILE__), $_SESSION['user'])) {
-    header("Location: Forbidden.php");
+    header("Location: error.php?error_status=403");
+    exit();
 }
 
 create_head('All Created Questions');
+echo "<body>";
+
+$db = new Database();
+$user = $_SESSION['user'];
+$first_name = $user->getFirstName();
+$account_type = $user->getAccountType();
+$header_text = "All Created Questions";
+
+
+include("NavigationBar.php");
+create_site_header($header_text);
+
 ?>
+<div class="container-fluid">
+<section class="wrapper style2 special">
+<div class="inner narrow">
 <form method='post'>
 <h4> Question Tag </h4>
 <input type='text' name='tag'>
@@ -56,7 +71,9 @@ $questions = $db->query($sql);
 <?php 
 create_page_link("Home.php", "Home");
 ?>
-
+</div>
+</section>
+</div>
 <?php 
 
 // Save new question to questions table

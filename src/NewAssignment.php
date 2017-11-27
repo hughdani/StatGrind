@@ -1,3 +1,38 @@
+<<<<<<< HEAD
+<?php
+require_once 'Database.php';
+require_once 'User.php';
+require_once 'Utils.php';
+
+if (!isset($_SESSION)) {
+    session_start();
+}
+if (!isset($_SESSION['user'])) {
+    header("Location: Forbidden.php");
+}
+
+create_head('New Assignment');
+echo "<body>";
+
+$db = new Database();
+=======
+<?php
+  require_once 'Database.php';
+  require_once 'User.php';
+  require_once 'Utils.php';
+  $db = new Database();
+
+  if (!isset($_SESSION)) {
+      session_start();
+  }
+  if (!isset($_SESSION['user'])) {
+      header("Location: error.php?error_status=401");
+      exit();
+  } elseif (!$db->pagePermission(basename(__FILE__), $_SESSION['user'])) {
+      header("Location: error.php?error_status=403");
+      exit();
+  }
+?>
 <head>
 <title>Create New Assignment</title>
 <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet">
@@ -11,20 +46,15 @@
 <link rel="stylesheet" href="css/main.css" />
 </head>
 <?php
-require_once 'Database.php';
-require_once 'User.php';
-require_once 'Utils.php';
-$db = new Database();
-
-if (!isset($_SESSION)) {
-    session_start();
-}
-if (!isset($_SESSION['user'])) {
-    header("Location: Forbidden.php");
-}
-
+>>>>>>> master
 $user = $_SESSION['user'];
 $user_id = $user->getUserId();
+$first_name = $user->getFirstName();
+$account_type = $user->getAccountType();
+$header_text = "Create New Assignment";
+
+include("NavigationBar.php");
+create_site_header($header_text);
 
 $sql = "SELECT courses.course_id, courses.course_name
     FROM courses 
@@ -32,10 +62,11 @@ $sql = "SELECT courses.course_id, courses.course_name
     WHERE teaching_course.user_id = $user_id";
 $courses = $db->query($sql);
 ?>
+
 <div class="container-fluid">
-   <div class="jumbotron">
-      <h1>Create Assignment</h1>
-   </div>
+<section class="wrapper style2 special">
+<div class="inner narrow">
+
    <form action="EditAssignment.php" method="post">
 		<h2>Assignment Title:</h2>
 		<input type="text" name="assignment_title" id="assignment_title" placeholder="Assignment Title">
@@ -89,6 +120,8 @@ $courses = $db->query($sql);
       Add a tag to assignment: <input type="text" name="assignment_tag" id="assignment_tag" placeholder="Assignment Tag">
       <input type="submit" class="btn btn-default" value="Create Assignment">
    </form>
+</div>
+</section>
 </div>
 </body>
 </html>

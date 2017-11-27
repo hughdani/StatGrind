@@ -1,26 +1,33 @@
-<html>
-<head>
-    <title>Assignment Overview</title>
-    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet">
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
-    <link rel="stylesheet" href="css/main.css" />
-</head>
-<body>
-
-<div class="container-fluid">
-
-	<div class="jumbotron">
-		<h1>Assignment Overview</h1>
-	</div>
 <?php
-
 require_once 'Database.php';
 require_once 'User.php';
-session_start();
-$db = new Database();
+require_once 'Utils.php';
+	$db = new Database();
+
+	if (!isset($_SESSION)) {
+  		session_start();
+	}
+	if (!isset($_SESSION['user'])) {
+	    header("Location: error.php?error_status=401");
+	    exit();
+	} elseif (!$db->pagePermission(basename(__FILE__), $_SESSION['user'])) {
+	    header("Location: error.php?error_status=403");
+	    exit();
+	}
+
+
+create_head('Assignment Overview');
+echo "<body>";
+
 $mysqli = $db->getconn();
 $user = $_SESSION['user'];
 $user_id = $user->getUserId();
+$first_name = $user->getFirstName();
+$account_type = $user->getAccountType();
+$header_text = "Assignment Overview";
+
+include("NavigationBar.php");
+create_site_header($header_text);
 // If comming from ConfirmSubmission page, insert submission into results table
 if (isset($_POST['result'])) {
 	$result = $_POST['result'];
@@ -29,7 +36,9 @@ if (isset($_POST['result'])) {
 	$mysqli->query($sql);
 }
 ?>
-
+<div class="container-fluid">
+<section class="wrapper style2 special">
+<div class="inner narrow">
 Find assignment:
 <form action="AssignmentOverview.php" method="post">
 	<input type="text" name="search_param" id="search_param" placeholder="Search for assignments">
@@ -75,7 +84,9 @@ while ($row = $result->fetch_assoc()) {
 }
 
 ?>
-
+</div>
+</section>
+</div>
 </div>
 </body>
 </html>

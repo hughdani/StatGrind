@@ -7,7 +7,7 @@ if (!isset($_SESSION)) {
     session_start();
 }
 if (!isset($_SESSION['user'])) {
-    header("Location: Forbidden.php");
+    header("Location: error.php?error_status=401");
 }
 
 create_head('Home');

@@ -8,8 +8,28 @@ $mysqli = $db->getconn();
 if (!isset($_SESSION)) {
     session_start();
 }
-create_head('Choose Assignment');
+if (!isset($_SESSION['user'])) {
+    header("Location: error.php?error_status=401");
+    exit();
+} elseif (!$db->pagePermission(basename(__FILE__), $_SESSION['user'])) {
+    header("Location: error.php?error_status=403");
+    exit();
+}
+create_head('Write Assignment');
+echo "<body>";
+
+$user = $_SESSION['user'];
+$first_name = $user->getFirstName();
+$account_type = $user->getAccountType();
+$header_text = "Write Assignment";
+
+include("NavigationBar.php");
+create_site_header($header_text);
+
 ?>
+<div class="container-fluid">
+<section class="wrapper style2 special">
+<div class="inner narrow">
 Find assignment:
 <form action="ChooseAssignment.php" method="post">
 	<input type="text" name="search_param" id="search_param" placeholder="Search for Assignments">
@@ -50,6 +70,9 @@ while ($row = $assignments->fetch_assoc()) {
 }
 
 ?>
+</div>
+</section>
+</div>
 </div>
 </body>
 </html>
