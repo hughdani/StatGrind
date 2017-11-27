@@ -3,6 +3,7 @@ require_once 'Database.php';
 require_once 'User.php';
 require_once 'Utils.php';
 $db = new Database();
+$mysqli = $db->getconn();
 
 if (!isset($_SESSION)) {
     session_start();
@@ -15,13 +16,6 @@ if (isset($_POST['course_id'])) {
     $course_id = $_POST['course_id'];
 } else {
     $course_id = 1;
-}
-
-// Set $assignment_id
-if (isset($_POST['assignment_id'])) {
-	$assignment_id = $_POST['assignment_id'];
-} else {
-	$assignment_id = 1;
 }
 
 //Get assignment tags if any
@@ -38,8 +32,9 @@ if (isset($_POST['starttime']))
 	$end = converttime($_POST['endtime']);
 	$assignment_id = $_POST['assignment_id'];
 	
-	$sql = "INSERT INTO assignments (assignment_id, start_date, end_date, tag, course_id) VALUES ($assignment_id, '$start', '$end', '$assignment_tag', $course_id)";
-	$db->query($sql);
+	$sql = "INSERT INTO assignments (start_date, end_date, tag, course_id) VALUES ('$start', '$end', '$assignment_tag', $course_id)";
+	$mysqli->query($sql);
+	$assignment_id = $mysqli->insert_id;
 }
 
 // Save new question to questions table
@@ -69,14 +64,14 @@ if (isset($_POST['questionText']))
 	// Insert question into question table
 	$assignment_id = $_POST['assignment_id'];
 	$sql = "INSERT INTO questions (location) VALUES ('$location')";
-	$db->query($sql);
+	$mysqli->query($sql);
 
 	$sql = "SELECT question_id, location FROM questions WHERE location = '$location'";
-	$row = $db->query($sql)->fetch_assoc();
+	$row = $mysqli->query($sql)->fetch_assoc();
 	$new_question_id = $row["question_id"];
 
 	$sql = "INSERT INTO in_assignment (assignment_id, question_id) VALUES ($assignment_id, $new_question_id)";
-	$db->query($sql);
+	$mysqli->query($sql);
 }
 
 // if question was selected, save that question
@@ -86,7 +81,7 @@ if (isset($_POST['question_id']))
 	$question_id = $_POST['question_id'];
 	$assignment_id = $_POST['assignment_id'];
 	$sql = "INSERT INTO in_assignment (assignment_id, question_id) VALUES ($assignment_id, $question_id)";
-	$db->query($sql);
+	$mysqli->query($sql);
 	
 }
 
@@ -102,14 +97,14 @@ if (isset($_POST['num_questions']))
 			$sql = $sql . " WHERE tag LIKE '%$filter%'";
 		}
 		
-       	$result = $db->query($sql);
+       	$result = $mysqli->query($sql);
 		for ($j = 1; $j <= rand(1, $result->num_rows); $j++){
 			$row = $result->fetch_assoc();
 		}
 		$question_id = $row["question_id"];
 		$insertsql = "INSERT INTO in_assignment (assignment_id, question_id) 
 				VALUES ($assignment_id, $question_id)";
-		$db->query($insertsql);
+		$mysqli->query($insertsql);
 	}
 }
 
@@ -119,7 +114,7 @@ if (isset($_POST['map_id']))
 	// Insert question into question table
 	$map_id = $_POST['map_id'];
 	$sql = "DELETE FROM in_assignment WHERE map_id = $map_id";
-	$db->query($sql);
+	$mysqli->query($sql);
 
 }
 
@@ -138,7 +133,7 @@ if (isset($_POST['map_id']))
 	<?php
 		$i = 1;
 		// Grab questions with correct assignment_id.
-		$result = $db->query("SELECT in_assignment.question_id, location, map_id FROM in_assignment LEFT JOIN questions ON in_assignment.question_id=questions.question_id WHERE assignment_id = $assignment_id");
+		$result = $mysqli->query("SELECT in_assignment.question_id, location, map_id FROM in_assignment LEFT JOIN questions ON in_assignment.question_id=questions.question_id WHERE assignment_id = $assignment_id");
 		while ($row = $result->fetch_assoc()) {
 			echo "<h2>Question $i</h2><br>";
 			$filetxt = file_get_contents($row["location"]);
