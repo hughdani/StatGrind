@@ -1,5 +1,6 @@
 <?php
 require_once 'Database.php';
+require_once 'User.php';
 $db = new Database();
 function create_head($title)
 {
@@ -78,5 +79,19 @@ function converttime($time) {
 	}
 	$newtime = $date[2] . "-" . $date[0] . "-" . $date[1] . " " . $time[0] . ":" . $time[1] . ":00";
 	return $newtime;	
+}
+
+function check_user_permission($file_name)
+{
+	if (!isset($_SESSION)) {
+  		session_start();
+	}
+	if (!isset($_SESSION['user'])) {
+	    header("Location: error.php?error_status=401");
+	    exit();
+	} elseif (!$db->pagePermission($file_name, $_SESSION['user'])) {
+	    header("Location: error.php?error_status=403");
+	    exit();
+	}
 }
 ?>
