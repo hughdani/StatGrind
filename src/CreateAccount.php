@@ -4,7 +4,6 @@ require_once 'User.php';
 require_once 'Utils.php';
 
 create_head("Create New Account");
-include('NavigationBar.php');
 
 function available($user_name)
 	{
