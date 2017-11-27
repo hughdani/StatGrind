@@ -1,25 +1,32 @@
-<html>
-<head>
-    <title>Assignment Statistics</title>
-    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet">
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
-    <link rel="stylesheet" href="css/main.css" />
-</head>
-
 <?php
 require_once 'Database.php';
+require_once 'User.php';
+require_once 'Utils.php';
+
+if (!isset($_SESSION)) {
+    session_start();
+}
+if (!isset($_SESSION['user'])) {
+    header("Location: Forbidden.php");
+}
+
+create_head('Assignment Statistics');
+echo "<body>";
+
 $db = new Database();
 $mysqli = $db->getconn();
+$user = $_SESSION['user'];
+$first_name = $user->getFirstName();
+$account_type = $user->getAccountType();
+$header_text = "Assignment Statistics";
 
+include("NavigationBar.php");
+create_site_header($header_text);
 ?>
 
-<body>
-
 <div class="container-fluid">
-
-	<div class="jumbotron">
-		<h1>Assignment Statistics</h1>
-	</div>
+<section class="wrapper style2 special">
+<div class="inner narrow">
 
 	<form method="post">
 		<div>
@@ -36,7 +43,6 @@ $mysqli = $db->getconn();
 				?>
 			</select>
 			<br>
-
 			<?php
 			if(isset($_POST['select_assignment'])){
 				$selected_id = $_POST['select_assignment'];
@@ -75,7 +81,10 @@ $mysqli = $db->getconn();
 					// Loop through all assignments
 					echo "<table>
 						<tr>
-							<th>Assignment Number</th>
+							</div>
+</section>
+</div>
+<th>Assignment Number</th>
 							<th>Average Mark</th>
 						</tr>";
 						while ($row = $result->fetch_assoc()) {		
@@ -107,5 +116,8 @@ $mysqli = $db->getconn();
 		</div>
 	</form>
 </div>
+</section>
+</div>
+
 </body>
 </html>
