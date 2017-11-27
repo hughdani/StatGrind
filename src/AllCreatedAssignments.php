@@ -15,12 +15,23 @@ $db = new database();
 
 $user = $_SESSION['user'];
 $user_id = $user->getUserId();
+$first_name = $user->getFirstName();
+$account_type = $user->getAccountType();
+$header_text = "All Created Assignments";
+
+
+include("NavigationBar.php");
+create_site_header($header_text);
 
 $sql = "SELECT assignment_id, start_date, end_date, visible ";
 $sql = $sql . "FROM assignments INNER JOIN teaching_course ON assignments.course_id = teaching_course.course_id ";
 $sql = $sql . "WHERE teaching_course.user_id = $user_id";
 $assignments = $db->query($sql);
 ?>
+
+<div class="container-fluid">
+<section class="wrapper style2 special">
+<div class="inner narrow">
 <?php if ($assignments->num_rows > 0): ?>
     <?php while ($a = $assignments->fetch_assoc()): ?>
         <form method='post' action=''>
@@ -42,6 +53,9 @@ $assignments = $db->query($sql);
 create_page_link("NewAssignment.php", "New Assignment");
 create_page_link("Home.php", "Home");
 ?>
+</div>
+</section>
+</div>
 
 <script>
 $(document).ready(function() {
