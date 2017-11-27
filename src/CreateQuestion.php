@@ -13,7 +13,7 @@
 </div>
   
 <div class="container">
-  <form method="post" action="EditAssignmentPage.php" name="form1">
+  <form method="post" action="EditAssignment.php" name="form1">
     <!-- Question Variables -->
     <div class="form-row">
       <h4>Add Random Variable</h4>
