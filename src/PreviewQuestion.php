@@ -11,7 +11,7 @@
     </div>
 
     <?php
-        include 'dependencies/wa_wrapper/WolframAlphaEngine.php';
+    require_once 'dependencies/wa_wrapper/WolframAlphaEngine.php';
 
         // use wolfram alpha to calculate formula
         function computeFormula($formula) {
@@ -27,13 +27,27 @@
             // select the wanted pod
             $pod = $pod[1];
 
-            // search for the plaintext pod
-            foreach($pod->getSubpods() as $subpod){
-                if($subpod->plaintext){
-                    $plaintext = $subpod->plaintext;
-                    break;
-                }
-            }
+        // search for the plaintext pod
+        foreach($pod->getSubpods() as $subpod){
+            if($subpod->plaintext){
+                  $plaintext = $subpod->plaintext;
+                          break;
+                        }
+        }
+
+        // print the answer
+        return $plaintext;
+    }
+
+    // function that takes in a string and store into a file
+    function saveString($filename, $question_input){ 
+      file_put_contents($filename, $question_input);
+    }
+
+    if (isset($_POST['question_text']) and isset($_POST['question_formula']))
+    {
+        echo "Question: " . $_POST['question_text'] . "<br>";
+        echo "Formula: " . $_POST['question_formula'] . "<br>";
 
             // print the answer
             return $plaintext;

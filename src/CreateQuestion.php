@@ -13,7 +13,7 @@
 </div>
   
 <div class="container">
-  <form method="post" action="EditAssignmentPage.php" name="form1">
+  <form method="post" action="EditAssignment.php" name="form1">
     <!-- Question Variables -->
     <div class="form-row">
       <h4>Add Random Variable</h4>
@@ -130,12 +130,12 @@
 		// Build random variable declaration text.
 		var text = " $" + name + qtype + minv + "," + maxv + ")";
 		// Append variable text to question text.
-		var oldtext = document.forms.form1.questionText.value;
-		document.forms.form1.questionText.value = oldtext + text;
+		var oldtext = document.forms.form1.question_text.value;
+		document.forms.form1.question_text.value = oldtext + text;
 		
 		// Append variable reference to formula text.
-		var oldform = document.forms.form1.questionFormula.value;
-		document.forms.form1.questionFormula.value = oldform + " $" + name;
+		var oldform = document.forms.form1.question_formula.value;
+		document.forms.form1.question_formula.value = oldform + " $" + name;
 		
 		i++;
 	}    
@@ -144,16 +144,16 @@
 	<br><br>
     <!-- Question Text -->
     <div class="form-row">
-      <textarea id="questionText" name="questionText" class="form-control" rows="10" placeholder="Question Text" required></textarea>
+      <textarea id="question_text" name="question_text" class="form-control" rows="10" placeholder="Question Text" required></textarea>
       <input type="hidden" name="assignment_id" id="assignment_id" value="<?php if (isset($_POST['assignment_id'])){ echo $_POST['assignment_id']; } else { echo 1; } ?>" />
     </div>
     <!-- Question Formula -->
     <div class="form-row">
-      <input id="questionFormula" name="questionFormula" type="text" class="form-control" placeholder="Question Formula">
+      <input id="question_formula" name="question_formula" type="text" class="form-control" placeholder="Question Formula">
     </div>
     <!-- Question Tags -->
     <div class="form-row">
-      <input id="questionTags" name="questionTags" type="text" class="form-control" placeholder="Question Tag(s)">
+      <input id="question_tags" name="question_tags" type="text" class="form-control" placeholder="Question Tag(s)">
     </div>
     <div class="form-row">
       <button type="button" class="btn btn-danger" onclick="history.back();"> Back </button>
