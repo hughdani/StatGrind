@@ -83,7 +83,11 @@ echo $newquestionbody . "<br><br>";
 if ($newformula == "") {
 	$right_answer = "";
 } else {
-	$right_answer = computeFormula($newformula);
+	if ($genquestion[2] != 0) { 
+		$right_answer = computeFormula($newformula);
+	} else {
+		$right_answer = $newformula;
+	}
 }
 
 

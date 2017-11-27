@@ -46,9 +46,11 @@ function varreader($question_text, $formula) {
 			$return_text = $return_text . $elm . " ";
 		}
 	}
+	$numbvar = 0;
 	// For each variable in the var_names array, replace any instance of it in the formula with the generated value.
 	foreach ($var_names as $name => $theint) {
 		$formula = str_replace($name, $theint, $formula);
+		$numbvar = $numbvar + 1;
 	}
 	// Build return array, 0 is new question text, 1 is new formula.
 	$return_array = array();
