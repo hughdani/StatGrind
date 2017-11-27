@@ -78,7 +78,7 @@ function display_mark_and_feedback(){
 			Mark:
 			<input id="new_mark" name="new_mark" type='text' class='form-control' value="<?php echo $mark; ?>">
 			Feedback:
-  			<textarea id="feedback" name="feedback" type='text' class='form-control' form='update_result' rows='5' ><?php echo $feedback; ?></textarea>
+  			<textarea id="feedback" name="feedback" type='text' form='update_result' rows='5' ><?php echo $feedback; ?></textarea>
   			<input type="submit" class="btn btn-default" value="Submit Update"/>
     	</form>
 <?php
