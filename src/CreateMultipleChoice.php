@@ -30,13 +30,15 @@
 </div>
 
 <div class="container-fluid"> 
-    <form method="post">
+    <form action="CreateMultipleChoice.php" method="post">
         <div class="form-group">
             <label for="num_options"> Number of Options:</label>
             <input class="form-control" type="number" id="num_options" name="num_options" min="2" required>
             <br />
             <input type="submit" class="btn btn-default" name="new_mc" id="new_mc" value="Create">
-            <input type="hidden" name="assignment_id" id="assignment_id" value="<?= $_POST['assignment_id']; ?>"/>
+            <?php if (isset($_POST['assignment_id'])) : ?>
+                <input class="hidden" name="assignment_id" id="assignment_id" value="<?php $_POST['assignment_id']; ?>">
+            <?php endif; ?>
         </div>
     </form>
 
@@ -47,7 +49,7 @@
     <?php if(isset($_POST["new_mc"])) : ?>
         <?php $num_options = $_POST["num_options"]; ?>
 
-        <form method='post' action="<?php if(isset($_POST['assignment_id'])){ echo 'EditAssignment.php'; } else { echo 'AllCreatedQuestions.php';};?>">        
+        <form method='post' action="<?php if(isset($_POST['assignment_id'])){ echo 'EditAssignment.php'; } else { echo 'AllCreatedQuestions.php';};?>">
             <div class='form-group'>
             <label for="mc_question"> Question:</label>
             <textarea type="submit" class="form-control" rows="5" name="mc_question" id="mc_question" required></textarea>
@@ -73,8 +75,9 @@
 
                 <!-- if making questions on the fly using new assignment -->
                 <?php if (isset($_POST['assignment_id'])) : ?>
-                    <input class="hidden" name="assignment_id" id=assignment_id value="<?php $_POST['assignment_id'] ?>">
+                    <input class="hidden" name="assignment_id" id="assignment_id" value="<?php $_POST['assignment_id']; ?>">
                 <?php endif; ?>
+
 
                 <br />
                 <input type="submit" class="btn btn-default" id="submit_question" value="Submit"> 
