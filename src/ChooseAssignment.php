@@ -2,14 +2,30 @@
 require_once 'Database.php';
 require_once 'User.php';
 require_once 'Utils.php';
-$db = new Database();
-$mysqli = $db->getconn();
 
 if (!isset($_SESSION)) {
     session_start();
 }
-create_head('Choose Assignment');
+if (!isset($_SESSION['user'])) {
+    header("Location: Forbidden.php");
+}
+
+create_head('Home');
+echo "<body>";
+
+$db = new Database();
+$mysqli = $db->getconn();
+$user = $_SESSION['user'];
+$first_name = $user->getFirstName();
+$account_type = $user->getAccountType();
+$header_text = "Welcome back $first_name!";
+
+include("NavigationBar.php");
+create_site_header($header_text);
 ?>
+<div class="container-fluid">
+<section class="wrapper style2 special">
+<div class="inner narrow">
 Find assignment:
 <form action="ChooseAssignment.php" method="post">
 	<input type="text" name="search_param" id="search_param" placeholder="Search for Assignments">
@@ -50,6 +66,9 @@ while ($row = $assignments->fetch_assoc()) {
 }
 
 ?>
+</div>
+</section>
+</div>
 </div>
 </body>
 </html>
