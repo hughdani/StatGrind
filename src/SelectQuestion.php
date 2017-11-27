@@ -16,16 +16,21 @@ if (!isset($_SESSION['user'])) {
 }
 
 create_head('Select Question');
+$user = $_SESSION['user'];
+$first_name = $user->getFirstName();
+$account_type = $user->getAccountType();
+$header_text = "Select Question";
+
+include("NavigationBar.php");
+create_site_header($header_text);
 $assignment_id = $_POST['assignment_id'];
 ?>
 
 <body>
-
 <div class="container-fluid">
+<section class="wrapper style2 special">
+<div class="inner narrow">
 
-    <div class="jumbotron">
-        <h1>Select Question</h1>
-    </div>
 
 	<!--Cancel button to go back to edit assignment page-->
 	<form action="EditAssignment.php" method="post">
@@ -94,6 +99,8 @@ $assignment_id = $_POST['assignment_id'];
 		}
 		?>
 
+</div>
+</section>
 </div>
 </body>
 </html>
