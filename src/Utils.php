@@ -21,7 +21,7 @@ function create_page_link($page_file, $page_name) {
 
 function create_nav_link($page_file, $page_name) {
     global $db;
-    echo "<form action='$page_file' method='post'>";
+    echo "<form action='$page_file' class='navbar-form' method='post'>";
     echo "<input type=submit value='$page_name'>";
     echo "</form>";
 }
