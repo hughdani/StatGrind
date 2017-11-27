@@ -2,20 +2,33 @@
 require_once 'Database.php';
 require_once 'User.php';
 require_once 'Utils.php';
-$db = new Database();
 
 if (!isset($_SESSION)) {
     session_start();
 }
+if (!isset($_SESSION['user'])) {
+    header("Location: Forbidden.php");
+}
 
+create_head('Course Enrolment');
+echo "<body>";
+
+$db = new Database();
 $user = $_SESSION['user'];
 $user_id = $user->getUserId();
+$first_name = $user->getFirstName();
+$account_type = $user->getAccountType();
+$header_text = "Manage Enrolment";
 
-create_head('Manage Enrolment');
+include("NavigationBar.php");
+create_site_header($header_text);
 
 if (isset($_POST['course_id'])) {
     $c_id = ($_POST['course_id']);
     // get all instructors and TAs
+    echo "<div class='container-fluid'>";
+    echo "<section class='wrapper style2 special'>";
+    echo "<div class='inner narrow'>";
     echo "<h2>Instructors</h2>";
     $sql = "SELECT * FROM users
         INNER JOIN account_types ON users.account_type = account_types.account_type
@@ -43,7 +56,9 @@ if (isset($_POST['course_id'])) {
     create_forms($students, 'taking_course');
 }
 create_page_link('EditCourses.php', 'Edit Courses');
-
+echo "</div>";
+echo "</section>";
+echo "</div>";
 /**
  * Creates a series of forms based on given data
  *

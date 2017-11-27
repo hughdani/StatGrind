@@ -10,7 +10,7 @@ if (!isset($_SESSION['user'])) {
     header("Location: Forbidden.php");
 }
 
-create_head('Home');
+create_head('Course Management');
 echo "<body>";
 
 $db = new Database();
@@ -19,7 +19,7 @@ $user = $_SESSION['user'];
 $user_id = $user->getUserId();
 $first_name = $user->getFirstName();
 $account_type = $user->getAccountType();
-$header_text = "Welcome back $first_name!";
+$header_text = "Course Management";
 
 include("NavigationBar.php");
 create_site_header($header_text);
