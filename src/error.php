@@ -1,6 +1,5 @@
 <?php
-$page_redirected_from = $_SERVER['REQUEST_URI'];  // this is especially useful with error 404 to indicate the missing page.
-$server_url = "http://thatbitcoinguy.com/L02_01/src/";
+$page_redirected_from = $_SERVER['REQUEST_URI'];
 $redirect_url = $_SERVER["REDIRECT_URL"];
 
 $error_status = getenv("REDIRECT_STATUS");
@@ -12,35 +11,35 @@ switch($error_status)
 	case 400:
 	$error_code = "400 - Bad Request";
 	$explanation = "The syntax of the URL submitted by your browser could not be understood. Please verify the address and try again.";
-	$redirect_to = "Home.php";
+	$redirect_to = "index.php";
 	break;
 
 	# "401 - Unauthorized"
 	case 401:
 	$error_code = "401 - Unauthorized";
 	$explanation = "This section requires higher permission or is otherwise protected. If you feel you have reached this page in error, please return to the login page and try again, or contact the webmaster if you continue to have problems.";
-	$redirect_to = "Home.php";
+	$redirect_to = "index.php";
 	break;
 
 	# "403 - Forbidden"
 	case 403:
 	$error_code = "403 - Forbidden";
 	$explanation = "This section requires higher permission or is otherwise protected. If you feel you have reached this page in error, please return to the login page and try again, or contact the webmaster if you continue to have problems.";
-	$redirect_to = "Home.php";
+	$redirect_to = "index.php";
 	break;
 
 	# "404 - Not Found"
 	case 404:
 	$error_code = "404 - Not Found";
 	$explanation = "The requested resource '" . $page_redirected_from . "' could not be found on this server. Please verify the address and try again.";
-	$redirect_to = "Home.php";
+	$redirect_to = "index.php";
 	break;
 
 	# "500 - Internal Server Error"
 	case 500:
 	$error_code = "500 - Internal Server Error";
 	$explanation = "The server experienced an unexpected error. Please verify the address and try again.";
-	$redirect_to = "Home.php";
+	$redirect_to = "index.php";
 	break;
 }
 ?>
@@ -57,7 +56,7 @@ switch($error_status)
 <h1>Seems like something went wrong.</h1>
 <p>The URL you requested was not found. <?PHP echo($explanation); ?></p>
 
-<p>Click <a href="<?php echo ($server_url); ?>">here</a> to return to the login page</p>
+<p>Click <a href="<?php echo ($redirect_to); ?>">here</a> to return to the login page</p>
 
 <hr />
 
