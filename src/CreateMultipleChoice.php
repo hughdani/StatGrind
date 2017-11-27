@@ -1,10 +1,28 @@
-<html>
-<head>
-    <title>Create Multiple Choice</title>
-    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet">
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+<?php
+require_once 'Database.php';
+require_once 'User.php';
+require_once 'Utils.php';
 
+if (!isset($_SESSION)) {
+    session_start();
+}
+if (!isset($_SESSION['user'])) {
+    header("Location: Forbidden.php");
+}
+
+create_head('Multiple Choice');
+echo "<body>";
+
+$db = new Database();
+$user = $_SESSION['user'];
+$first_name = $user->getFirstName();
+$account_type = $user->getAccountType();
+$header_text = "Create Multiple Choice Question";
+
+include("NavigationBar.php");</div>
+</section>
+create_site_header($header_text);
+?>
     <script>
         $(document).ready(function(){
             // construct the question to send         
@@ -22,14 +40,9 @@
         });
     </script>
 </head>
-
-<body>
-<!-- Multiple Choice -->
-<div class="jumbotron text-center">
-    <p>Multiple Choice Creator</p> 
-</div>
-
-<div class="container-fluid"> 
+<div class="container-fluid">
+<section class="wrapper style2 special">
+<div class="inner narrow">
     <form method="post">
         <div class="form-group">
             <label for="num_options"> Number of Options:</label>
@@ -87,6 +100,8 @@
             </div>
         </form>    
     <?php endif; ?>
+</div>
+</section>
 </div>
 
 </body>

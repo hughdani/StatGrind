@@ -1,18 +1,31 @@
-<html>
-<head>
-    <title>Select Question Type</title>
-    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet">
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+<?php
+require_once 'Database.php';
+require_once 'User.php';
+require_once 'Utils.php';
 
-</head>
+if (!isset($_SESSION)) {
+    session_start();
+}
+if (!isset($_SESSION['user'])) {
+    header("Location: Forbidden.php");
+}
 
+create_head('Select Question Type');
+echo "<body>";
+
+$db = new Database();
+$user = $_SESSION['user'];
+$first_name = $user->getFirstName();
+$account_type = $user->getAccountType();
+$header_text = "Select Question Type";
+
+include("NavigationBar.php");
+create_site_header($header_text);
+?>
 <body>
-
-    <div class="jumbotron text-center">
-        <p>Select Question Type</p> 
-    </div>
-
+<div class="container-fluid">
+<section class="wrapper style2 special">
+<div class="inner narrow">
     <div class="container-fluid" >
         <form action="CreateQuestion.php" method="post">
             <input type="submit" class="btn btn-default" value="Standard Question">
@@ -37,5 +50,8 @@
         </form>
     </div>
 
+</div>
+</section>
+</div>
 </body>
 </html>
