@@ -22,11 +22,11 @@ function register($username, $password, $first_name, $last_name, $account_type) 
     return;
 }
 $err_msg = "";
-if (isset($_POST["create_Account"])) {
+if (isset($_POST["create_account"])) {
     $username = $_POST["user_name"];
-    $firstname = $_POST["first_name"];
-    $lastname = $_POST["last_name"];
-    $accounttype = $_POST["account_type"];
+    $first_name = $_POST["first_name"];
+    $last_name = $_POST["last_name"];
+    $account_type = $_POST["account_type"];
     $pass1 = $_POST["password1"];
     $pass2 = $_POST["password2"];
     if (!available($username)) {
@@ -35,10 +35,10 @@ if (isset($_POST["create_Account"])) {
     } else if ($pass1 != $pass2) {
         $err_msg = "Passwords do not match";
     } else {
-        register($username, $pass1, $firstname, $lastname, $accounttype);
+        register($username, $pass1, $first_name, $last_name, $account_type);
         $username = "";
-        $firstname = "";
-        $lastname = "";
+        $first_name = "";
+        $last_name = "";
         $err_msg = "Account Created";
     }
 }
@@ -56,18 +56,18 @@ if (isset($_POST["create_Account"])) {
 } ?> required><br>
       Password: <input type="password" name="password1" minlength="4" required><br>
       Confirm Password: <input type="password" name="password2" minlength="4" required><br>
-      First Name: <input type="text" name="first_name" <?php if (isset($firstname)) {
-    echo "value='$firstname'";
+      First Name: <input type="text" name="first_name" <?php if (isset($first_name)) {
+    echo "value='$first_name'";
 } ?> required><br>
-      Last Name: <input type="text" name="last_name" <?php if (isset($lastname)) {
-    echo "value='$lastname'";
+      Last Name: <input type="text" name="last_name" <?php if (isset($last_name)) {
+    echo "value='$last_name'";
 } ?> required><br>
       Account Type: <select name="account_type" required>
  			<option value="2">Student</option>
   			<option value="1">Instructor</option>
   			<option value="3">TA</option>
 		    </select><br>
-      <input type="submit" name="create_Account" value ="Create Account">
+      <input type="submit" name="create_account" value ="Create Account">
       <?php echo "<br> $err_msg"; ?>
   </form>
   <form method="post" action="AccountLogin.php">

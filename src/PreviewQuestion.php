@@ -38,14 +38,14 @@
     }
 
     // function that takes in a string and store into a file
-    function saveString($filename, $questionInput){ 
-      file_put_contents($filename, $questionInput);
+    function saveString($filename, $question_input){ 
+      file_put_contents($filename, $question_input);
     }
 
-    if (isset($_POST['questionText']) and isset($_POST['questionFormula']))
+    if (isset($_POST['question_text']) and isset($_POST['question_formula']))
     {
-        echo "Question: " . $_POST['questionText'] . "<br>";
-        echo "Formula: " . $_POST['questionFormula'] . "<br>";
+        echo "Question: " . $_POST['question_text'] . "<br>";
+        echo "Formula: " . $_POST['question_formula'] . "<br>";
 
     }
 
@@ -64,9 +64,9 @@
         $file_name = "/question" . (iterator_count($fi) + 1) . ".txt";
 
         // Append answer to question.
-        //$answer = computeFormula($_POST['questionFormula']);
+        //$answer = computeFormula($_POST['question_formula']);
         //echo $answer . "<br>";
-        $qanda = $_POST['questionText'] . "<br> FORMULA: " . $_POST['questionFormula'];
+        $qanda = $_POST['question_text'] . "<br> FORMULA: " . $_POST['question_formula'];
         // Save question to file.
         saveString($dir . $file_name, $qanda); // saves the string in the textarea into the file
         echo $qanda . "<br>";
@@ -77,15 +77,15 @@
         $question_id = $result->num_rows + 1;
         
 	// Get tag(s)
-	$questionTags = '';
-	if (isset($_POST['questionTags'])){
-		$questionTags = $_POST['questionTags'];
+	$question_tags = '';
+	if (isset($_POST['question_tags'])){
+		$question_tags = $_POST['question_tags'];
 	}
 
         // Insert question into question table
         $location = $dir . $file_name;
         $assignment_id = $_POST['assignment_id'];
-        $sql = "INSERT INTO questions (question_id, location, tag) VALUES ($question_id, '$location', '$questionTags')";
+        $sql = "INSERT INTO questions (question_id, location, tag) VALUES ($question_id, '$location', '$question_tags')";
         $mysqli->query($sql);
         $mysqli->close();
 

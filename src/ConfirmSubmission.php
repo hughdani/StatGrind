@@ -43,7 +43,7 @@ $final = $final / count($results);
 	<form action="WriteAssignment.php" method="post">
 		<input type="hidden" name="assignment_id" id="assignment_id" value="<?php echo $assignment_id; ?>"/>
 		<input type="hidden" name="student_id" id="student_id" value="<?php echo $student_id; ?>"/>
-		<input type="submit" class="btn btn-default" value="Try Agian">
+		<input type="submit" class="btn btn-default" value="Try Again">
 	</form>
 	
 

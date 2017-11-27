@@ -19,46 +19,46 @@
 
     <form method="post">
         <div class="form-group">
-            <label for="mcQuestion"> Question:</label>
-            <textarea type="submit" class="form-control" rows="5" name="mcQuestion" id="mcQuestion" required value=<?=$mcQuestion;?> ></textarea>
+            <label for="mc_question"> Question:</label>
+            <textarea type="submit" class="form-control" rows="5" name="mc_question" id="mc_question" required value=<?=$mc_question;?> ></textarea>
         </div>  
         <div class="form-group">
-            <label for="numOptions"> Number of Options:</label>
-            <input class="form-control" type="number" id="numOptions" name="numOptions" min="2" required value=<?=$numOptions;?>>
+            <label for="num_options"> Number of Options:</label>
+            <input class="form-control" type="number" id="num_options" name="num_options" min="2" required value=<?=$num_options;?>>
             <input type="submit" class="btn btn-default" name="newMC" id="newMC" value="Create Multiple Choice Question"> 
         </div>   
     </form>
 
     <?php if(isset($_POST["newMC"])) : ?>
-        <?php $numOptions = $_POST["numOptions"]; ?>
+        <?php $num_options = $_POST["num_options"]; ?>
 
         <form action='PreviewQuestion.php' method='post'>
             <div class='form-group'>
                 <h3>Options</h3>
 
-                <?php for($i = 1; $i <= $numOptions; $i++) : ?>
+                <?php for($i = 1; $i <= $num_options; $i++) : ?>
                     <label for=mc<?=$i?>>Option <?=$i?> </label>
                     <input class='form-control' type='text' id=mc<?=$i?> value='' required> 
                     <br>
                 <?php endfor; ?>
 
-                <label for="correctOpt">Correct Option Number </label>
-                <select class="form-control" id="correctOpt">
+                <label for="correct_opt">Correct Option Number </label>
+                <select class="form-control" id="correct_opt">
 
-                <?php for($i = 1; $i <= $numOptions; $i++) : ?>
+                <?php for($i = 1; $i <= $num_options; $i++) : ?>
                     <option><?=$i?></option>
                 <?php endfor; ?>
             </div>
             
-            <!-- questionFormula set to dummy filler value for it to work with existing PreviewQuestion.php -->
-            <input class='hidden' name=questionText id=questionText value=<?=$_POST['mcQuestion']?>>
-            <input class='hidden' name=questionFormula id=questionFormula value='2+2' >
+            <!-- question_formula set to dummy filler value for it to work with existing PreviewQuestion.php -->
+            <input class='hidden' name=question_text id=question_text value=<?=$_POST['mc_question']?>>
+            <input class='hidden' name=question_formula id=question_formula value='2+2' >
             <input type='submit' class='btn' value='Submit'> 
                                
             <h3>Summary</h3>
-            <div>Question: <?=$_POST["mcQuestion"]?> </div>
+            <div>Question: <?=$_POST["mc_question"]?> </div>
             <br>
-            <div>Options: <?=$_POST["numOptions"]?> </div>
+            <div>Options: <?=$_POST["num_options"]?> </div>
         </form>
     
     <?php endif; ?>

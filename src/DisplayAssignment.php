@@ -5,7 +5,7 @@
 </head>
 <body>
 	<form method="POST">
-		Assignment ID: <input type="text" name="AssignmentID"><br>
+		Assignment ID: <input type="text" name="assignment_id"><br>
 		<input type="submit" name="submit" value="Submit">
 	</form>
 	<form action="index.php" method="post">
@@ -19,12 +19,12 @@
 		$dbname = "CSCC01";
 
 		// get assignment ID
-		$assignmentID = $_POST['AssignmentID'];
-		echo "<p>Display Assignment $assignmentID</p><br>";
+		$assignment_id = $_POST['assignment_id'];
+		echo "<p>Display Assignment $assignment_id</p><br>";
 	
 		// get filename for question
 		$conn = new mysqli($servername, $username, $password, $dbname);
-		$sqlquery = "SELECT location FROM in_assignment LEFT JOIN questions ON in_assignment.question_id=questions.question_id WHERE in_assignment.assignment_id = " . $assignmentID;
+		$sqlquery = "SELECT location FROM in_assignment LEFT JOIN questions ON in_assignment.question_id=questions.question_id WHERE in_assignment.assignment_id = " . $assignment_id;
 		$result = mysqli_query($conn, $sqlquery);
 		
 		if(mysqli_num_rows($result) > 0){
@@ -33,9 +33,9 @@
 			while($row = mysqli_fetch_assoc($result)){
 				echo "<p>Question $qNum</p><br>";
 				$file = file_get_contents($row['location']);
-				$questionText = explode("ANSWER:", $file);
-				echo $questionText[0] . "<br><br>";
-				echo "ANSWER:" . $questionText[1];
+				$question_text = explode("ANSWER:", $file);
+				echo $question_text[0] . "<br><br>";
+				echo "ANSWER:" . $question_text[1];
 				$qNum = $qNum + 1;
 			}
 		}

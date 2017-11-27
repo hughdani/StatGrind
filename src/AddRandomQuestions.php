@@ -25,8 +25,8 @@
 			$sql = "SELECT question_id FROM `questions`";
 			
 			// Apply filter if any
-			if (isset($_POST['questionTag'])){
-				$filter = $_POST['questionTag'];
+			if (isset($_POST['question_tag'])){
+				$filter = $_POST['question_tag'];
 				$sql = $sql . " WHERE tag LIKE '%$filter%'";
 			}
 			
