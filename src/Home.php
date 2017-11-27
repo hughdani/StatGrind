@@ -23,7 +23,7 @@ $header_text = "Welcome back $first_name!";
 
 include("NavigationBar.php");
 
-//create_site_header($header_text);
+create_site_header($header_text);
 ?>
 <div class="container-fluid">
 <section class="wrapper style2 special">

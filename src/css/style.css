@@ -33,7 +33,10 @@
 }
 
 /****** Navigation bar ******/
-
+.navbar{
+    border-radius: 0;
+    margin-bottom: 0;
+}
 .navbar-default {
     background-color: #00cdcf;
     border-color: #00cdcf;
@@ -79,7 +82,7 @@
     border-bottom-color: #333;
 }
 .navbar-default .navbar-nav > .open > a .caret,
-.navbar-default .navbar-nav > .open > a:hover .caret,
+.navbar-default .navbar-nav root@thatbitcoinguy.com:/var/www/html/brian_dev/L02_01/src/> .open > a:hover .caret,
 .navbar-default .navbar-nav > .open > a:focus .caret {
     border-top-color: #555;
     border-bottom-color: #555;
