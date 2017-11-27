@@ -1,19 +1,28 @@
-<html>
-<head>
-    <title>Leaderboard</title>
-    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet">
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
-    <link rel="stylesheet" href="css/main.css" />
-</head>
-
 <?php
-session_start();
-$user_id = $_SESSION['user_id'];
-
-$user_id = 128; //TMP
-
 require_once 'Database.php';
+require_once 'User.php';
+require_once 'Utils.php';
+
+if (!isset($_SESSION)) {
+    session_start();
+}
+if (!isset($_SESSION['user'])) {
+    header("Location: Forbidden.php");
+}
+
+create_head('Leaderboard');
+echo "<body>";
+
 $db = new Database();
+$user = $_SESSION['user'];
+$first_name = $user->getFirstName();
+$account_type = $user->getAccountType();
+$header_text = "Rankings";
+
+include("NavigationBar.php");
+create_site_header($header_text);
+
+$user_id = $user->getUserId();
 
 // Get user's rank and total score
 $sql = "SELECT rank, total_score from (SELECT @rnk := @rnk+1 as 'rank', user_id, total_score FROM leaderboard, (SELECT @rnk := 0) T) LB WHERE user_id = $user_id";
@@ -28,9 +37,9 @@ $result = $db->query($sql);
 ?>
 
 
-<body>
-
 <div class="container-fluid">
+<section class="wrapper style2 special">
+<div class="inner narrow">
 
 	<div class="jumbotron">
 		<h1>Leaderboard</h1>
@@ -38,14 +47,11 @@ $result = $db->query($sql);
 
 	<div class="container">
 		<div class="row">
-			<div class="col-md-offset-2 col-md-3">
 				<h3> Your Rank </h3>
 				<h1><?= $user_rank; ?></h1>
-			</div>
-			<div class="col-md-offset-2 col-md-3">
+				
 				<h3> Your Score </h3>
 				<h1><?= $user_score; ?></h1>
-			</div>
 		</div>
 	</div>
 
@@ -66,5 +72,8 @@ $result = $db->query($sql);
 		</table>
 	</div>
 </div>
+</section>
+</div>
+
 </body>
 </html>
