@@ -15,7 +15,7 @@ create_head('Home');
 $db = new Database();
 $user = $_SESSION['user'];
 $account_type = $user->getAccountType();
-$sql = "SEELCT name, filename
+$sql = "SELECT name, filename
     FROM pages
     INNER JOIN permissions ON pages.page_id = permissions.page_id
     WHERE pages.home_item=1 AND permissions.account_type=$account_type";
