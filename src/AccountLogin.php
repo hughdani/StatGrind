@@ -29,17 +29,31 @@ if ($_POST['login']) {
     }
 }
 ?>
-<div class="container">
-  <form method="post" action="AccountLogin.php">
-      Username: <input type="text" name="username" required><br>
-      Password: <input type="password" name="password" required><br>
-      <input type="submit" name="login" value ="Log In">
-</form>
-<?= $_SESSION['error'] ?>
-  <form method="post" action="CreateAccount.php">
-      <input type="submit" value ="Create Account">
-  </form>
+<body>
+
+<section id="site_header">
+  <p>Log In</p> 
+</section>
+
+<?php if (isset($_SESSION['error'])): ?>
+<div class="alert">
+  <span class="closebtn" onclick="this.parentElement.style.display='none';">&times;</span> 
+      <?= $_SESSION['error']; ?>
 </div>
+<?php endif; ?>
+
+<section class="wrapper special">
+    <div class="inner">
+ 	<form method="post" action="AccountLogin.php">
+    	 	<h3>Username:</h3> <input type="text" name="username" required><br>
+      		<h3>Password:</h3> <input type="password" name="password" required><br>
+      		<input type="submit" name="login" value ="Log In">
+	</form>
+	<form method="post" action="CreateAccount.php">
+		<input type="submit" value ="Create Account">
+	</form>
+    </div>
+</section>
 
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>

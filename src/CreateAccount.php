@@ -24,7 +24,7 @@ function register($username, $password, $first_name, $last_name, $account_type)
 	}
 
 $err_msg = "";
-$err_clr = "red";
+$err_clr = "ef6951";
 $username = "";
 $firstname = "";
 $lastname = "";
@@ -54,7 +54,7 @@ if (isset($_POST["create_Account"]))
 		$firstname = "";
 		$lastname = "";
 		$err_msg = "Account Created";
-		$err_clr = "green";
+		$err_clr = "54f296";
 		}
 	}
 
@@ -66,19 +66,15 @@ if (isset($_POST["create_Account"]))
   <p>Create New Account</p> 
 </section>
 
-<?php
-
-if ($err_msg != ""): ?>
-<div class="alert" style="background-color:<?php echo $err_clr
-?>">
+<?php if ($err_msg != ""): ?>
+<div class="alert" style="background-color:<?= "#$err_clr" ?>">
   <span class="closebtn" onclick="this.parentElement.style.display='none';">&times;</span> 
-      <?php echo $err_msg; ?>
+      <?= $err_msg; ?>
 </div>
-<?php
-endif; ?>
+<?php endif; ?>
 
-	<section class="wrapper special">
-		<div class="inner">
+<section class="wrapper special">
+    <div class="inner">
       <form method="post" action="CreateAccount.php">
         <h3>User Name:</h3> <input type="text" name="user_name" minlength="4" value="<?= $username; ?>" required><br>
         <h3>Password:</h3> <input type="password" name="password1" minlength="4" required><br>
@@ -96,8 +92,8 @@ endif; ?>
       <form method="post" action="AccountLogin.php">
         <input type="submit" name="log_in" value ="Log in">
       </form>
-		</div>
-	</section>
+    </div>
+</section>
 
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
