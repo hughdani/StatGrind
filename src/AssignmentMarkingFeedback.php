@@ -13,18 +13,6 @@
 		<h1>Assignment Marking/Feedback</h1>
 	</div>
 <?php
-<<<<<<< HEAD
-=======
-	include 'Database.php';
-	$db = new Database();
-
-	// Get student_id
-	if (isset($_POST['student_id'])) {
-		$student_id = $_POST['student_id'];
-	} else {
-		$student_id = "kozaadam";
-	}
->>>>>>> master
 
 
 /**
@@ -36,45 +24,10 @@
  */
 function update_mark_and_feedback($new_mark, $new_feedback, $attempt_id){
 	$mysqli = new mysqli("localhost", "root", "R0binson", "CSCC01");
-<<<<<<< HEAD
 	$sqlUpdate = "UPDATE results SET result=$new_mark, feedback='$new_feedback' WHERE attempt_id=$attempt_id";
 	$mysqli->query($sqlUpdate);
 	$mysqli->close();
 }
-=======
-	$sql = "SELECT assignment_id, start_date FROM assignments";
-	$result = $mysqli->query($sql);
-	include 'Utils.php';
-	$current_time = converttime(date("Y-m-d h:i:sa"));
-	// Display open assignments.
-	while ($row = $result->fetch_assoc()) {
-		if ($current_time > $row["start_date"]) {
-			echo "<h2>".$db->getAssignmentTitle($row["assignment_id"])."</h2><br>";
-			// Select all student attempts for this assignment.
-			$sql = "SELECT result, attempt_id, feedback FROM results WHERE student_id = '$student_id' AND assignment_id = $row[0]";
-			$result2 = $mysqli->query($sql);
-			$attempts = $result2->num_rows;
-			$feedback = "";
-			$attempt_id = 0;
-			// Determine last attempt.
-			if ($attempts > 0) {
-				$mark = 0;
-				$attempt_id = 0;
-				while ($row2 = $result2->fetch_assoc()) {
-					if ($row2["attempt_id"] > $attempt_id) {
-						$mark = $row2["result"];
-						$attempt_id = $row2["attempt_id"];
-						$feedback = $row2["feedback"];
-					}
-				}
-			} else {
-				$mark = 0;
-			}
-			echo "Mark: " . $mark . "<br>Number of attempts: " . $attempts . "<br>";
-			echo "Instructor feedback: " . $feedback . "<br>";
-
-?>
->>>>>>> master
 
 if(isset($_POST['attempt_id'])){
 	update_mark_and_feedback($_POST['new_mark'], $_POST['feedback'],$_POST['attempt_id']);
@@ -96,8 +49,8 @@ function display_mark_and_feedback(){
 			$mysqli = new mysqli("localhost", "root", "R0binson", "CSCC01");
 			$sql = "SELECT assignment_id, start_date FROM assignments";
 			$result = $mysqli->query($sql);
-			while ($row = $result->fetch_assoc()){
-				echo "<option value='".$row["assignment_id"]."''> Assignment ". $row["assignment_id"] . "</option>";
+			while ($row = $result->fetch_row()){
+				echo "<option value='".$row[0]."''> Assignment ". $row[0] . "</option>";
 			}
 			?>
 		</select>
@@ -125,7 +78,7 @@ function display_mark_and_feedback(){
 			Mark:
 			<input id="new_mark" name="new_mark" type='text' class='form-control' value="<?php echo $mark; ?>">
 			Feedback:
-  			<textarea id="feedback" name="feedback" type='text' class='form-control' form='update_result' rows='5' ><?php echo $feedback; ?></textarea>
+  			<textarea id="feedback" name="feedback" type='text' rows='5' ><?php echo $feedback; ?></textarea>
   			<input type="submit" class="btn btn-default" value="Submit Update"/>
     	</form>
 <?php
