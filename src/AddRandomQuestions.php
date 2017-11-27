@@ -42,7 +42,7 @@
 		$mysqli->close();
 	?>
 
-	<form action="EditAssignmentPage.php" method="post">
+	<form action="EditAssignment.php" method="post">
 		<input type="hidden" name="assignment_id" id="assignment_id" value="<?php echo $assignment_id; ?>"/>
 		<input type="submit" class="btn btn-default" value="Ok">
 	</form>

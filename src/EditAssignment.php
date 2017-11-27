@@ -173,7 +173,7 @@ if (isset($_POST['map_id']))
 			echo "ANSWER: " . $q[1] . "<br>";
 			$i = $i + 1;
 			?>
-			<form action="EditAssignmentPage.php" method="post">
+			<form action="EditAssignment.php" method="post">
 				<input type="hidden" name="assignment_id" id="assignment_id" value="<?= $assignment_id; ?>"/>
 				<input type="hidden" name="map_id" id="map_id" value="<?= $row["map_id"]; ?>"/>
 				<input type="submit" class="btn btn-default" value="Remove Question">
@@ -189,11 +189,11 @@ if (isset($_POST['map_id']))
 		<input type="hidden" name="assignment_id" id="assignment_id" value="<?= $assignment_id; ?>"/>
 		<input type="submit" class="btn btn-default" value="Create New Question">
 	</form>
-	<form action="SelectQuestionPage.php" method="post">
+	<form action="SelectQuestion.php" method="post">
 		<input type="hidden" name="assignment_id" id="assignment_id" value="<?= $assignment_id; ?>"/>
 		<input type="submit" class="btn btn-default" value="Select Question">
 	</form>
-	<form action="ConfirmCreateAssignmentPage.php" method="post">
+	<form action="ConfirmCreateAssignment.php" method="post">
 		<input type="hidden" name="assignment_id" id="assignment_id" value="<?= $assignment_id; ?>"/>
 		<input type="submit" class="btn btn-default" value="Submit Assignment">
 	</form>

@@ -18,7 +18,7 @@ $assignment_id = $_POST['assignment_id'];
     </div>
 
 	<!--Cancel button to go back to edit assignment page-->
-	<form action="EditAssignmentPage.php" method="post">
+	<form action="EditAssignment.php" method="post">
         <input type="hidden" name="assignment_id" id="assignment_id" value="<?php echo $assignment_id; ?>"/>
         <input type="submit" class="btn btn-default" value="Cancel">
     </form>
@@ -26,7 +26,7 @@ $assignment_id = $_POST['assignment_id'];
 	<br>
 
 	<!--Search for question based on tag-->
-	<form action="SelectQuestionPage.php" method="post">
+	<form action="SelectQuestion.php" method="post">
             <input type="text" name="questionTag" id="questionTag" placeholder="Question Tag(s)"/>
             <input type="hidden" name="assignment_id" id="assignment_id" value="<?php echo $assignment_id; ?>"/>
             <input type="submit" class="btn btn-default" value="Search">
@@ -35,7 +35,7 @@ $assignment_id = $_POST['assignment_id'];
 	<br>
 	
 	<!--Add N random questions-->
-	<form action="EditAssignmentPage.php" method="post">
+	<form action="EditAssignment.php" method="post">
 		<input type="hidden" name="assignment_id" id="assignment_id" value="<?php echo $assignment_id; ?>"/>
 		Add <input type="number" min="1" name="num_questions" id = "num_questions" value=1 /> random questions (with tag 
 		<input type="text" name="questionTag" id = "questionTag" />)
@@ -74,7 +74,7 @@ $assignment_id = $_POST['assignment_id'];
 				$i = $i + 1;
 			
 		?>
-				<form action="EditAssignmentPage.php" method="post">
+				<form action="EditAssignment.php" method="post">
 					<input type="hidden" name="assignment_id" id="assignment_id" value="<?= $assignment_id; ?>"/>
 					<input type="hidden" name="question_id" id="question_id" value="<?= $row["question_id"]; ?>"/>
 					<input type="submit" class="btn btn-default" value="Select Question">
