@@ -5,14 +5,14 @@ require_once 'dependencies/wa_wrapper/WolframAlphaEngine.php';
 /**
  * Parse and generate random variables in question and formula text.
  *
- * @param $questiontext:  The raw text of the question.
+ * @param $question_text:  The raw text of the question.
  * @param $formula:       The raw text of the solution/formula.
  */
-function varreader($questiontext, $formula) {
+function varreader($question_text, $formula) {
     // Seperate text into elements by spaces
-	$space = explode(" ", $questiontext);
-	$varnames = array();
-	$returntext = "";
+	$space = explode(" ", $question_text);
+	$var_names = array();
+	$return_text = "";
 	foreach ($space as &$elm) {
 		// Test if element is a declaration of a random variable.
 		if (strpos($elm, 'random_') !== false) {
@@ -30,31 +30,31 @@ function varreader($questiontext, $formula) {
 			if ($type[0] == "random_int") {
 				// Generate random integer, save variable name as key and new int as value.
 				$randint = rand($start, $end);
-				$varnames[$var] = $randint;
+				$var_names[$var] = $randint;
 				// Append new question text.
-				$returntext = $returntext . $randint . " ";
+				$return_text = $return_text . $randint . " ";
 			}
 			if ($type[0] == "random_real") {
 				// Generate random integer, save variable name as key and new int as value.
 				$randint = rand($start*100, $end*100) / 100;
-				$varnames[$var] = $randint;
+				$var_names[$var] = $randint;
 				// Append new question text.
-				$returntext = $returntext . $randint . " ";
+				$return_text = $return_text . $randint . " ";
 			}
 		} else {
 			// If not a random variable, append text to new question text.
-			$returntext = $returntext . $elm . " ";
+			$return_text = $return_text . $elm . " ";
 		}
 	}
-	// For each variable in the varnames array, replace any instance of it in the formula with the generated value.
-	foreach ($varnames as $name => $theint) {
+	// For each variable in the var_names array, replace any instance of it in the formula with the generated value.
+	foreach ($var_names as $name => $theint) {
 		$formula = str_replace($name, $theint, $formula);
 	}
 	// Build return array, 0 is new question text, 1 is new formula.
-	$returnarray = array();
-	$returnarray[] = $returntext;
-	$returnarray[] = $formula;
-	return $returnarray;
+	$return_array = array();
+	$return_array[] = $return_text;
+	$return_array[] = $formula;
+	return $return_array;
 }
 
 

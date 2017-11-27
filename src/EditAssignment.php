@@ -32,8 +32,8 @@ function converttime($time) {
 }
 
 // function that takes in a string and store into a file
-function saveString($filename, $questionInput) {
-  file_put_contents($filename, $questionInput);
+function saveString($filename, $question_input) {
+  file_put_contents($filename, $question_input);
 }
 
 //Get assignment tags if any
@@ -57,7 +57,7 @@ if (isset($_POST['starttime']))
 }
 
 // Save new question to questions table
-if (isset($_POST['questionText']))
+if (isset($_POST['question_text']))
 {
 
 	$dir = 'questions';
@@ -74,7 +74,7 @@ if (isset($_POST['questionText']))
 	$file_name = "/question" . (iterator_count($fi) + 1) . ".txt";
 
 	// Append answer to question.
-	$qanda = $_POST['questionText'] . "\n\n\n\n ANSWER: " . $_POST['questionFormula'];
+	$qanda = $_POST['question_text'] . "\n\n\n\n ANSWER: " . $_POST['question_formula'];
 
 	// Save question to file.
 	$location = $dir . $file_name;
@@ -119,8 +119,8 @@ if (isset($_POST['num_questions']))
 		$sql = "SELECT question_id FROM questions";
 		
 		// Apply filter if any
-		if (isset($_POST['questionTag'])){
-			$filter = $_POST['questionTag'];
+		if (isset($_POST['question_tag'])){
+			$filter = $_POST['question_tag'];
 			$sql = $sql . " WHERE tag LIKE '%$filter%'";
 		}
 		

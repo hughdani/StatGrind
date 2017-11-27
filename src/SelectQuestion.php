@@ -27,7 +27,7 @@ $assignment_id = $_POST['assignment_id'];
 
 	<!--Search for question based on tag-->
 	<form action="SelectQuestion.php" method="post">
-            <input type="text" name="questionTag" id="questionTag" placeholder="Question Tag(s)"/>
+            <input type="text" name="question_tag" id="question_tag" placeholder="Question Tag(s)"/>
             <input type="hidden" name="assignment_id" id="assignment_id" value="<?php echo $assignment_id; ?>"/>
             <input type="submit" class="btn btn-default" value="Search">
     </form>
@@ -37,8 +37,8 @@ $assignment_id = $_POST['assignment_id'];
 	<!--Add N random questions-->
 	<form action="EditAssignment.php" method="post">
 		<input type="hidden" name="assignment_id" id="assignment_id" value="<?php echo $assignment_id; ?>"/>
-		Add <input type="number" min="1" name="num_questions" id = "num_questions" value=1 /> random questions (with tag 
-		<input type="text" name="questionTag" id = "questionTag" />)
+		Add <input type="number" min="1" name="num_questions" id = "num_questions" value=1 /> random questions with tag:
+		<input type="text" name="question_tag" id = "question_tag" />
 		<input type="submit" class="btn btn-default" value="Add Questions">
 	</form>
 	
@@ -49,8 +49,8 @@ $assignment_id = $_POST['assignment_id'];
 		$sql = "SELECT question_id, location FROM questions";
 
 		// Apply filters
-		if (isset($_POST['questionTag'])){
-			$filter = $_POST['questionTag'];
+		if (isset($_POST['question_tag'])){
+			$filter = $_POST['question_tag'];
 			$sql = $sql . " WHERE tag LIKE '%$filter%'";
 		}
 
