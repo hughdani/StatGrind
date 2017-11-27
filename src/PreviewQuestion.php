@@ -58,11 +58,11 @@
             file_put_contents($filename, $questionInput);
         }
 
-        if (isset($_POST['questionText']) and isset($_POST['questionFormula'])) {
+        if (isset($_POST['questionText']) and isset($_POST['question_formula'])) {
   
             if (!(isset($_POST['save']))) {
                 echo "Question: " . $_POST['questionText'] . "<br>";
-                echo "Formula: " . $_POST['questionFormula'] . "<br>";
+                echo "Formula: " . $_POST['question_formula'] . "<br>";
             }
 
             if(isset($_POST['save'])) {
@@ -80,10 +80,10 @@
                 $file_name = "/question" . (iterator_count($fi) + 1) . ".txt";
 
                 // Append answer to question.
-                //$answer = computeFormula($_POST['questionFormula']);
+                //$answer = computeFormula($_POST['question_formula']);
                 //echo $answer . "<br>";
 
-                $qanda = $_POST['questionText'] . "<br> FORMULA: " . $_POST['questionFormula'];
+                $qanda = $_POST['questionText'] . "<br> FORMULA: " . $_POST['question_formula'];
 
                 // Save question to file.
                 saveString($dir . $file_name, $qanda); // saves the string in the textarea into the file
@@ -121,7 +121,7 @@
             <button type="button" class="btn btn-danger" onclick="history.back();"> Back </button>
             <button type="submit" class="btn btn-primary" name="save" value="save"> Save </button>
             <input type="hidden" name="questionText" value="<?=$_POST['questionText']?>">
-            <input type="hidden" name="questionFormula" value="<?=$_POST['questionFormula']?>">
+            <input type="hidden" name="question_formula" value="<?=$_POST['question_formula']?>">
         </div>
     </form>
 

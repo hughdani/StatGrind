@@ -80,19 +80,19 @@ endif; ?>
 
 	<section class="wrapper special">
 		<div class="inner">
-      <form id="account_creation" method="post" action="CreateAccount.php">
-        <h3>User Name:</h3> <input type="text" id="user_name" name="user_name" minlength="4" value="<?php echo $username; ?>" required><br/>
-        <h3>Password:</h3> <input type="password" name="password1" minlength="4" required><br/>
+      <form method="post" action="CreateAccount.php">
+        <h3>User Name:</h3> <input type="text" name="user_name" minlength="4" value="<?= $username; ?>" required><br>
+        <h3>Password:</h3> <input type="password" name="password1" minlength="4" required><br>
         <h3>Confirm Password:</h3> <input type="password" name="password2" minlength="4" required><br/>
-        <h3>First Name:</h3> <input type="text" name="first_name" value="<?php echo $firstname; ?>" required><br/>
-        <h3>Last Name:</h3> <input type="text" name="last_name" value="<?php echo $lastname; ?>" required><br/>
+        <h3>First Name:</h3> <input type="text" name="first_name" value="<?= $firstname; ?>" required><br>
+        <h3>Last Name:</h3> <input type="text" name="last_name" value="<?= $lastname; ?>" required><br>
         <h3>Account Type:</h3>
         <select name="account_type" required>
-     		  <option value="2">Student</option>
-    			<option value="1">Instructor</option>
-    			<option value="3">TA</option>
-    	  </select><br/>
-        <input form="account_Creation" type="submit" name="create_Account" value ="Create Account">
+ 			<option value="2">Student</option>
+  			<option value="1">Instructor</option>
+  			<option value="3">TA</option>
+		    </select><br>
+     	<input type="submit" name="create_Account" value ="Create Account">
       </form>
       <form method="post" action="AccountLogin.php">
         <input type="submit" name="log_in" value ="Log in">

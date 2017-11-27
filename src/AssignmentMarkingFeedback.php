@@ -13,18 +13,6 @@
 		<h1>Assignment Marking/Feedback</h1>
 	</div>
 <?php
-<<<<<<< HEAD
-=======
-	include 'Database.php';
-	$db = new Database();
-
-	// Get student_id
-	if (isset($_POST['student_id'])) {
-		$student_id = $_POST['student_id'];
-	} else {
-		$student_id = "kozaadam";
-	}
->>>>>>> master
 
 
 /**
@@ -36,43 +24,10 @@
  */
 function update_mark_and_feedback($new_mark, $new_feedback, $attempt_id){
 	$mysqli = new mysqli("localhost", "root", "R0binson", "CSCC01");
-<<<<<<< HEAD
 	$sqlUpdate = "UPDATE results SET result=$new_mark, feedback='$new_feedback' WHERE attempt_id=$attempt_id";
 	$mysqli->query($sqlUpdate);
 	$mysqli->close();
 }
-=======
-	$sql = "SELECT assignment_id, start_date FROM assignments";
-	$result = $mysqli->query($sql);
-	// Display open assignments.
-	while ($row = $result->fetch_row()) {
-		if ($current_time > $row[1]) {
-			echo "<h2>".$db->getAssignmentTitle($row[0])."</h2><br>";
-			// Select all student attempts for this assignment.
-			$sql = "SELECT result, attempt_id, feedback FROM results WHERE student_id = '$student_id' AND assignment_id = $row[0]";
-			$result2 = $mysqli->query($sql);
-			$attempts = $result2->num_rows;
-			$feedback = "";
-			$attempt_id = 0;
-			// Determine last attempt.
-			if ($attempts > 0) {
-				$mark = 0;
-				$attempt_id = 0;
-				while ($row2 = $result2->fetch_row()) {
-					if ($row2[1] > $attempt_id) {
-						$mark = $row2[0];
-						$attempt_id = $row2[1];
-						$feedback = $row2[2];
-					}
-				}
-			} else {
-				$mark = 0;
-			}
-			echo "Mark: " . $mark . "<br>Number of attempts: " . $attempts . "<br>";
-			echo "Instructor feedback: " . $feedback . "<br>";
-
-?>
->>>>>>> master
 
 if(isset($_POST['attempt_id'])){
 	update_mark_and_feedback($_POST['new_mark'], $_POST['feedback'],$_POST['attempt_id']);
