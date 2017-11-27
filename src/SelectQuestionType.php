@@ -29,8 +29,11 @@
             
         </form>
         
-        <form action="AccountLogin.php" method="post">
+        <form action="<?php if(isset($_POST['assignment_id'])){ echo 'EditAssignment.php'; } else { echo 'Home.php';};?>" method="post">
             <input type="submit" class="btn btn-default" value="Cancel">
+            <?php if (isset($_POST["assignment_id"])) : ?>
+                <input class="hidden" name="assignment_id" id="assignment_id" value="<?= $_POST["assignment_id"]; ?>">
+            <?php endif; ?>
         </form>
     </div>
 
