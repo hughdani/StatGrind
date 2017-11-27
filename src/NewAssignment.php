@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 <?php
 require_once 'Database.php';
 require_once 'User.php';
@@ -14,6 +15,38 @@ create_head('New Assignment');
 echo "<body>";
 
 $db = new Database();
+=======
+<?php
+  require_once 'Database.php';
+  require_once 'User.php';
+  require_once 'Utils.php';
+  $db = new Database();
+
+  if (!isset($_SESSION)) {
+      session_start();
+  }
+  if (!isset($_SESSION['user'])) {
+      header("Location: error.php?error_status=401");
+      exit();
+  } elseif (!$db->pagePermission(basename(__FILE__), $_SESSION['user'])) {
+      header("Location: error.php?error_status=403");
+      exit();
+  }
+?>
+<head>
+<title>Create New Assignment</title>
+<link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet">
+<link href="css/bootstrap-datetimepicker.min.css" rel="stylesheet">
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/transition.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/collapse.js"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+<script src="js/moment.min.js"></script>
+<script src="js/bootstrap-datetimepicker.js"></script>
+<link rel="stylesheet" href="css/main.css" />
+</head>
+<?php
+>>>>>>> master
 $user = $_SESSION['user'];
 $user_id = $user->getUserId();
 $first_name = $user->getFirstName();

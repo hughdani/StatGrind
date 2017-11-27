@@ -3,17 +3,20 @@ require_once 'Database.php';
 require_once 'User.php';
 require_once 'Utils.php';
 
+$db = new Database();
 if (!isset($_SESSION)) {
     session_start();
 }
 if (!isset($_SESSION['user'])) {
-    header("Location: Forbidden.php");
+    header("Location: error.php?error_status=401");
+    exit();
+} elseif (!$db->pagePermission(basename(__FILE__), $_SESSION['user'])) {
+    header("Location: error.php?error_status=403");
+    exit();
 }
-
 create_head('Confirm Submission');
 echo "<body>";
 
-$db = new Database();
 $user = $_SESSION['user'];
 $first_name = $user->getFirstName();
 $account_type = $user->getAccountType();
@@ -21,7 +24,6 @@ $header_text = "Confirm Submission";
 
 include("NavigationBar.php");
 create_site_header($header_text);
-
 $results = unserialize($_POST['results']);
 $student_id = $_POST['student_id'];
 $assignment_id = $_POST['assignment_id'];

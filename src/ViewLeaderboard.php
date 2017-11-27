@@ -1,7 +1,31 @@
+
 <?php
-require_once 'Database.php';
-require_once 'User.php';
-require_once 'Utils.php';
+    require_once 'Database.php';
+    require_once 'User.php';
+    require_once 'Utils.php';
+    $db = new Database();
+
+    if (!isset($_SESSION)) {
+        session_start();
+    }
+    if (!isset($_SESSION['user'])) {
+        header("Location: error.php?error_status=401");
+        exit();
+    } elseif (!$db->pagePermission(basename(__FILE__), $_SESSION['user'])) {
+        header("Location: error.php?error_status=403");
+        exit();
+    }
+?>
+<html>
+<head>
+    <title>Leaderboard</title>
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet">
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <link rel="stylesheet" href="css/main.css" />
+</head>
+
+<?php
+$user_id = $_SESSION['user_id'];
 
 if (!isset($_SESSION)) {
     session_start();

@@ -3,17 +3,20 @@ require_once 'Database.php';
 require_once 'User.php';
 require_once 'Utils.php';
 
+$db = new Database();
+
 if (!isset($_SESSION)) {
     session_start();
 }
 if (!isset($_SESSION['user'])) {
-    header("Location: Forbidden.php");
+    header("Location: error.php?error_status=401");
+    exit();
+} elseif (!$db->pagePermission(basename(__FILE__), $_SESSION['user'])) {
+    header("Location: error.php?error_status=403");
+    exit();
 }
-
-create_head('Marks and Feedback');
+create_head('Marking and Feedback');
 echo "<body>";
-
-$db = new Database();
 $user = $_SESSION['user'];
 $first_name = $user->getFirstName();
 $account_type = $user->getAccountType();
@@ -21,6 +24,7 @@ $header_text = "Assignment Marks and Feedback";
 
 include("NavigationBar.php");
 create_site_header($header_text);
+
 
 /**
  * Update the mark and feedback for the selected student's assignment
@@ -42,7 +46,6 @@ if(isset($_POST['attempt_id'])){
 
 /**
  * Display the dropdown for selecting assignment and display the mark/feedback of the selected assignment
- *
  */
 function display_mark_and_feedback(){
 	global $db;
@@ -55,22 +58,23 @@ function display_mark_and_feedback(){
 			// Display open assignments.
 			$sql = "SELECT assignment_id, start_date FROM assignments";
 			$result = $db->query($sql);
-			while ($row = $result->fetch_row()){
-				echo "<option value='".$row[0]."''> Assignment ". $row[0] . "</option>";
+			while ($row = $result->fetch_assoc()){
+				echo "<option value='".$row["assignment_id"]."''> Assignment ". $row["assignment_id"] . "</option>";
 			}
 			?>
 		</select>
 	</form>
 		<br>
 <?php
+
 	if(isset($_POST['select_assignment'])){
 		$assignment_id = $_POST['select_assignment'];
-		echo "<h2>Assignment $assignment_id</h2><br>";
+		echo "<h2>".$db->getAssignmentTitle($assignment_id)."</h2><br>";
 		// Select all student attempts for this assignment.
 		$sql = "SELECT results.student_id, results.assignment_id, results.result, results.feedback, results.attempt_id from (SELECT student_id, assignment_id, max(attempt_id) as 'most_recent' FROM `results` group by student_id, assignment_id) T LEFT JOIN results on most_recent = attempt_id where results.assignment_id = $assignment_id";
 		$result = $db->query($sql);
 		while($row = $result->fetch_assoc()){ ?>
-	<form id="update_result" method='post'>
+		<form id="update_result" method='post'>
 			<?php
 			$student_id = $row['student_id'];
 			$feedback = $row['feedback'];

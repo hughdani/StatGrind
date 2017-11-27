@@ -44,7 +44,7 @@ class Database
             return $row;
         }
     }
-
+    
     public function pagePermission($page_file, $user)
     {
         $account_type = $user->getAccountType();
@@ -71,7 +71,7 @@ class Database
         $title = $result['title'];
         if ($title == ""){ $title = "Assignment $id"; }
         return $title;
+
     }
 }
 ?>
-

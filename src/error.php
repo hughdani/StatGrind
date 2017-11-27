@@ -1,9 +1,11 @@
 <?php
-$page_redirected_from = $_SERVER['REQUEST_URI'];  // this is especially useful with error 404 to indicate the missing page.
-$server_url = "http://thatbitcoinguy.com/L02_01/src/";
+$page_redirected_from = $_SERVER['REQUEST_URI'];
 $redirect_url = $_SERVER["REDIRECT_URL"];
 
-switch(getenv("REDIRECT_STATUS"))
+$error_status = getenv("REDIRECT_STATUS");
+if(isset($_GET['error_status'])){$error_status=$_GET['error_status'];}
+
+switch($error_status)
 {
 	# "400 - Bad Request"
 	case 400:
@@ -15,14 +17,14 @@ switch(getenv("REDIRECT_STATUS"))
 	# "401 - Unauthorized"
 	case 401:
 	$error_code = "401 - Unauthorized";
-	$explanation = "This section requires a password or is otherwise protected. If you feel you have reached this page in error, please return to the login page and try again, or contact the webmaster if you continue to have problems.";
+	$explanation = "This section requires higher permission or is otherwise protected. If you feel you have reached this page in error, please return to the login page and try again, or contact the webmaster if you continue to have problems.";
 	$redirect_to = "index.php";
 	break;
 
 	# "403 - Forbidden"
 	case 403:
 	$error_code = "403 - Forbidden";
-	$explanation = "This section requires a password or is otherwise protected. If you feel you have reached this page in error, please return to the login page and try again, or contact the webmaster if you continue to have problems.";
+	$explanation = "This section requires higher permission or is otherwise protected. If you feel you have reached this page in error, please return to the login page and try again, or contact the webmaster if you continue to have problems.";
 	$redirect_to = "index.php";
 	break;
 
@@ -54,9 +56,7 @@ switch(getenv("REDIRECT_STATUS"))
 <h1>Seems like something went wrong.</h1>
 <p>The URL you requested was not found. <?PHP echo($explanation); ?></p>
 
-<p><strong>Click <a href="<?php echo ($redirect_to); ?>">here</a> to return to the home page</strong> </p>
-
-<p>Click <a href="<?php echo ($server_url); ?>">here</a> to return to the login page</p>
+<p>Click <a href="<?php echo ($redirect_to); ?>">here</a> to return to the login page</p>
 
 <hr />
 

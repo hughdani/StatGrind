@@ -6,9 +6,18 @@ require_once 'Utils.php';
 if (!isset($_SESSION)) {
     session_start();
 }
-if (!isset($_SESSION['user'])) {
-    header("Location: Forbidden.php");
-}
+  $db = new Database();
+
+  if (!isset($_SESSION)) {
+      session_start();
+  }
+  if (!isset($_SESSION['user'])) {
+      header("Location: error.php?error_status=401");
+      exit();
+  } elseif (!$db->pagePermission(basename(__FILE__), $_SESSION['user'])) {
+      header("Location: error.php?error_status=403");
+      exit();
+  }
 
 create_head('Course Creation');
 echo "<body>";
