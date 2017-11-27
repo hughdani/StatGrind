@@ -12,36 +12,20 @@ if (!isset($_SESSION['user'])) {
 
 create_head('Home');
 echo "<body>";
-
+require_once 'Database.php';
+require_once 'User.php';
+session_start();
 $db = new Database();
+$mysqli = $db->getconn();
 $user = $_SESSION['user'];
-$first_name = $user->getFirstName();
-$account_type = $user->getAccountType();
-$header_text = "Welcome back $first_name!";
-
-include("NavigationBar.php");
-create_site_header($header_text);
-
-// Get student_id
-if (isset($_POST['student_id'])) {
-	$student_id = $_POST['student_id'];
-} else {
-	$student_id = "kozaadam";
-}
-
-	echo "<!-- $student_id -->";
+$user_id = $user->getUserId();
 // If comming from ConfirmSubmission page, insert submission into results table
 if (isset($_POST['result'])) {
 	$result = $_POST['result'];
 	$assignment_id = $_POST['assignment_id'];
-	$sql = "INSERT INTO results (student_id, assignment_id, result) VALUES ('$student_id', $assignment_id, $result)";
+	$sql = "INSERT INTO results (student_id, assignment_id, result) VALUES ('$user_id', $assignment_id, $result)";
 	$mysqli->query($sql);
 }
-
-// Get current time, convert to 24hr.
-include 'Utils.php';
-$current_time = converttime(date("Y-m-d h:i:sa"));
-
 ?>
 
 Find assignment:
@@ -53,46 +37,39 @@ Find assignment:
 
 <?php
 // Select all assignment from assignment table.
-$sql = "SELECT assignment_id, start_date, end_date FROM assignments";
+$sql = "SELECT assignment_id, start_date, end_date FROM assignments WHERE NOW() >= start_date AND visible=1";
 
 //Apply search params if any
 if (isset($_POST['search_param'])) {
 	$filter = $_POST['search_param'];
-	$sql = $sql . " WHERE tag LIKE '%$filter%' OR title LIKE '%$filter%'";
+	$sql = $sql . " AND tag LIKE '%$filter%' OR title LIKE '%$filter%'";
 }
 
 $result = $mysqli->query($sql);
 // Display open assignments.
 while ($row = $result->fetch_assoc()) {
-	$start_date = $row["start_date"];
-	$end_date = $row["end_date"];
 	$assignment_title = $db->getAssignmentTitle($row["assignment_id"]);
-	if ($current_time > $row["start_date"]) {
 		echo "<h2>$assignment_title</h2>";
+        $a_id = $row['assignment_id'];
+        $start_date = $row['start_date'];
+        $end_date = $row['end_date'];
+
 		// Select all student attempts for this assignment.
-		$sql = "SELECT result, attempt_id, feedback FROM results WHERE student_id = '$student_id' AND assignment_id = $row['assignment_id']";
+		$sql = "SELECT result, feedback FROM results WHERE student_id = '$user_id' AND assignment_id = $a_id ORDER BY attempt_id DESC LIMIT 1";
 		$result2 = $mysqli->query($sql);
 		$attempts = $result2->num_rows;
-		// Determine last attempt.
 		if ($attempts > 0) {
-			$mark = 0;
-			$attempt_id = 0;
-			while ($row2 = $result2->fetch_assoc()) {
-				if ($row2["attempt_id"] > $attempt_id) {
-					$mark = $row2["result"];
-					$attempt_id = $row2["attempt_id"];
-					$feedback = $row2["feedback"];
-				}
-			}
-		} else {
-			$mark = 0;
-			$feedback = "";
-		}
-		echo "Available from : " . $start_date . " to " . $end_date . "<br>";
-		echo "Mark: " . $mark . "<br>Number of attempts: " . $attempts . "<br>";
-		echo "Instructor feedback: " . $feedback . "<br><br><br><br>";
-	}
-	
+            $row2 = $result2->fetch_assoc();
+			$mark = $row2['result'];
+            $feedback = $row2['feedback'];
+        } else {
+            $mark = 'TBA';
+            $feedback = 'TBA';
+        }
+		echo "<b> Posted </b>: $start_date <br>";
+        echo "<b> Due </b>: $end_date <br>";
+		echo "<b> Mark </b>: $mark <br>";
+		echo "<b> Instructor feedback </b>: $feedback <br><br><br><br>";
 }
 
 ?>
