@@ -1,60 +1,49 @@
-<!-- Page containing all assignments created -->
-  
-<html>
-<head>
-    <title>Manage Enrolment</title>
-    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet">
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
-    <link rel="stylesheet" href="css/main.css" />
-</head>
-
-<h1>Manage Enrolment</h1>
 <?php
-session_start();
-$mysqli = new mysqli('localhost', 'root', 'R0binson', 'CSCC01');
-$user_id = $_SESSION['user_id'];
-$user_id = 124;
-if (!permission_check($user_id)) {
-    header('Location: Forbidden.php');
+require_once 'Database.php';
+require_once 'User.php';
+require_once 'Utils.php';
+$db = new Database();
+
+if (!isset($_SESSION)) {
+    session_start();
 }
+
+$user = $_SESSION['user'];
+$user_id = $user->getUserId();
+
+create_head('Manage Enrolment');
+
 if (isset($_POST['course_id'])) {
     $c_id = ($_POST['course_id']);
     // get all instructors and TAs
     echo "<h2>Instructors</h2>";
-    $query = "";
-    $query = $query . "SELECT * FROM users u LEFT JOIN account_types t ";
-    $query = $query . "ON u.account_type = t.account_type ";
-    $query = $query . "WHERE u.user_id <> $user_id ";
-    $query = $query . "AND t.type_description='Instructor' ";
-    $query = $query . "ORDER BY u.last_name, u.first_name";
-    $result = $mysqli->query($query);
-    create_forms($result, 'teaching_course');
+    $sql = "SELECT * FROM users
+        INNER JOIN account_types ON users.account_type = account_types.account_type
+        WHERE users.user_id <> $user_id
+        AND account_types.type_description='Instructor'
+        ORDER BY users.last_name, users.first_name";
+    $instructors = $db->query($sql);
+    create_forms($instructors, 'teaching_course');
     echo "<h2>TAs</h2>";
-    $query = "";
-    $query = $query . "SELECT * FROM users u LEFT JOIN account_types t ";
-    $query = $query . "ON u.account_type = t.account_type ";
-    $query = $query . "WHERE u.user_id <> $user_id ";
-    $query = $query . "AND t.type_description='TA' ";
-    $query = $query . "ORDER BY u.last_name, u.first_name";
-    $result = $mysqli->query($query);
-    create_forms($result, 'teaching_course');
+    $sql = "SELECT * FROM users
+        INNER JOIN account_types ON users.account_type = account_types.account_type
+        WHERE users.user_id <> $user_id
+        AND account_types.type_description='TA'
+        ORDER BY users.last_name, users.first_name";
+    $tas = $db->query($sql);
+    create_forms($tas, 'teaching_course');
     // get all Students
     echo "<h2>Students</h2>";
-    $query = "";
-    $query = $query . "SELECT * FROM users u LEFT JOIN account_types t ";
-    $query = $query . "ON u.account_type = t.account_type ";
-    $query = $query . "WHERE u.user_id <> $user_id AND t.type_description = 'Student' ";
-    $query = $query . "ORDER BY u.last_name, u.first_name";
-    $result = $mysqli->query($query);
-    create_forms($result, 'taking_course');
+    $sql = "SELECT * FROM users
+        INNER JOIN account_types ON users.account_type = account_types.account_type
+        WHERE users.user_id <> $user_id
+        AND account_types.type_description='Student'
+        ORDER BY users.last_name, users.first_name";
+    $students = $db->query($sql);
+    create_forms($students, 'taking_course');
 }
-?>
-<!-- Quick path to get back to managing courses. -->
-<form action="EditCourses.php" method="post">
-    <input type="submit" class="btn btn-default" value="Manage Courses">
-</form>
-<?php
+create_page_link('EditCourses.php', 'Edit Courses');
+
 /**
  * Creates a series of forms based on given data
  *
@@ -62,8 +51,8 @@ if (isset($_POST['course_id'])) {
  * @param string  $table the name of the table to check enrolment in
  */
 function create_forms($data, $table) {
-    global $mysqli;
     global $c_id;
+    global $db;
     if ($data->num_rows > 0) {
         echo "<form method='post' action=''>";
         while ($row = $data->fetch_assoc()) {
@@ -73,18 +62,19 @@ function create_forms($data, $table) {
             $u_enrol = is_enrolled($u_id, $table) ? "checked" : "";
 ?>
       <br>
-      <?php echo "<b>ID</b>: $u_id" ?>
+      <b> ID: <?= $u_id ?> </b>
       <br>
-      <?php echo "<b>Name</b>: $u_lname, $u_fname" ?>
+      <b> Name: <?= $u_lname, $u_fname ?> </b>
       <br>
       <label class='form-check-label'>
-      <input type='checkbox' class='chk-enrol form-check-input' value='<?php echo "$c_id;$u_id;$table" ?>' <?php echo $u_enrol ?>> Enrolled </label>
+      <input type='checkbox' class='chk-enrol form-check-input' value='<?= "$c_id;$u_id;$table" ?>' <?= $u_enrol ?>> Enrolled </label>
       <br>
 <?php
         }
         echo "</form>";
     }
 }
+
 /**
  * Returns true if the user is enrolled in course
  *
@@ -92,28 +82,14 @@ function create_forms($data, $table) {
  * @param int $table  the name of the table to look up the user on
  */
 function is_enrolled($u_id, $table) {
-    global $mysqli;
+    global $db;
     global $c_id;
-    $query = "SELECT * FROM $table WHERE user_id = $u_id AND course_id = $c_id";
-    return (($mysqli->query($query))->num_rows > 0);
+    $mysqli = $db->getconn();
+    $sql = "SELECT * FROM $table WHERE user_id = $u_id AND course_id = $c_id";
+    return ($mysqli->query($sql)->num_rows > 0);
 }
-/**
- * Returns true if the user_id belongs to an instructor
- *
- * @param int $user_id  the id of the user accessing the page
- */
-function permission_check($user_id) {
-    global $mysqli;
-    $query = "";
-    $query = $query . "SELECT * FROM users LEFT JOIN account_types ";
-    $query = $query . "ON users.account_type = account_types.account_type ";
-    $query = $query . "WHERE users.user_id = $user_id AND account_types.type_description='Instructor'";
-    // search the current user in instructor records
-    $result = $mysqli->query($query);
-    return ($result->num_rows != 0);
-}
-$mysqli->close();
 ?>
+
 <script>
 $(document).ready(function() {
   // event for visibility checkboxes

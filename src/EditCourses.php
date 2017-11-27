@@ -1,20 +1,24 @@
-
-<head>
-    <title>Edit My Courses</title>
-    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet">
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
-    <link rel="stylesheet" href="css/main.css" />
-</head>
-<h1>Courses Taught By Me</h1>
 <?php
-session_start();
-$mysqli = new mysqli('localhost', 'root', 'R0binson', 'CSCC01');
-$user_id = $_SESSION['user_id'];
-$user_id = 124;
-if (!permission_check($mysqli, $user_id)) {
-    header('Location: Forbidden.php');
+require_once 'Database.php';
+require_once 'User.php';
+require_once 'Utils.php';
+$db = new Database();
+$mysqli = $db->getconn();
+
+if (!isset($_SESSION)) {
+    session_start();
 }
+if (!isset($_SESSION['user'])) {
+    header("Location: Forbidden.php");
+} elseif (!$db->pagePermission(basename(__FILE__), $_SESSION['user'])) {
+    header("Location: Forbidden.php");
+}
+
+$user = $_SESSION['user'];
+$user_id = $user->getUserId();
+
+create_head('Edit Courses');
+
 // Update records before pulling them if posting back to the same page
 if (isset($_POST['up_course'])) {
     $course_id = $_POST['course_id'];
@@ -40,63 +44,44 @@ if (isset($_POST['create_course'])) {
     $mysqli->query($query);
 }
 // do a look up on the courses taught by the user
-$query = "";
-$query = $query . "SELECT * FROM courses WHERE course_id IN";
-$query = $query . "(SELECT course_id FROM teaching_course WHERE user_id = $user_id)";
-$result = $mysqli->query($query);
-if ($result->num_rows > 0) {
-    while ($row = $result->fetch_assoc()) {
-        $course_id = $row['course_id'];
-        $course_name = $row['course_name'];
-        $course_desc = $row['course_desc'];
+$sql = "SELECT courses.course_id, courses.course_name, courses.course_desc
+    FROM courses
+    INNER JOIN teaching_course ON courses.course_id = teaching_course.course_id
+    WHERE teaching_course.user_id = $user_id";
+$courses = $mysqli->query($sql);
 ?>
-<form method='post'>
-  <input type='hidden' name='course_id' value='<?php echo $course_id ?>'>
 
-  <div class='form-group'>
-    <label for='name<?php echo $course_id ?>'> <?php echo $course_name ?> </label>
-    <input id='name<?php echo $course_id ?>' type='text' name='course_name' placeholder='<?php echo $course_name ?>' class='form-control'>
-  </div>
+<?php if ($courses->num_rows > 0): ?>
+    <?php while ($c = $courses->fetch_assoc()): ?>
+    <form method='post'>
+      <input type='hidden' name='course_id' value='<?= $c['course_id'] ?>'>
 
-  <div class='form-group'>
-    <label for='desc<?php echo $course_id ?>'> <?php echo $course_desc ?> </label>
-    <textarea id='desc<?php echo $course_id ?>' name='course_desc' placeholder='<?php echo $course_desc ?>' class='form-control'></textarea>
-  </div>
+      <div class='form-group'>
+        <label for='name<?= $c['course_id'] ?>'> <?= $c['course_name'] ?> </label>
+        <input id='name<?= $c['course_id'] ?>' type='text' name='course_name' placeholder='<?= $c['course_name'] ?>' class='form-control'>
+      </div>
 
-  <div class='form-group'>
-    <input type='submit' name='up_course' value='Submit Changes' class='btn btn-default'> 
-  </div>
-</form>
-<form method='post' action='ManageEnrolment.php'>
-  <div class='form-group'>
-    <input type='hidden' name='course_id' value='<?php echo $course_id ?>'>
-    <input type='submit' name='manage_enrolment' value='Manage Enrolment' class='btn btn-default'> 
-  </div>
-</form>
+      <div class='form-group'>
+        <label for='desc<?= $c['course_id'] ?>'> <?= $c['course_desc'] ?> </label>
+        <textarea id='desc<?= $c['course_id'] ?>' name='course_desc' placeholder='<?= $c['course_desc'] ?>' class='form-control'></textarea>
+      </div>
+
+      <div class='form-group'>
+        <input type='submit' name='up_course' value='Submit Changes' class='btn btn-default'> 
+      </div>
+    </form>
+    <form method='post' action='ManageEnrolment.php'>
+      <div class='form-group'>
+        <input type='hidden' name='course_id' value='<?= $c['course_id'] ?>'>
+        <input type='submit' name='manage_enrolment' value='Manage Enrolment' class='btn btn-default'> 
+      </div>
+    </form>
+    <?php endwhile ?>
+<?php else: ?>
+    No courses found!
+<?php endif ?>
+
 <?php
-    }
-} else {
-    echo "No courses found!";
-}
-$mysqli->close();
-?>
-<form method='post' action='CreateCourse.php'>
-  <input type='submit' value='New Course' class='btn btn-default'>
-</form>
-<?php
-/**
- * Returns true if the user_id belongs to an instructor
- *
- * @param int $user_id  the id of the user accessing the page
- */
-function permission_check($mysqli, $user_id) {
-    $query = "";
-    $query = $query . "SELECT * FROM users LEFT JOIN account_types ";
-    $query = $query . "ON users.account_type = account_types.account_type ";
-    $query = $query . "WHERE users.user_id = $user_id AND account_types.type_description='Instructor'";
-    // search the current user in instructor records
-    $result = $mysqli->query($query);
-    return ($result->num_rows != 0);
-}
+create_page_link('CreateCourse.php', 'Create Course');
 ?>
 

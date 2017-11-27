@@ -31,7 +31,7 @@ $mysqli->close();
         </div>
 
         <h2>Start Time</h2>
-			<form action="EditAssignmentPage.php" method="post">
+			<form action="EditAssignment.php" method="post">
                 <div class="container">
 					<div class="row">
 						<div class='col-sm-6'>

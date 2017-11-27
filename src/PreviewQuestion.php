@@ -9,7 +9,7 @@
     </div>
 
     <?php
-    include 'dependencies/wa_wrapper/WolframAlphaEngine.php';
+    require_once 'dependencies/wa_wrapper/WolframAlphaEngine.php';
 
     // use wolfram alpha to calculate formula
     function computeFormula($formula) {
