@@ -18,3 +18,4 @@ Out most recent product and sprint backlog can be found [here](https://github.co
 To install our project locally, make sure you have php installed.
 Checkout our repo and cd to the src folder.
 Do the command php -S localhost:8000 to start a server using our code.
+Finally open localhost:8000/ in a browser to access the index page.
