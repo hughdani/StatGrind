@@ -57,21 +57,6 @@ switch($error_status)
 <h1>Seems like something went wrong.</h1>
 <p>The URL you requested was not found. <?PHP echo($explanation); ?></p>
 
-<?php
-    require_once 'Database.php';
-    require_once 'User.php';
-    require_once 'Utils.php';
-    $db = new Database();
-
-    if (!isset($_SESSION)) {
-        session_start();
-    }
-    if (!empty($_SESSION['user']) && !$db->pagePermission($redirect_to, $_SESSION['user'])) {
-        ?>
-        <p>Click <a href="<?php echo ($redirect_to); ?>">here</a> to return to the home page</p>
-        <?php
-    }
-?>
 <p>Click <a href="<?php echo ($server_url); ?>">here</a> to return to the login page</p>
 
 <hr />
