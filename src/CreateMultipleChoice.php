@@ -30,14 +30,14 @@
 </div>
 
 <div class="container-fluid"> 
-    <form action="CreateMultipleChoice.php" method="post">
+    <form method="post">
         <div class="form-group">
             <label for="num_options"> Number of Options:</label>
             <input class="form-control" type="number" id="num_options" name="num_options" min="2" required>
             <br />
             <input type="submit" class="btn btn-default" name="new_mc" id="new_mc" value="Create">
             <?php if (isset($_POST['assignment_id'])) : ?>
-                <input class="hidden" name="assignment_id" id="assignment_id" value="<?php $_POST['assignment_id']; ?>">
+                <input class="hidden" name="assignment_id" id="assignment_id" value="<?= $_POST["assignment_id"]; ?>">
             <?php endif; ?>
         </div>
     </form>
@@ -75,7 +75,7 @@
 
                 <!-- if making questions on the fly using new assignment -->
                 <?php if (isset($_POST['assignment_id'])) : ?>
-                    <input class="hidden" name="assignment_id" id="assignment_id" value="<?php $_POST['assignment_id']; ?>">
+                    <input class="hidden" name="assignment_id" id="assignment_id" value="<?= $_POST['assignment_id']; ?>">
                 <?php endif; ?>
 
 
