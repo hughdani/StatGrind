@@ -92,7 +92,8 @@ if (isset($_POST['question_text']))
 	$new_question_id = $mysqli->insert_id;
 
 	$sql = "INSERT INTO in_assignment (assignment_id, question_id) VALUES ($assignment_id, $new_question_id)";
-	$mysqli->query($sql);
+    $mysqli->query($sql);
+    echo '<script> window.location.replace("/Home.php"); </script>';
 }
 
 // if question was selected, save that question
