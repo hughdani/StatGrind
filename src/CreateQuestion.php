@@ -53,7 +53,7 @@ create_site_header($header_text);
       </div>
 	  <br>
       <div class="form-row">
-        <input onclick='addvar()' type='button' class="btn btn-primary" name="addVar" value="Add"
+        <input onclick='addvar()' type='button' class="btn btn-primary" name="addVar" value="Add">
       </div>
     </div>
 	<script>
