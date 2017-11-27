@@ -1,15 +1,10 @@
-<header  class="navbar navbar-default navbar-fixed-top">
-  <div class="container-fluid">
+<div class="container-fluid">
+<header class="navbar navbar-default navbar-fixed-top">
     <div class="navbar-header">
       <a class="navbar-brand" href="Home.php"><span class="fa fa-home"></span> StatGrind</a>
     </div>
     <ul class="nav navbar-nav">
     <?php      
-	// Get account type
-	require_once 'Database.php';
-	$db = new Database();
-	$account_type = $db->getAccountType($user_id);
-
 	// Generate navigation bar options based on account type
 	$sql = "SELECT pages.name, pages.filename FROM permissions LEFT JOIN pages on permissions.page_id = pages.page_id where pages.nav_item = 1 AND permissions.account_type = $account_type";
         foreach ($db->query($sql) as $p) {
@@ -28,8 +23,8 @@
     <ul class="nav navbar-nav navbar-right">
       <li><a href="AccountLogin.php"><span class="glyphicon glyphicon-log-out"></span> Logout</a></li>
     </ul>
-  </div>
-</header >
+</header>
+</div>
 
 <script>
 function navLink(address, pagename) {

@@ -3717,6 +3717,7 @@
 		padding: 4em 0 1em 0;
 		/*margin: 0 0 2.5em 0;*/  
 		text-align: center;
+		display:block;
 	}
 
 		#site_header input, #site_header select, #site_header textarea {

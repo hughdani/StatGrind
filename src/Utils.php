@@ -19,12 +19,14 @@ function create_page_link($page_file, $page_name) {
     echo "</form>";
 }
 
-function create_nav_link($page_file, $page_name) {
-    global $db;
-    echo "<form action='$page_file' class='navbar-form' method='post'>";
-    echo "<input type=submit value='$page_name'>";
-    echo "</form>";
+function create_site_header($header){
+    echo "<div class='container-fluid'>";
+    echo "<section id='site_header'>";
+    echo "<p>$header</p> ";
+    echo "</section>";
+    echo "</div>";
 }
+
 
 /**
 * Loads a question from file as an associative array

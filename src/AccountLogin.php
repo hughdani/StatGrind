@@ -30,10 +30,9 @@ if ($_POST['login']) {
 }
 ?>
 <body>
-
-<section id="site_header">
-  <p>Log In</p> 
-</section>
+<?php
+create_site_header("Log In");
+?>
 
 <?php if (isset($_SESSION['error'])): ?>
 <div class="alert">
@@ -54,7 +53,6 @@ if ($_POST['login']) {
 	</form>
     </div>
 </section>
-
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 </body>

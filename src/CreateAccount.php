@@ -62,9 +62,9 @@ if (isset($_POST["create_Account"]))
 
 <body>	
 
-<section id="site_header">
-  <p>Create New Account</p> 
-</section>
+<?php 
+create_site_header("Create New Account");
+?>
 
 <?php if ($err_msg != ""): ?>
 <div class="alert" style="background-color:<?= "#$err_clr" ?>">
