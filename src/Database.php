@@ -56,6 +56,16 @@ class Database
         $result = $this->query($sql)->fetch_assoc();
         return $result['permission'];
     }
+    
+    // Function that gets assignment title from id
+    function getAssignmentTitle($id){
+        global $db;
+        $sql = "SELECT assignment_id, title FROM assignments WHERE assignment_id = $id";
+        $result = $db->query($sql)->fetch_assoc();
+        $title = $result['title'];
+        if ($title == ""){ $title = "Assignment $id"; }
+        return $title;
+    }
 }
 ?>
 

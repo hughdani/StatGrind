@@ -34,7 +34,7 @@ $courses = $db->query($sql);
 ?>
 <div class="container-fluid">
    <div class="jumbotron">
-      <h1>Create Assignment <?php echo $assignment_id; ?></h1>
+      <h1>Create Assignment</h1>
    </div>
    <h2>Start Time</h2>
    <form action="EditAssignment.php" method="post">
@@ -84,9 +84,9 @@ $courses = $db->query($sql);
       <option value=<?=$c['course_id']?>> <?= $c['course_name'] ?> </option>
 <?php endwhile ?>
       </select>
-      <input type="hidden" name="assignment_id" id="assignment_id" value="<?php echo $assignment_id; ?>"/>
       Add a tag to assignment: <input type="text" name="assignment_tag" id="assignment_tag" placeholder="Assignment Tag">
       <input type="submit" class="btn btn-default" value="Create Assignment">
    </form>
 </div>
 </body>
+</html>

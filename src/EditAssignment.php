@@ -12,27 +12,39 @@ if (!isset($_SESSION)) {
 $user = $_SESSION['user'];
 create_head('Edit Assignment');
 
+// If editing existing assignment, get id and title
+if (isset($_POST['assignment_id'])) {
+	$assignment_id = $_POST['assignment_id'];
+} else {
+	$assignment_id = 1;
+}
+
 if (isset($_POST['course_id'])) {
     $course_id = $_POST['course_id'];
 } else {
     $course_id = 1;
 }
 
-//Get assignment tags if any
+// Get assignment title if defined
+if (isset($_POST['assignment_title'])){
+	$assignment_title = $_POST['assignment_title'];
+} else {
+	$assignment_title = "";
+}
+
+// Get assignment tags if any
 if (isset($_POST['assignment_tag'])) {
 	$assignment_tag = $_POST['assignment_tag'];
 } else {
 	$assignment_tag = "";
 }
 
-// Insert new assignment into assignments table
+// Insert new assignment into assignments table and and select the new assignment_id
 if (isset($_POST['starttime']))
 {
 	$start = converttime($_POST['starttime']);
 	$end = converttime($_POST['endtime']);
-	$assignment_id = $_POST['assignment_id'];
-	
-	$sql = "INSERT INTO assignments (start_date, end_date, tag, course_id) VALUES ('$start', '$end', '$assignment_tag', $course_id)";
+	$sql = "INSERT INTO assignments (start_date, end_date, tag, course_id, title) VALUES ('$start', '$end', '$assignment_tag', $course_id, '$assignment_title')";
 	$mysqli->query($sql);
 	$assignment_id = $mysqli->insert_id;
 }
@@ -66,9 +78,7 @@ if (isset($_POST['question_text']))
 	$sql = "INSERT INTO questions (location) VALUES ('$location')";
 	$mysqli->query($sql);
 
-	$sql = "SELECT question_id, location FROM questions WHERE location = '$location'";
-	$row = $mysqli->query($sql)->fetch_assoc();
-	$new_question_id = $row["question_id"];
+	$new_question_id = $mysqli->insert_id;
 
 	$sql = "INSERT INTO in_assignment (assignment_id, question_id) VALUES ($assignment_id, $new_question_id)";
 	$mysqli->query($sql);
@@ -117,7 +127,7 @@ if (isset($_POST['map_id']))
 	$mysqli->query($sql);
 
 }
-
+$assignment_title = $db->getAssignmentTitle($assignment_id);
 
 ?>
 
@@ -127,7 +137,11 @@ if (isset($_POST['map_id']))
 <div class="container-fluid">
 
 	<div class="jumbotron">
-		<h1>Edit Assignment <?php echo $assignment_id; ?></h1>
+		<?php if ($assignment_title != ""): ?>
+			<h1>Edit <?= $assignment_title; ?></h1>
+		<?php else: ?>
+			<h1>Edit Assignment <?= $assignment_id; ?></h1>
+		<?php endif ?>
 	</div>
 
 	<?php
@@ -143,7 +157,7 @@ if (isset($_POST['map_id']))
 			$i = $i + 1;
 			?>
 			<form action="EditAssignment.php" method="post">
-				<input type="hidden" name="assignment_id" id="assignment_id" value="<?= $assignment_id; ?>"/>
+				<input type="hidden" name="assignment_id" id="assignment_id" value="<?= $assignment_id ?>"/>
 				<input type="hidden" name="map_id" id="map_id" value="<?= $row["map_id"]; ?>"/>
 				<input type="submit" class="btn btn-default" value="Remove Question">
 			</form>
@@ -153,7 +167,7 @@ if (isset($_POST['map_id']))
 		echo "<h2>Question $i</h2>";
 	?>
 
-	<form action="CreateQuestion.php" method="post">
+	<form action="SelectQuestionType.php" method="post">
 		<input type="hidden" name="assignment_id" id="assignment_id" value="<?= $assignment_id; ?>"/>
 		<input type="submit" class="btn btn-default" value="Create New Question">
 	</form>

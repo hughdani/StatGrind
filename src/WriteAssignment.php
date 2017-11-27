@@ -1,4 +1,8 @@
 <?php 
+
+include 'Database.php';
+$db = new Database();
+
 // Determine assignment_id.
 if (isset($_POST['assignment_id']))
 {
@@ -43,7 +47,7 @@ if (isset($_POST['questions']))
 
 <html>
 <head>
-    <title>Write Assignment <?php echo $assignment_id; ?></title>
+    <title>Write <?= $db->getAssignmentTitle($assignment_id); ?></title>
     <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet">
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
     <link rel="stylesheet" href="css/main.css" />
@@ -52,7 +56,7 @@ if (isset($_POST['questions']))
 <div class="container-fluid">
 
 	<div class="jumbotron">
-		<h1>Write Assignment <?php echo $assignment_id; ?></h1>
+		<h1>Write <?= $db->getAssignmentTitle($assignment_id); ?></h1>
 	</div>
 
 <?php

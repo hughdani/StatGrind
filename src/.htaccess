@@ -1,0 +1,5 @@
+ErrorDocument 400 /L02_01/src/error.php
+ErrorDocument 401 /L02_01/src/error.php
+ErrorDocument 403 /L02_01/src/error.php
+ErrorDocument 404 /L02_01/src/error.php
+ErrorDocument 500 /L02_01/src/error.php
