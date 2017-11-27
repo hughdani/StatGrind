@@ -44,6 +44,9 @@
 
     <form action="SelectQuestionType.php" method="post">
         <input type="submit" class="btn btn-default" id="cancel" value="Cancel">
+        <?php if (isset($_POST['assignment_id'])) : ?>
+            <input class="hidden" name="assignment_id" id="assignment_id" value="<?= $_POST["assignment_id"]; ?>">
+        <?php endif; ?>
     </form>
 
     <?php if(isset($_POST["new_mc"])) : ?>
