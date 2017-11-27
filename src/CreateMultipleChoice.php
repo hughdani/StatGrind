@@ -16,8 +16,8 @@
                     option_counter++;
                 })
                 // update post variables to have the correct question and answer
-                $("#questionText").val(question);
-                $("#questionFormula").val($("#correct_opt").val());
+                $("#question_text").val(question);
+                $("#question_formula").val($("#correct_opt").val());
             });    
         });
     </script>
@@ -46,7 +46,7 @@
     <?php if(isset($_POST["new_mc"])) : ?>
         <?php $num_options = $_POST["num_options"]; ?>
 
-        <form action='PreviewQuestion.php' method='post'>
+        <form method='post' action="<?php if(isset($_POST['assignment_id'])){ echo 'EditAssignment.php'; } else { echo 'AllCreatedQuestions.php';};?>">        
             <div class='form-group'>
             <label for="mc_question"> Question:</label>
             <textarea type="submit" class="form-control" rows="5" name="mc_question" id="mc_question" required></textarea>
@@ -67,10 +67,16 @@
                     <option><?=$i?></option>
                 <?php endfor; ?>         
             
-                <input class='hidden' name=questionText id=questionText value="">
-                <input class='hidden' name=questionFormula id=questionFormula value="">
+                <input class="hidden" name="question_text" id="question_text" value="">
+                <input class="hidden"name="question_formula" id="question_formula" value="">
+
+                <!-- if making questions on the fly using new assignment -->
+                <?php if (isset($_POST['assignment_id'])) : ?>
+                    <input class="hidden" name="assignment_id" id=assignment_id value=<?php $_POST['assignment_id'] ?>>
+                <?php endif; ?>
+
                 <br />
-                <input type='submit' class='btn btn-default' id="submit_question" value='Submit'> 
+                <input type="submit" class="btn btn-default" id="submit_question" value="Submit"> 
             </div>
         </form>    
     <?php endif; ?>
