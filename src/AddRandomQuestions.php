@@ -7,8 +7,13 @@
 </head>
 
 <?php
+
+include 'Database.php';
+$db = new Database();
+
 	$assignment_id = $_POST['assignment_id'];
 	$num_questions = $_POST['num_questions'];
+	$assignment_title = $db->getAssignmentTitle($assignment_id) ;
 ?>
 
 <body>
@@ -16,11 +21,10 @@
 <div class="container-fluid">
 
 	<div class="jumbotron">
-		<h1>Adding <?php echo $num_questions; ?> question(s) to assignment <?php echo $assignment_id; ?></h1>
+		<h1>Adding <?= $num_questions; ?> question(s) to <?= $assignment_title; ?></h1>
 	</div>
 
 	<?php
-        	$mysqli = new mysqli("localhost", "root", "R0binson", "CSCC01");
 		for ($i = 1; $i <= $num_questions; $i++) {
 			$sql = "SELECT question_id FROM `questions`";
 			
@@ -30,16 +34,15 @@
 				$sql = $sql . " WHERE tag LIKE '%$filter%'";
 			}
 			
-        		$result = $mysqli->query($sql);
+        		$result = $db->query($sql);
 			for ($j = 1; $j <= rand(1, $result->num_rows); $j++){
 				$row = $result->fetch_row();
 			}
 			$question_id = $row[0];
 			$insertsql = "INSERT INTO in_assignment (assignment_id, question_id) 
 					VALUES ($assignment_id, $question_id)";
-			$mysqli->query($insertsql);
+			$db->query($insertsql);
 		}
-		$mysqli->close();
 	?>
 
 	<form action="EditAssignment.php" method="post">

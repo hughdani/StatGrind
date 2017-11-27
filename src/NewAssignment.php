@@ -21,10 +21,11 @@ $prev_assignment = $result->fetch_row();
 $assignment_id = $prev_assignment[0] + 1;
 $mysqli->close();
 ?>
-    <div class="container-fluid">
+
+<div class="container-fluid">
 
         <div class="jumbotron">
-            <h1>Create Assignment <?php echo $assignment_id; ?></h1>
+            <h1>Create New Assignment</h1>
         </div>
 
         <h2>Start Time</h2>
@@ -48,25 +49,22 @@ $mysqli->close();
 						</script>
 					</div>
 				</div>
+			</div>
+			<script type="text/javascript">
+				$(function () {
+					$('#datetimepicker1').datetimepicker();
+				});
+			</script>
 
-                <h2>End Time</h2>
-                <div class="container">
-					<div class="row">
-						<div class='col-sm-6'>
-							<div class="form-group">
-								<div class='input-group date' id='datetimepicker2'>
-									<input id="endtime" name="endtime" type='text' class="form-control" />
-									<span class="input-group-addon">
-										<span class="glyphicon glyphicon-calendar"></span>
-									</span>
-								</div>
-							</div>
-						</div>
-						<script type="text/javascript">
-						$(function () {
-							$('#datetimepicker2').datetimepicker();
-						});
-						</script>
+			<div class='col-md-4'>
+				<br>
+              			<h2>End Time</h2>
+				<div class="form-group">
+					<div class='input-group date' id='datetimepicker2'>
+						<input id="endtime" name="endtime" type='text' class="form-control" />
+						<span class="input-group-addon">
+							<span class="glyphicon glyphicon-calendar"></span>
+						</span>
 					</div>
 				</div>
 				<input type="hidden" name="assignment_id" id="assignment_id" value="<?php echo $assignment_id; ?>"/>
@@ -75,5 +73,4 @@ $mysqli->close();
 			</form>
     </div>
 </body>
-
 </html>

@@ -6,6 +6,11 @@
     <link rel="stylesheet" href="css/main.css" />
 </head>
 
+<?php
+include 'Database.php';
+$db = new Database();
+?>
+
 <body>
 
 <div class="container-fluid">
@@ -32,11 +37,12 @@
 			<br>
 
 			<?php
-			if(isset($_POST['select_assignment'])){
-				$selected_id = $_POST['select_assignment'];
-				if($selected_id != "All Assignments"){
-					echo "<h3>Assignment ". $selected_id ."</h3><br>";
-					$sql = "SELECT result FROM results WHERE assignment_id = $selected_id";
+			if(isset($_POST['selectAssignment'])){
+				$selectedId = $_POST['selectAssignment'];
+				if($selectedId != "All Assignments"){
+					$assignmentTitle = $db->getAssignmentTitle($selectedId);
+					echo "<h3>". $assignmentTitle ."</h3><br>";
+					$sql = "SELECT result FROM results WHERE assignment_id = $selectedId";
 					$result2 = $mysqli->query($sql);
 					$attempts = $result2->num_rows;
 					$assignment_total = 0;
