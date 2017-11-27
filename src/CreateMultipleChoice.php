@@ -24,8 +24,7 @@ $first_name = $user->getFirstName();
 $account_type = $user->getAccountType();
 $header_text = "Create Multiple Choice Question";
 
-include("NavigationBar.php");</div>
-</section>
+include("NavigationBar.php");
 create_site_header($header_text);
 ?>
     <script>
