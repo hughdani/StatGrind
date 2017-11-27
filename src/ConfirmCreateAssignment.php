@@ -1,19 +1,11 @@
-<!-- Page for professor after creating an assignment -->
-
-<html>
-<head>
-    <title>edit assignment</title>
-    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet">
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
-    <link rel="stylesheet" href="css/main.css" />
-</head>
-
-<?php 
-
-include 'Database.php';
+<?php
+require_once 'Database.php';
+require_once 'Utils.php';
 $db = new Database();
 
-    echo $db->getAssignmentTitle($_POST["assignment_id"]) . " successfully added.";
+create_head('Edit Assignment');
+
+echo $db->getAssignmentTitle($_POST["assignment_id"]) . " successfully added.";
 ?>
 
 <p>What would you like to do next?</p>
