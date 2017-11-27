@@ -56,10 +56,18 @@
 	// Select all assignment from assignment table.
 	$sql = "SELECT assignment_id, start_date FROM assignments";
 	$result = $mysqli->query($sql);
+	include 'Utils.php';
+	$current_time = converttime(date("Y-m-d h:i:sa"));
 	// Display open assignments.
+<<<<<<< HEAD
 	while ($row = $result->fetch_row()) {
 		if ($current_time > $row[1]) {
 			echo "<h2>Assignment $row[0]</h2><br>";
+=======
+	while ($row = $result->fetch_assoc()) {
+		if ($current_time > $row["start_date"]) {
+			echo "<h2>".$db->getAssignmentTitle($row["assignment_id"])."</h2><br>";
+>>>>>>> b4645a54746d4ef66db898c965998c0bec30a0b4
 			// Select all student attempts for this assignment.
 			$sql = "SELECT result, attempt_id, feedback FROM results WHERE student_id = '$student_id' AND assignment_id = $row[0]";
 			$result2 = $mysqli->query($sql);
@@ -70,11 +78,11 @@
 			if ($attempts > 0) {
 				$mark = 0;
 				$attempt_id = 0;
-				while ($row2 = $result2->fetch_row()) {
-					if ($row2[1] > $attempt_id) {
-						$mark = $row2[0];
-						$attempt_id = $row2[1];
-						$feedback = $row2[2];
+				while ($row2 = $result2->fetch_assoc()) {
+					if ($row2["attempt_id"] > $attempt_id) {
+						$mark = $row2["result"];
+						$attempt_id = $row2["attempt_id"];
+						$feedback = $row2["feedback"];
 					}
 				}
 			} else {
@@ -95,6 +103,58 @@
 
         <?php
 
+<<<<<<< HEAD
+=======
+/**
+ * Display the dropdown for selecting assignment and display the mark/feedback of the selected assignment
+ *
+ */
+function display_mark_and_feedback(){
+?>
+	<form method='post'>
+		View Mark/Feedback for: 
+		<select name="select_assignment" onchange="this.form.submit();">
+			<option disabled value="" selected hidden>Select Assignment</option>
+			<?php 
+			// Display open assignments.
+			$mysqli = new mysqli("localhost", "root", "R0binson", "CSCC01");
+			$sql = "SELECT assignment_id, start_date FROM assignments";
+			$result = $mysqli->query($sql);
+			while ($row = $result->fetch_assoc()){
+				echo "<option value='".$row["assignment_id"]."''> Assignment ". $row["assignment_id"] . "</option>";
+			}
+			?>
+		</select>
+	</form>
+		<br>
+<?php
+	if(isset($_POST['select_assignment'])){
+		$assignment_id = $_POST['select_assignment'];
+		echo "<h2>Assignment $assignment_id</h2><br>";
+		// Select all student attempts for this assignment.
+		$sql = "SELECT results.student_id, results.assignment_id, results.result, results.feedback, results.attempt_id from (SELECT student_id, assignment_id, max(attempt_id) as 'most_recent' FROM `results` group by student_id, assignment_id) T LEFT JOIN results on most_recent = attempt_id where results.assignment_id = $assignment_id";
+		$result = $mysqli->query($sql);
+		while($row = $result->fetch_assoc()){ ?>
+	<form id="update_result" method='post'>
+			<?php
+			$student_id = $row['student_id'];
+			$feedback = $row['feedback'];
+			$mark = $row['result'];
+			$attempt_id = $row['attempt_id'];
+			echo "Student ID: $student_id <br>";
+			?>	
+    			<input type="hidden" name="student_id" id="student_id" value="<?php echo $student_id; ?>"/>
+    			<input type="hidden" name="attempt_id" id="attempt_id" value="<?php echo $attempt_id; ?>"/>
+    			<input type="hidden" name="select_assignment" id="select_assignment" value="<?php echo $assignment_id; ?>"/>
+			Mark:
+			<input id="new_mark" name="new_mark" type='text' class='form-control' value="<?php echo $mark; ?>">
+			Feedback:
+  			<textarea id="feedback" name="feedback" type='text' class='form-control' form='update_result' rows='5' ><?php echo $feedback; ?></textarea>
+  			<input type="submit" class="btn btn-default" value="Submit Update"/>
+    	</form>
+<?php
+		}
+>>>>>>> b4645a54746d4ef66db898c965998c0bec30a0b4
 	}
 	
 }
