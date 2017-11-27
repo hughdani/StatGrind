@@ -8,9 +8,9 @@ if (!isset($_SESSION)) {
     session_start();
 }
 if (!isset($_SESSION['user'])) {
-    header("Location: Forbidden.php");
+    header("Location: error.php?error_status=401");
 } elseif (!$db->pagePermission(basename(__FILE__), $_SESSION['user'])) {
-    header("Location: Forbidden.php");
+    header("Location: error.php?error_status=403");
 }
 
 create_head('All Created Questions');

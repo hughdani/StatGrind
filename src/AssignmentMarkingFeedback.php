@@ -2,34 +2,18 @@
 	require_once 'Database.php';
 	$db = new Database();
 
-	if (!isset($_SESSION)) {
-  		session_start();
-	}
 	if (!isset($_SESSION['user'])) {
-	    header("HTTP/1.1 401 Unauthorized");
 	    header("Location: error.php?error_status=401");
 	    exit();
 	} elseif (!$db->pagePermission(basename(__FILE__), $_SESSION['user'])) {
-	    header("HTTP/1.1 403 Fobidden");
 	    header("Location: error.php?error_status=403");
 	    exit();
 	}
 
 ?>
-<html>
-<head>
-    <title>Assignment Marking Feedback</title>
-    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet">
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
-    <link rel="stylesheet" href="css/main.css" />
-</head>
-<body>
 
-<div class="container-fluid">
+create_head('Assignment Marking');
 
-	<div class="jumbotron">
-		<h1>Assignment Marking/Feedback</h1>
-	</div>
 <?php
 
 /**
