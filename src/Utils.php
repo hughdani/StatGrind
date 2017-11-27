@@ -12,10 +12,9 @@ function create_head($title)
     echo "</head>";
 }
 
-function create_page_link($page_file, $page_name, $user) {
+function create_page_link($page_file, $page_name) {
     global $db;
-    $vis = !$db->pagePermission($page_file, $user) ? "style='display:none'" : "";
-    echo "<form action='$page_file' method='post' $vis>";
+    echo "<form action='$page_file' method='post'>";
     echo "<input type=submit value='$page_name'>";
     echo "</form>";
 }
