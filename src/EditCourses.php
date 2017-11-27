@@ -2,22 +2,28 @@
 require_once 'Database.php';
 require_once 'User.php';
 require_once 'Utils.php';
-$db = new Database();
-$mysqli = $db->getconn();
 
 if (!isset($_SESSION)) {
     session_start();
 }
 if (!isset($_SESSION['user'])) {
     header("Location: Forbidden.php");
-} elseif (!$db->pagePermission(basename(__FILE__), $_SESSION['user'])) {
-    header("Location: Forbidden.php");
 }
 
+create_head('Home');
+echo "<body>";
+
+$db = new Database();
+$mysqli = $db->getconn();
 $user = $_SESSION['user'];
 $user_id = $user->getUserId();
+$first_name = $user->getFirstName();
+$account_type = $user->getAccountType();
+$header_text = "Welcome back $first_name!";
 
-create_head('Edit Courses');
+include("NavigationBar.php");
+create_site_header($header_text);
+
 
 // Update records before pulling them if posting back to the same page
 if (isset($_POST['up_course'])) {
@@ -50,7 +56,9 @@ $sql = "SELECT courses.course_id, courses.course_name, courses.course_desc
     WHERE teaching_course.user_id = $user_id";
 $courses = $mysqli->query($sql);
 ?>
-
+<div class="container-fluid">
+<section class="wrapper style2 special">
+<div class="inner narrow">
 <?php if ($courses->num_rows > 0): ?>
     <?php while ($c = $courses->fetch_assoc()): ?>
     <form method='post'>
@@ -84,4 +92,7 @@ $courses = $mysqli->query($sql);
 <?php
 create_page_link('CreateCourse.php', 'Create Course');
 ?>
+</div>
+</section>
+</div>
 
