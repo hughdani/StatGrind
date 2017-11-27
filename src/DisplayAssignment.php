@@ -33,7 +33,7 @@
 			while($row = mysqli_fetch_assoc($result)){
 				echo "<p>Question $qNum</p><br>";
 				$file = file_get_contents($row['location']);
-				$question_text = explode("ANSWER:", $file);
+				$question_text = explode("FORMULA:", $file);
 				echo $question_text[0] . "<br><br>";
 				echo "ANSWER:" . $question_text[1];
 				$qNum = $qNum + 1;

@@ -67,7 +67,7 @@ $assignment_id = $_POST['assignment_id'];
 			if (!in_array($row["location"], $displayed)) {
 				echo "<h2>Question $i</h2><br>";
 				$filetxt = file_get_contents($row["location"]);
-				$q = explode("ANSWER:", $filetxt);
+				$q = explode("FORMULA:", $filetxt);
 				// DIsplay question and answer.
 				echo $q[0] . "<br><br>";
 				echo "ANSWER: " . $q[1];

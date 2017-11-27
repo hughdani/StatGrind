@@ -67,7 +67,7 @@ if (isset($_POST['question_text']))
 	$file_name = "/question" . (iterator_count($fi) + 1) . ".txt";
 
 	// Append answer to question.
-	$qanda = $_POST['question_text'] . "\n\n\n\n ANSWER: " . $_POST['question_formula'];
+	$qanda = $_POST['question_text'] . "<br> FORMULA: " . $_POST['question_formula'];
 
 	// Save question to file.
 	$location = $dir . $file_name;
@@ -151,7 +151,7 @@ $assignment_title = $db->getAssignmentTitle($assignment_id);
 		while ($row = $result->fetch_assoc()) {
 			echo "<h2>Question $i</h2><br>";
 			$filetxt = file_get_contents($row["location"]);
-			$q = explode("ANSWER:", $filetxt);
+			$q = explode("FORMULA:", $filetxt);
 			echo $q[0] . "<br><br>";
 			echo "ANSWER: " . $q[1] . "<br>";
 			$i = $i + 1;
