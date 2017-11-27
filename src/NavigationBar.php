@@ -5,9 +5,16 @@
     </div>
     <ul class="nav navbar-nav">
     <?php      
-        foreach ($db->query("SELECT name, filename FROM pages WHERE home_item=1") as $p) {
+	// Get account type
+	require_once 'Database.php';
+	$db = new Database();
+	$account_type = $db->getAccountType($user_id);
+
+	// Generate navigation bar options based on account type
+	$sql = "SELECT pages.name, pages.filename FROM permissions LEFT JOIN pages on permissions.page_id = pages.page_id where pages.nav_item = 1 AND permissions.account_type = $account_type";
+        foreach ($db->query($sql) as $p) {
             echo "<li>";
-            create_page_link($p['filename'], $p['name']);
+            create_nav_link($p['filename'], $p['name']);
             echo "</li>";
         }
     ?>
@@ -19,7 +26,6 @@
       -->
     </ul>
     <ul class="nav navbar-nav navbar-right">
-      <li><a href="AccountLogin.php"><span class="glyphicon glyphicon-user"></span> Sign Up</a></li>
       <li><a href="AccountLogin.php"><span class="glyphicon glyphicon-log-out"></span> Logout</a></li>
     </ul>
   </div>

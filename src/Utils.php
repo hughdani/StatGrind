@@ -19,6 +19,13 @@ function create_page_link($page_file, $page_name) {
     echo "</form>";
 }
 
+function create_nav_link($page_file, $page_name) {
+    global $db;
+    echo "<form action='$page_file' method='post'>";
+    echo "<input type=submit value='$page_name'>";
+    echo "</form>";
+}
+
 /**
 * Loads a question from file as an associative array
 *

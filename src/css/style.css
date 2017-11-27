@@ -65,6 +65,26 @@
     color: #ffffff;
     background-color: #ffffff;
 }
+/* Form */
+.navbar-default .navbar-nav > li > form {
+    color: #ffffff;
+}
+.navbar-default .navbar-nav > li > form:hover,
+.navbar-default .navbar-nav > li > form:focus {
+    color: #104b4c;
+}
+.navbar-default .navbar-nav > .active > form,
+.navbar-default .navbar-nav > .active > form:hover,
+.navbar-default .navbar-nav > .active > form:focus {
+    color: #ffffff;
+    background-color: #104b4c;
+}
+.navbar-default .navbar-nav > .open > form,
+.navbar-default .navbar-nav > .open > form:hover,
+.navbar-default .navbar-nav > .open > form:focus {
+    color: #ffffff;
+    background-color: #ffffff;
+}
 /* Caret */
 .navbar-default .navbar-nav > .dropdown > a .caret {
     border-top-color: #ffffff;

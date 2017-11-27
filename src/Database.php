@@ -56,12 +56,18 @@ class Database
         $result = $this->query($sql)->fetch_assoc();
         return $result['permission'];
     }
+
+    // Function that gets account type code from ID
+    function getAccountType($id){
+        $sql = "SELECT account_type FROM users WHERE user_id = $id";
+	$result = $this->query($sql)->fetch_assoc();
+	return $result['account_type'];
+    }
     
     // Function that gets assignment title from id
     function getAssignmentTitle($id){
-        global $db;
         $sql = "SELECT assignment_id, title FROM assignments WHERE assignment_id = $id";
-        $result = $db->query($sql)->fetch_assoc();
+        $result = $this->query($sql)->fetch_assoc();
         $title = $result['title'];
         if ($title == ""){ $title = "Assignment $id"; }
         return $title;
