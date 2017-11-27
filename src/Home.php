@@ -3,13 +3,12 @@ require_once 'Database.php';
 require_once 'User.php';
 require_once 'Utils.php';
 
-/*if (!isset($_SESSION)) {
+if (!isset($_SESSION)) {
     session_start();
 }
 if (!isset($_SESSION['user'])) {
     header("Location: error.php");
-}*/
-include(permissions.php);
+}
 
 create_head('Home');
 
