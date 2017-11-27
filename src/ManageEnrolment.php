@@ -73,8 +73,8 @@ function create_forms($data, $table) {
       <br>
       <b> Name: <?= $u_lname, $u_fname ?> </b>
       <br>
-      <label class='form-check-label'>
-      <input type='checkbox' class='chk-enrol form-check-input' value='<?= "$c_id;$u_id;$table" ?>' <?= $u_enrol ?>> Enrolled </label>
+      <input type='checkbox' id='ec-<?=$u_id;?>' class='chk-enrol form-check-input' value='<?= "$c_id;$u_id;$table" ?>' <?= $u_enrol ?>>
+      <label for='ec-<?=$u_id;?>'> Enrolled </label>
       <br>
 <?php
         }
