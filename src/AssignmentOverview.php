@@ -10,15 +10,19 @@ if (!isset($_SESSION['user'])) {
     header("Location: Forbidden.php");
 }
 
-create_head('Home');
+create_head('Assignment Overview');
 echo "<body>";
-require_once 'Database.php';
-require_once 'User.php';
-session_start();
+
 $db = new Database();
 $mysqli = $db->getconn();
 $user = $_SESSION['user'];
 $user_id = $user->getUserId();
+$first_name = $user->getFirstName();
+$account_type = $user->getAccountType();
+$header_text = "Assignment Overview";
+
+include("NavigationBar.php");
+create_site_header($header_text);
 // If comming from ConfirmSubmission page, insert submission into results table
 if (isset($_POST['result'])) {
 	$result = $_POST['result'];
@@ -27,7 +31,9 @@ if (isset($_POST['result'])) {
 	$mysqli->query($sql);
 }
 ?>
-
+<div class="container-fluid">
+<section class="wrapper style2 special">
+<div class="inner narrow">
 Find assignment:
 <form action="AssignmentOverview.php" method="post">
 	<input type="text" name="search_param" id="search_param" placeholder="Search for assignments">
@@ -73,7 +79,9 @@ while ($row = $result->fetch_assoc()) {
 }
 
 ?>
-
+</div>
+</section>
+</div>
 </div>
 </body>
 </html>
