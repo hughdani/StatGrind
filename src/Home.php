@@ -12,6 +12,8 @@ if (!isset($_SESSION['user'])) {
 
 create_head('Home');
 
+echo "<body>";
+
 $db = new Database();
 $user = $_SESSION['user'];
 $first_name = $user->getFirstName();
@@ -23,7 +25,7 @@ include("NavigationBar.php");
 
 //create_site_header($header_text);
 ?>
-<body>
+<div class="container-fluid">
 <section class="wrapper style2 special">
 <div class="inner narrow">
 <?php
@@ -31,10 +33,11 @@ $sql = "SELECT name, filename
     FROM pages
     INNER JOIN permissions ON pages.page_id = permissions.page_id
     WHERE pages.home_item=1 AND permissions.account_type=$account_type";
-foreach ($db->query("SELECT name, filename FROM pages WHERE home_item=1") as $p) {
+foreach ($db->query($sql) as $p) {
     create_page_link($p['filename'], $p['name']);
 }
 ?>
 </div>
 </section>
+</div>
 </body>
