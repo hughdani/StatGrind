@@ -35,7 +35,8 @@
             <label for="num_options"> Number of Options:</label>
             <input class="form-control" type="number" id="num_options" name="num_options" min="2" required>
             <br />
-            <input type="submit" class="btn btn-default" name="new_mc" id="new_mc" value="Create"> 
+            <input type="submit" class="btn btn-default" name="new_mc" id="new_mc" value="Create">
+            <input type="hidden" name="assignment_id" id="assignment_id" value="<?= $_POST['assignment_id']; ?>"/>
         </div>
     </form>
 
@@ -65,14 +66,14 @@
                 <!-- Select from a set of correct options -->
                 <?php for($i = 1; $i <= $num_options; $i++) : ?>
                     <option><?=$i?></option>
-                <?php endfor; ?>         
+                <?php endfor; ?>
             
                 <input class="hidden" name="question_text" id="question_text" value="">
                 <input class="hidden"name="question_formula" id="question_formula" value="">
 
                 <!-- if making questions on the fly using new assignment -->
                 <?php if (isset($_POST['assignment_id'])) : ?>
-                    <input class="hidden" name="assignment_id" id=assignment_id value=<?php $_POST['assignment_id'] ?>>
+                    <input class="hidden" name="assignment_id" id=assignment_id value="<?php $_POST['assignment_id'] ?>">
                 <?php endif; ?>
 
                 <br />

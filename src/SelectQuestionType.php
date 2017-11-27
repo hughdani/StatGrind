@@ -16,10 +16,12 @@
     <div class="container-fluid" >
         <form action="CreateQuestion.php" method="post">
             <input type="submit" class="btn btn-default" value="Standard Question">
+            <input type="hidden" name="assignment_id" id="assignment_id" value="<?= $_POST['assignment_id']; ?>"/>
         </form>
 
         <form action="CreateMultipleChoice.php" method="post">
             <input type="submit" class="btn btn-default" value="Multiple Choice">
+            <input type="hidden" name="assignment_id" id="assignment_id" value="<?= $_POST['assignment_id']; ?>"/>
         </form>
         
         <form action="AccountLogin.php" method="post">
