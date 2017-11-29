@@ -39,9 +39,9 @@ if (isset($_POST['result'])) {
 <div class="container-fluid">
 <section class="wrapper style2 special">
 <div class="inner narrow">
-Find assignment:
+Find Assignment:
 <form action="AssignmentOverview.php" method="post">
-	<input type="text" name="search_param" id="search_param" placeholder="Search for assignments">
+	<input type="text" name="search_param" id="search_param" placeholder="Search for Assignment Titles/Tags">
 	<input type="hidden" name="student_id" id="student_id" <?php if ($student_id){ echo "value=$student_id";} ?>>
 	<input type="submit" value ="Search">
 </form>
