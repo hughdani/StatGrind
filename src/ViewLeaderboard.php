@@ -15,30 +15,12 @@
         header("Location: error.php?error_status=403");
         exit();
     }
-?>
-<html>
-<head>
-    <title>Leaderboard</title>
-    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet">
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
-    <link rel="stylesheet" href="css/main.css" />
-</head>
-
-<?php
-$user_id = $_SESSION['user_id'];
-
-if (!isset($_SESSION)) {
-    session_start();
-}
-if (!isset($_SESSION['user'])) {
-    header("Location: Forbidden.php");
-}
-
 create_head('Leaderboard');
 echo "<body>";
 
 $db = new Database();
 $user = $_SESSION['user'];
+$user_id = $user->getUserId();
 $first_name = $user->getFirstName();
 $account_type = $user->getAccountType();
 $header_text = "Rankings";
@@ -46,7 +28,6 @@ $header_text = "Rankings";
 include("NavigationBar.php");
 create_site_header($header_text);
 
-$user_id = $user->getUserId();
 
 // Get user's rank and total score
 $sql = "SELECT rank, total_score from (SELECT @rnk := @rnk+1 as 'rank', user_id, total_score FROM leaderboard, (SELECT @rnk := 0) T) LB WHERE user_id = $user_id";
