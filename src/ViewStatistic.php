@@ -74,7 +74,7 @@ create_site_header($header_text);
 					}
 
 					$average = round($assignment_total / $num_of_students, 2);
-					echo "Number of registered students: " . $num_of_students . "<br> Total number of attempts for this assignment: " . $attempts . "<br> Average attempts: " . $attempts/$num_of_students . "<br> Assignment average: " . $average . "<br>" . $num_of_participate . " out of " . $num_of_students . " registered students participated in this assignment <br>";
+					echo "Number of registered students: " . $num_of_students . "<br> Total number of attempts for this assignment: " . $attempts . "<br> Average attempts: " . round($attempts/$num_of_students, 2) . "<br> Assignment average: " . $average . "<br>" . $num_of_participate . " out of " . $num_of_students . " registered students participated in this assignment <br>";
 					
 
 				}
@@ -105,7 +105,7 @@ create_site_header($header_text);
 							$sql = "SELECT username FROM users WHERE account_type = 2";
 							$result3 = $mysqli->query($sql);
 							$num_of_students = $result3->num_rows;
-							$average = $assignment_total / $num_of_students;
+							$average = round($assignment_total / $num_of_students, 2);
 							// set the new table row
 							echo "<tr>
 									<th> ". $row['title'] . "</th>
