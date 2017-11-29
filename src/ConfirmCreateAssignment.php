@@ -15,7 +15,21 @@
 	    exit();
 	}
 	
-create_head('Edit Assignment');
+create_head('Confirm Assignment Creation');
+echo "<body>";
+
+$user = $_SESSION['user'];
+$first_name = $user->getFirstName();
+$account_type = $user->getAccountType();
+$header_text = "Confirm Assignment Creation";
+
+
+include("NavigationBar.php");
+create_site_header($header_text);
+
+echo "<div class='container-fluid'>";
+echo "<section class='wrapper style2 special'>";
+echo "<div class='inner narrow'>";
 
 echo $db->getAssignmentTitle($_POST["assignment_id"]) . " successfully added.";
 ?>
@@ -30,4 +44,8 @@ echo $db->getAssignmentTitle($_POST["assignment_id"]) . " successfully added.";
 <form action="AllCreatedAssignments.php" method="post">
     <input type="submit" class="btn btn-default" value="View All Assignments">
 </form>
+</div>
+</section>
+</div>
+</body>
 
