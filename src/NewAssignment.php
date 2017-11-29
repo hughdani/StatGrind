@@ -56,9 +56,6 @@ $courses = $db->query($sql);
 		<h2>Assignment Title:</h2>
 		<input type="text" name="assignment_title" id="assignment_title" placeholder="Assignment Title">
        <h2>Start Time</h2>
-      <div class="container">
-         <div class="row">
-            <div class='col-sm-6'>
                <div class="form-group">
                   <div class='input-group date' id='datetimepicker1'>
                      <input id="starttime" name="starttime" type='text' class="form-control" />
@@ -67,18 +64,12 @@ $courses = $db->query($sql);
                      </span>
                   </div>
                </div>
-            </div>
             <script type="text/javascript">
                $(function () {
                    $('#datetimepicker1').datetimepicker();
                });
             </script>
-         </div>
-      </div>
       <h2>End Time</h2>
-      <div class="container">
-         <div class="row">
-            <div class='col-sm-6'>
                <div class="form-group">
                   <div class='input-group date' id='datetimepicker2'>
                      <input id="endtime" name="endtime" type='text' class="form-control" />
@@ -87,14 +78,11 @@ $courses = $db->query($sql);
                      </span>
                   </div>
                </div>
-            </div>
             <script type="text/javascript">
                $(function () {
                    $('#datetimepicker2').datetimepicker();
                });
             </script>
-         </div>
-      </div>
       Course:
       <select name="course_id">
       <option disabled value="" selected hidden>Select Course</option>
