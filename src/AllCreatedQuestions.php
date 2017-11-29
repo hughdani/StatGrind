@@ -27,6 +27,45 @@ $header_text = "All Created Questions";
 include("NavigationBar.php");
 create_site_header($header_text);
 
+// Save new question to questions table
+if (isset($_POST['question_text']))
+{
+
+	$dir = 'questions';
+
+ 	// create new directory with 744 permissions if it does not exist yet
+ 	// owner will be the user/group the PHP script is run under
+ 	if ( !file_exists($dir) ) {
+     		$oldmask = umask(0);
+     		mkdir ($dir, 0744);
+ 	}
+
+	// Increment question number for file name.
+	$fi = new FilesystemIterator($dir, FilesystemIterator::SKIP_DOTS);
+	$file_name = "/question" . (iterator_count($fi) + 1) . ".txt";
+
+	// Append answer to question.
+	$qanda = $_POST['question_text'] . "<br> FORMULA: " . $_POST['question_formula'];
+
+	// Save question to file.
+	$location = $dir . $file_name;
+	file_put_contents($location, $qanda); // saves the string in the textarea into the file
+
+	// Insert question into question table
+	//$assignment_id = $_POST['assignment_id'];
+	$sql = "INSERT INTO questions (location) VALUES ('$location')";
+	$mysqli->query($sql);
+
+	$new_question_id = $mysqli->insert_id;
+
+	//$sql = "INSERT INTO in_assignment (assignment_id, question_id) VALUES ($assignment_id, $new_question_id)";
+	//$mysqli->query($sql);
+    echo '<script> window.location.replace("/Home.php"); </script>';
+}
+
+
+
+
 ?>
 <div class="container-fluid">
 <section class="wrapper style2 special">
@@ -74,52 +113,3 @@ create_page_link("Home.php", "Home");
 </div>
 </section>
 </div>
-<?php 
-
-// Save new question to questions table
-if (isset($_POST['question_text']))
-{
-
-	$dir = 'questions';
-
- 	// create new directory with 744 permissions if it does not exist yet
- 	// owner will be the user/group the PHP script is run under
- 	if ( !file_exists($dir) ) {
-     		$oldmask = umask(0);
-     		mkdir ($dir, 0744);
- 	}
-
-	// Increment question number for file name.
-	$fi = new FilesystemIterator($dir, FilesystemIterator::SKIP_DOTS);
-	$file_name = "/question" . (iterator_count($fi) + 1) . ".txt";
-
-	// Append answer to question.
-	$qanda = $_POST['question_text'] . "\n\n\n\n ANSWER: " . $_POST['question_formula'];
-
-	// Save question to file.
-	$location = $dir . $file_name;
-	file_put_contents($location, $qanda); // saves the string in the textarea into the file
-
-	// Insert question into question table
-	$assignment_id = $_POST['assignment_id'];
-	$sql = "INSERT INTO questions (location) VALUES ('$location')";
-	$mysqli->query($sql);
-
-	$new_question_id = $mysqli->insert_id;
-
-	$sql = "INSERT INTO in_assignment (assignment_id, question_id) VALUES ($assignment_id, $new_question_id)";
-    $mysqli->query($sql);
-    echo '<script> window.location.replace("/Home.php"); </script>';
-}
-
-// if question was selected, save that question
-if (isset($_POST['question_id']))
-{
-	// Insert question into question table
-	$question_id = $_POST['question_id'];
-	$assignment_id = $_POST['assignment_id'];
-	$sql = "INSERT INTO in_assignment (assignment_id, question_id) VALUES ($assignment_id, $question_id)";
-	$mysqli->query($sql);
-	
-}
-?>
