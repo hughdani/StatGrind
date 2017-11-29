@@ -1,7 +1,15 @@
 <?php 
-
-include 'Database.php';
+require_once 'Database.php';
+require_once 'User.php';
+require_once 'Utils.php';
 $db = new Database();
+
+if (!isset($_SESSION)) {
+    session_start();
+}
+if (!isset($_SESSION['user'])) {
+    header("Location: error.php?error_status=401");
+}
 
 // Determine assignment_id.
 if (isset($_POST['assignment_id']))
@@ -43,23 +51,23 @@ if (isset($_POST['questions']))
 	}
 	$mysqli->close();
 }
+$assignment_title = $db->getAssignmentTitle($assignment_id);
+$pagename = "Write $assignment_title";
+create_head($pagename);
+echo "<body>";
+$user = $_SESSION['user'];
+$first_name = $user->getFirstName();
+$account_type = $user->getAccountType();
+include("NavigationBar.php");
+
+create_site_header($pagename);
+
 ?>
-
-<html>
-<head>
-    <title>Write <?= $db->getAssignmentTitle($assignment_id); ?></title>
-    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet">
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
-    <link rel="stylesheet" href="css/main.css" />
-</head>
-<body>
 <div class="container-fluid">
-
-	<div class="jumbotron">
-		<h1>Write <?= $db->getAssignmentTitle($assignment_id); ?></h1>
-	</div>
-
+<section class="wrapper style2 special">
+<div class="inner narrow">
 <?php
+
 // Display question
 $qnumb = $i + 1;
 echo "<center><h2>Question $qnumb</h2><br>";
@@ -136,13 +144,9 @@ $i = $i + 1;
 ?>
 
 
-
-
-
-
-
-
-
+</div>
+</section>
+</div>
 </div>
 </body>
 </html>
