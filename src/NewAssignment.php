@@ -54,7 +54,7 @@ $courses = $db->query($sql);
 
    <form action="EditAssignment.php" method="post">
 		<h2>Assignment Title:</h2>
-		<input type="text" name="assignment_title" id="assignment_title" placeholder="Assignment Title">
+		<input type="text" name="assignment_title" id="assignment_title" placeholder="Assignment Title" required>
        <h2>Start Time</h2>
                <div class="form-group">
                   <div class='input-group date' id='datetimepicker1'>
