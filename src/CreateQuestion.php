@@ -30,7 +30,7 @@ create_site_header($header_text);
 <div class="container-fluid">
 <section class="wrapper style2 special">
 <div class="inner narrow">
-  <form method="post" action="EditAssignment.php" name="form1">
+  <form method="post" action="<?php if(isset($_POST['assignment_id'])){ echo 'EditAssignment.php'; } else { echo 'AllCreatedQuestions.php';};?>" name="form1">
     <!-- Question Variables -->
     <div class="form-row">
       <h4>Add Random Variable</h4>
