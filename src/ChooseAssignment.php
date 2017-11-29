@@ -30,9 +30,9 @@ create_site_header($header_text);
 <div class="container-fluid">
 <section class="wrapper style2 special">
 <div class="inner narrow">
-Find assignment:
+Find Assignment:
 <form action="ChooseAssignment.php" method="post">
-	<input type="text" name="search_param" id="search_param" placeholder="Search for Assignments">
+	<input type="text" name="search_param" id="search_param" placeholder="Search for Assignment Titles/Tags">
 	<input type="submit" value ="Search">
 </form>
 <?php
