@@ -56,10 +56,10 @@ function display_mark_and_feedback(){
 			<option disabled value="" selected hidden>Select Assignment</option>
 			<?php 
 			// Display open assignments.
-			$sql = "SELECT assignment_id, start_date FROM assignments";
+			$sql = "SELECT assignment_id, title, start_date FROM assignments";
 			$result = $db->query($sql);
 			while ($row = $result->fetch_assoc()){
-				echo "<option value='".$row["assignment_id"]."''> Assignment ". $row["assignment_id"] . "</option>";
+				echo "<option value='".$row["assignment_id"]."''>". $row["title"] . "</option>";
 			}
 			?>
 		</select>
