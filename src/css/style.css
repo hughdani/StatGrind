@@ -107,3 +107,23 @@
           color: #333;
     }
 }
+
+#footer {
+    overflow: hidden;
+}
+
+
+#footer .coon{
+    position: absolute;
+    transition: all 3s ease-in;
+    right: 150px;
+    bottom: -225px;
+}
+
+#footer:hover .coon{
+    -moz-transform: translate(-1px, -200px);
+    -ms-transform: translate(-1px, -200px);
+    -o-transform: translate(-1px, -200px);
+    -webkit-transform: translate(-1px, -200px);
+    transform: translate(-1px, -200px)
+}

@@ -92,7 +92,8 @@ function GetAssignment(){
     global $db;
     // get assignment ID
     $assignment_id = $_POST['assignment_id'];
-    echo "<h3><b>Assignment $assignment_id</b></h3>";
+    $assignment_title = $db->getAssignmentTitle($assignment_id);
+    echo "<h3><b>$assignment_title</b></h3><br>";
 
     // get filename for question
     $sql = "SELECT location FROM in_assignment LEFT JOIN questions ON in_assignment.question_id=questions.question_id WHERE in_assignment.assignment_id = " . $assignment_id;

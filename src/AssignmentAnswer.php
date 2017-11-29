@@ -33,17 +33,31 @@ create_site_header($header_text);
 <section class="wrapper style2 special">
 <div class="inner narrow">
 <form method="POST">
-    Assignment ID: <input type="text" name="assignment_id"><br>
-    <input type="submit" name="submit" value="Search Answer">
+    Assignment: 
+			<select name="assignment_id" onchange="this.form.submit();">
+				<option disabled value="" selected hidden>Select Assignment</option>
+				<?php 
+				$sql = "SELECT assignment_id, title FROM assignments";
+				if ($account_type == 2){
+					$sql = $sql . " where end_date < NOW()";
+				}
+				$result = $db->query($sql);
+				while ($row = $result->fetch_assoc()){
+				echo "<option value='".$row["assignment_id"]."'> ". $row["title"] . "</option>";
+                }
+				?>
+			</select>
+
 </form>
 
 
 <?php
-create_page_link('Home.php', 'Home');
 
-if(isset($_POST['submit'])) {
+if(isset($_POST['assignment_id'])) {
     GetAssignment();
 }
+
+create_page_link('Home.php', 'Home');
     ?>
 </div>
 </section>
