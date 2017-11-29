@@ -39,14 +39,15 @@ $assignments = $db->query($sql);
 <?php if ($assignments->num_rows > 0): ?>
     <?php while ($a = $assignments->fetch_assoc()): ?>
         <form method='post' action=''>
-        <br> <?= $a['title']; ?>
-            <br> start date: <?= $a['start_date']; ?>
-            <br> end date: <?= $a['end_date']; ?>
-            <br> 
+            <h3><?= $a['title']; ?></h3>
+            <div class="row">
+                Start Date: <?= $a['start_date']; ?>
+            </div>
+            <div class="row">
+                End Date: <?= $a['end_date']; ?>
+            </div>
             <input name='vis-$a_id' id='a-<?= $a['assignment_id'];?>' type='checkbox' value=<?= $a['assignment_id'] ?> class='chk-vis form-check-input' <?= ($a['visible']) ? 'checked' : '' ?> >
-	    <label for='a-<?= $a['assignment_id'];?>'>
-            Visible
-            </label><br>
+            <label for='a-<?= $a['assignment_id'];?>'>Visible</label><br>
         </form>
     <?php endwhile ?>
 <?php else: ?>
