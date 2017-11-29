@@ -5,6 +5,7 @@
     <meta charset="utf-8">
     <meta content="width=device-width, initial-scale=1" name="viewport"><!--[if lte IE 8]><script src="js/ie/html5shiv.js"></script><![endif]-->
     <link href="css/main.css" rel="stylesheet"><!--[if lte IE 9]><link rel="stylesheet" href="css/ie9.css" /><![endif]-->
+    <link rel='icon' href='css/favicon.png'>
 </head>
 <body>
     <!-- Banner -->
