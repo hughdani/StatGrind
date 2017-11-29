@@ -73,7 +73,7 @@ create_site_header($header_text);
 						$num_of_participate = ($result4->fetch_row()[0]);
 					}
 
-					$average = $assignment_total / $num_of_students;
+					$average = round($assignment_total / $num_of_students, 2);
 					echo "Number of registered students: " . $num_of_students . "<br> Total number of attempts for this assignment: " . $attempts . "<br> Average attempts: " . $attempts/$num_of_students . "<br> Assignment average: " . $average . "<br>" . $num_of_participate . " out of " . $num_of_students . " registered students participated in this assignment <br>";
 					
 
