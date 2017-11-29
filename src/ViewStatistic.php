@@ -30,15 +30,15 @@ create_site_header($header_text);
 
 	<form method="post">
 		<div>
-			View statistics for: 
+			View statistics for assignment: 
 			<select name="select_assignment" onchange="this.form.submit();">
 				<option disabled value="" selected hidden>Select Assignment</option>
 				<option value="All Assignments">All Assignments</option>
 				<?php 
-				$sql = "SELECT assignment_id FROM assignments";
+				$sql = "SELECT assignment_id, title FROM assignments";
 				$result = $mysqli->query($sql);
 				while ($row = $result->fetch_assoc()){
-				echo "<option value='".$row["assignment_id"]."''> Assignment". $row["assignment_id"] . "</option>";
+				echo "<option value='".$row["assignment_id"]."''> ". $row["title"] . "</option>";
                 }
 				?>
 			</select>
@@ -76,15 +76,15 @@ create_site_header($header_text);
 				}
 				else
 				{
-					$sql = "SELECT assignment_id FROM assignments";
+					$sql = "SELECT assignment_id, title FROM assignments";
 					$result = $mysqli->query($sql);					
 					// Loop through all assignments
 					echo "<table>
 						<tr>
 							</div>
-</section>
-</div>
-<th>Assignment Number</th>
+							</section>
+							</div>
+							<th>Assignment Title</th>
 							<th>Average Mark</th>
 						</tr>";
 						while ($row = $result->fetch_assoc()) {		
@@ -104,7 +104,7 @@ create_site_header($header_text);
 							$average = $assignment_total / $num_of_students;
 							// set the new table row
 							echo "<tr>
-									<th>Assignment ". $row[0] . "</th>
+									<th> ". $row['title'] . "</th>
 									<th>". $average ."</th>
 								</tr>";
 						}
