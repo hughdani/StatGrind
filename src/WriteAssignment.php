@@ -70,7 +70,7 @@ create_site_header($pagename);
 
 // Display question
 $qnumb = $i + 1;
-echo "<center><h2>Question $qnumb</h2><br>";
+echo "<center><h2>Question $qnumb</h2>";
 $question_file = file_get_contents($questions[$i][1]);
 if (strpos($question_file, 'ANSWER:') !== false) {
     $q = explode("ANSWER:", $question_file);
@@ -85,7 +85,7 @@ $genquestion = varreader($q[0], $q[1]);
 // Display generated question
 $newquestionbody = $genquestion[0];
 $newformula = $genquestion[1];
-echo $newquestionbody . "<br><br>";
+echo $newquestionbody . "<br>";
 
 // Set correct answer.
 if ($newformula == "") {
