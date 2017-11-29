@@ -59,6 +59,7 @@
         <div class="copyright">
             CSCC01 Fall 2017 Project <a href="https://github.com/CSCC01F17/L02_01">GITHUB</a>.
         </div>
+        <img class="coon" src="css/raccoon.png"/>
     </footer>
     <script src="js/jquery.min.js">
     </script> 
