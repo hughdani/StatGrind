@@ -63,7 +63,7 @@ create_site_header($header_text);
 					}
 
 					// Get the number of students in the db, account_type = 2 is for students
-					$sql = "SELECT username FROM users INNER JOIN account_types WHERE type_description='Student'";
+					$sql = "SELECT username FROM users WHERE account_type=2";
 					$result3 = $mysqli->query($sql);
 					$num_of_students = $result3->num_rows;
 
