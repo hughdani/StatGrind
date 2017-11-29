@@ -58,7 +58,7 @@ $courses = $db->query($sql);
        <h2>Start Time</h2>
                <div class="form-group">
                   <div class='input-group date' id='datetimepicker1'>
-                     <input id="starttime" name="starttime" type='text' class="form-control" />
+                     <input id="starttime" name="starttime" type='text' class="form-control" required/>
                      <span class="input-group-addon">
                      <span class="glyphicon glyphicon-calendar"></span>
                      </span>
@@ -72,7 +72,7 @@ $courses = $db->query($sql);
       <h2>End Time</h2>
                <div class="form-group">
                   <div class='input-group date' id='datetimepicker2'>
-                     <input id="endtime" name="endtime" type='text' class="form-control" />
+                     <input id="endtime" name="endtime" type='text' class="form-control" required/>
                      <span class="input-group-addon">
                      <span class="glyphicon glyphicon-calendar"></span>
                      </span>
@@ -84,7 +84,7 @@ $courses = $db->query($sql);
                });
             </script>
       Course:
-      <select name="course_id">
+      <select name="course_id" required>
       <option disabled value="" selected hidden>Select Course</option>
 <?php while ($c = $courses->fetch_assoc()): ?>
       <option value=<?=$c['course_id']?>> <?= $c['course_name'] ?> </option>
