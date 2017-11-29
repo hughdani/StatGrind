@@ -102,10 +102,10 @@ function GetAssignment(){
         $qNum = 1;
         // display each questions from their text file location
         while($row = mysqli_fetch_assoc($result)){
-            echo "<div> <b>Question $qNum<b><br>";
+            echo "<div> <b>Question $qNum</b><br>";
             $file = file_get_contents($row['location']);
             $question_text = explode("FORMULA:", $file);
-            echo "ANSWER:" . $question_text[1] . "<br><br><div>";
+            echo "<b>ANSWER:</b>" . $question_text[1] . "<br><br><div>";
             $qNum = $qNum + 1;
         }
     }
