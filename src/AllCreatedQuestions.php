@@ -3,6 +3,7 @@ require_once 'Database.php';
 require_once 'User.php';
 require_once 'Utils.php';
 
+
 if (!isset($_SESSION)) {
     session_start();
 }
@@ -13,6 +14,7 @@ if (!isset($_SESSION['user'])) {
     header("Location: error.php?error_status=403");
     exit();
 }
+$mysqli = $db->getconn();
 
 create_head('All Created Questions');
 echo "<body>";
@@ -52,14 +54,14 @@ if (isset($_POST['question_text']))
 	file_put_contents($location, $qanda); // saves the string in the textarea into the file
 
 	// Insert question into question table
-	//$assignment_id = $_POST['assignment_id'];
+	$assignment_id = $_POST['assignment_id'];
 	$sql = "INSERT INTO questions (location) VALUES ('$location')";
 	$mysqli->query($sql);
 
 	$new_question_id = $mysqli->insert_id;
 
-	//$sql = "INSERT INTO in_assignment (assignment_id, question_id) VALUES ($assignment_id, $new_question_id)";
-	//$mysqli->query($sql);
+	$sql = "INSERT INTO in_assignment (assignment_id, question_id) VALUES ($assignment_id, $new_question_id)";
+	$mysqli->query($sql);
     echo '<script> window.location.replace("/Home.php"); </script>';
 }
 
