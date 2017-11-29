@@ -1,49 +1,47 @@
 <?php 
 
-require_once 'VariableReader.php';
-require_once 'Database.php';
-require_once 'User.php';
-if (!isset($_SESSION)) {
-    session_start();
-}
+include 'Database.php';
 $db = new Database();
-$mysqli = $db->getconn();
-
-$user = $_SESSION['user'];
-$user_id = $user->getUserId();
 
 // Determine assignment_id.
-if (isset($_POST['assignment_id'])) {
+if (isset($_POST['assignment_id']))
+{
 	$assignment_id = $_POST['assignment_id'];
 } else {
 	$assignment_id = 1;
 }
+// Determine student_id.
+if (isset($_POST['student_id']))
+{
+	$student_id = $_POST['student_id'];
+} else {
+	$student_id = "kozaadam";
+}
 
 // If this is not the first question.
-if (isset($_POST['questions'])) {
+if (isset($_POST['questions']))
+{
 	$i = $_POST['index'];
 	$questions = unserialize($_POST['questions']);
 	$results = unserialize($_POST['results']);
 	// Determine result of last question.
-    $user_answer = $_POST['user_answer'];
-    $true_answer = $_POST['true_answer'];
-    $wa = "$user_answer = $true_answer";
-    $wa_result = computeFormula($wa);
-	$result[] = ($wa == 'True') ?  100 : 0;
+	If ($_POST['user_answer'] == $_POST['right_answer']){
+		$results[] = 100;
+	} else {
+		$results[] = 0;
+	}
+
 } else {
-    $i = 0;
 	// Get assignment questions
+	$i = 0;
 	$questions = [];
 	$results = [];
-    $ret = $mysqli->query("SELECT DISTINCT location
-        FROM in_assignment 
-        INNER JOIN questions ON in_assignment.question_id=questions.question_id 
-        WHERE assignment_id = $assignment_id");
-
-    while ($question = $ret->fetch_assoc()) {
-            $questions[] = $question;
-    }
-
+	$mysqli = new mysqli("localhost", "root", "R0binson", "CSCC01");
+	$result = $mysqli->query("SELECT in_assignment.question_id, location FROM in_assignment LEFT JOIN questions ON in_assignment.question_id=questions.question_id WHERE assignment_id = $assignment_id");
+	while ($row = $result->fetch_row()) {
+		$questions[] = [$row[0], $row[1]];
+	}
+	$mysqli->close();
 }
 ?>
 
@@ -63,39 +61,59 @@ if (isset($_POST['questions'])) {
 
 <?php
 // Display question
-echo "<center><h2>Question $i </h2><br>";
-$question = $questions[$i];
-$question_file = file_get_contents($question['location']);
-$q = explode("FORMULA:", $question_file);
+$qnumb = $i + 1;
+echo "<center><h2>Question $qnumb</h2><br>";
+$question_file = file_get_contents($questions[$i][1]);
+if (strpos($question_file, 'ANSWER:') !== false) {
+    $q = explode("ANSWER:", $question_file);
+} else {
+	$q = explode("FORMULA: ", $question_file);
+}
+
 // Insert variable interpetor.
-$parsed_question = varreader($q[0], $q[1]);
+require_once 'VariableReader.php';
+$genquestion = varreader($q[0], $q[1]);
 
 // Display generated question
-$parsed_qtext = $parsed_question[0];
-$parsed_qformula = $genquestion[1];
+$newquestionbody = $genquestion[0];
+$newformula = $genquestion[1];
+echo $newquestionbody . "<br><br>";
 
-echo $parsed_qtext . "<br><br>";
 // Set correct answer.
-if ($parsed_qformula == "") {
-	$true_answer = "";
+if ($newformula == "") {
+	$right_answer = "";
 } else {
 	if ($genquestion[2] != 0) { 
-		$true_answer = computeFormula($parsed_qformula);
+		if (is_numeric ($newformula)) {
+			$right_answer = $newformula;
+		} else {
+			$right_answer = computeFormula($newformula);
+		}
 	} else {
-		$true_answer = $parsed_qformula;;
+		if (is_numeric ($newformula)) {
+			$right_answer = $newformula;
+		} else {
+			if (computeFormula($newformula) == "error") {
+				$right_answer = $newformula;
+			} else {
+				$right_answer = computeFormula($newformula);
+			}
+		}
 	}
 }
 
+
 // Determine if this is the last question
-if ($i == $questions->num_rows - 1) {
+if ($qnumb == count($questions)) {
 ?>
 
 	<form action="ConfirmSubmission.php" method="post">
 		<label for="user_answer">Answer:</label>
 		<input type="text" name="user_answer" id="user_answer">
-		<input type="hidden" name="true_answer" id="right_answer" value="<?= $true_answer ?>"/>
-		<input type="hidden" name="assignment_id" id="assignment_id" value="<?= $assignment_id ?>"/>
+		<input type="hidden" name="right_answer" id="right_answer" value="<?= $right_answer; ?>"/>
+		<input type="hidden" name="assignment_id" id="assignment_id" value="<?= $assignment_id; ?>"/>
 		<input type="hidden" name="results" id="results" value="<?php echo htmlentities(serialize($results)); ?>"/>
+		<input type="hidden" name="student_id" id="student_id" value="<?= $student_id; ?>"/>
 		<input type="submit" class="btn btn-default" value="Submit Assignment">
 	</form></center>
 <?php
@@ -105,16 +123,26 @@ $i = $i + 1;
 	<form action="WriteAssignment.php" method="post">
 		<label for="user_answer">Answer:</label>
 		<input type="text" name="user_answer" id="user_answer">
-		<input type="hidden" name="true_answer" id="right_answer" value="<?= $true_answer ?>"/>
+		<input type="hidden" name="right_answer" id="right_answer" value="<?= $right_answer; ?>"/>
 		<input type="hidden" name="assignment_id" id="assignment_id" value="<?= $assignment_id; ?>"/>
-		<input type="hidden" name="questions" id="questions" value="<?= htmlentities(serialize($questions)) ?>"/>
-		<input type="hidden" name="results" id="results" value="<?php echo htmlentities(serialize($results)) ?>"/>
+		<input type="hidden" name="questions" id="questions" value="<?= htmlentities(serialize($questions)); ?>"/>
+		<input type="hidden" name="results" id="results" value="<?php echo htmlentities(serialize($results)); ?>"/>
+		<input type="hidden" name="student_id" id="student_id" value="<?= $student_id; ?>"/>
 		<input type="hidden" name="index" id="index" value="<?= $i; ?>"/>
 		<input type="submit" class="btn btn-default" value="Next Question">
 	</form></center>
 <?php
 }
 ?>
+
+
+
+
+
+
+
+
+
 </div>
 </body>
 </html>

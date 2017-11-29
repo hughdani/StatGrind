@@ -74,20 +74,24 @@ function computeFormula($formulatext) {
     $resp = $engine->getResults($formulatext);
 
     // get data pods back
-    $pod = $resp->getPods();
+    if ( count($resp->getPods()) > 0 ) {
+    	$pod = $resp->getPods();
 
-    // select the wanted pod
-    $pod = $pod[1];
+    	// select the wanted pod
+    	$pod = $pod[1];
 
-    // search for the plaintext pod
-    foreach($pod->getSubpods() as $subpod){
-        if($subpod->plaintext){
-            $plaintext = $subpod->plaintext;
-                    break;
-        }
+    	// search for the plaintext pod
+    	foreach($pod->getSubpods() as $subpod){
+        	if($subpod->plaintext){
+            		$plaintext = $subpod->plaintext;
+                    	break;
+        	}
+    	}
+
+    	// print the answer
+    	return $plaintext;
+    } else {
+	return "error";
     }
-
-    // print the answer
-    return $plaintext;
 }
 ?>
