@@ -27,7 +27,7 @@ $header_text = "All Created Assignments";
 include("NavigationBar.php");
 create_site_header($header_text);
 
-$sql = "SELECT title, start_date, end_date, visible ";
+$sql = "SELECT assignment_id, title, start_date, end_date, visible ";
 $sql = $sql . "FROM assignments INNER JOIN teaching_course ON assignments.course_id = teaching_course.course_id ";
 $sql = $sql . "WHERE teaching_course.user_id = $user_id";
 $assignments = $db->query($sql);
