@@ -39,7 +39,7 @@ $assignments = $db->query($sql);
 <?php if ($assignments->num_rows > 0): ?>
     <?php while ($a = $assignments->fetch_assoc()): ?>
         <form method='post' action=''>
-            <h3><?= $a['title']; ?></h3>
+            <h2><?= $a['title']; ?></h2>
             <div class="row">
                 Start Date: <?= $a['start_date']; ?>
             </div>
