@@ -26,13 +26,12 @@ $header_text = "Manage Enrolment";
 
 include("NavigationBar.php");
 create_site_header($header_text);
-
+echo "<div class='container-fluid'>";
+echo "<section class='wrapper style2 special'>";
+echo "<div class='inner narrow'>";
 if (isset($_POST['course_id'])) {
     $c_id = ($_POST['course_id']);
     // get all instructors and TAs
-    echo "<div class='container-fluid'>";
-    echo "<section class='wrapper style2 special'>";
-    echo "<div class='inner narrow'>";
     echo "<h2>Instructors</h2>";
     $sql = "SELECT * FROM users
         INNER JOIN account_types ON users.account_type = account_types.account_type
