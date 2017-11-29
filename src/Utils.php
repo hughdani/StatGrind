@@ -92,7 +92,7 @@ function GetAssignment(){
     global $db;
     // get assignment ID
     $assignment_id = $_POST['assignment_id'];
-    echo "<h3><b>Assignment $assignment_id</b></h3><br>";
+    echo "<h3><b>Assignment $assignment_id</b></h3>";
 
     // get filename for question
     $sql = "SELECT location FROM in_assignment LEFT JOIN questions ON in_assignment.question_id=questions.question_id WHERE in_assignment.assignment_id = " . $assignment_id;
@@ -102,10 +102,10 @@ function GetAssignment(){
         $qNum = 1;
         // display each questions from their text file location
         while($row = mysqli_fetch_assoc($result)){
-            echo "<div> <b>Question</b> $qNum<br>";
+            echo "<div> <b>Question $qNum<br>";
             $file = file_get_contents($row['location']);
             $question_text = explode("FORMULA:", $file);
-            echo "FORMULA:" . $question_text[1] . "<br><br><div>";
+            echo "ANSWER:" . $question_text[1] . "<br><br><div>";
             $qNum = $qNum + 1;
         }
     }
