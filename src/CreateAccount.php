@@ -31,7 +31,7 @@ $username = "";
 $firstname = "";
 $lastname = "";
 
-if (isset($_POST["create_Account"]))
+if (isset($_POST["create_account"]))
 	{
 	$username = $_POST["user_name"];
 	$firstname = $_POST["first_name"];
@@ -89,7 +89,7 @@ create_site_header("Create New Account");
   			<option value="1">Instructor</option>
   			<option value="3">TA</option>
 		    </select><br>
-     	<input type="submit" name="create_Account" value ="Create Account">
+     	<input type="submit" name="create_account" value ="Create Account">
       </form>
       <form method="post" action="AccountLogin.php">
         <input type="submit" name="log_in" value ="Log in">
