@@ -60,6 +60,8 @@ abstract class User
     {
         return $this->account_type;
     }
+
+    abstract public function getCourseTable();
 }
 
 class Instructor extends User
@@ -70,6 +72,11 @@ class Instructor extends User
         parent::__construct($user_id, $user_name, $first_name, $last_name);
         $this->account_type = self::USER_TYPE;
     }
+
+    public function getCourseTable() {
+        return 'teaching_course';
+    }
+
 }
 
 class TA extends User
@@ -80,6 +87,10 @@ class TA extends User
         parent::__construct($user_id, $user_name, $first_name, $last_name);
         $this->account_type = self::USER_TYPE;
     }
+
+    public function getCourseTable() {
+        return 'teaching_course';
+    }
 }
 
 class Student extends User
@@ -89,5 +100,9 @@ class Student extends User
     {
         parent::__construct($user_id, $user_name, $first_name, $last_name);
         $this->account_type = self::USER_TYPE;
+    }
+
+    public function getCourseTable() {
+        return 'taking_course';
     }
 }

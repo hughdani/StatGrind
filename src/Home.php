@@ -21,7 +21,7 @@ $account_type = $user->getAccountType();
 $header_text = "Welcome back $first_name!";
 
 
-include("NavigationBar.php");
+require_once("NavigationBar.php");
 
 create_site_header($header_text);
 ?>

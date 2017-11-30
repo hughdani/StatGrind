@@ -4,6 +4,14 @@
     </div>
     <ul class="nav navbar-nav">
     <?php      
+    require_once 'Database.php';
+    require_once 'User.php';
+    require_once 'Utils.php';
+    if (!isset($_SESSION)) {
+        session_start();
+    }
+    $user = $_SESSION['user'];
+    $account_type = $user->getAccountType();
 	// Generate navigation bar options based on account type
 	$sql = "SELECT pages.name, pages.filename FROM permissions LEFT JOIN pages on permissions.page_id = pages.page_id where pages.nav_item = 1 AND permissions.account_type = $account_type";
         foreach ($db->query($sql) as $p) {

@@ -47,13 +47,22 @@ Find Assignment:
 </form>
 
 <?php
-// Select all assignment from assignment table.
-$sql = "SELECT assignment_id, start_date, end_date FROM assignments WHERE NOW() >= start_date AND visible=1";
+// Select all assignment from assignment table for the student.
+// Assignments must be:
+//  for the same courses that they are enrolled in
+//  have a start date before the current date
+//  be visible
+$sql = "SELECT assignment_id, start_date, end_date 
+    FROM assignments 
+    INNER JOIN taking_course ON assignments.course_id = taking_course.course_id 
+    WHERE NOW() >= start_date 
+    AND visible=1 
+    AND taking_course.user_id = $user_id";
 
 //Apply search params if any
 if (isset($_POST['search_param'])) {
 	$filter = $_POST['search_param'];
-	$sql = $sql . " AND tag LIKE '%$filter%' OR title LIKE '%$filter%'";
+	$sql = $sql . " AND (tag LIKE '%$filter%' OR title LIKE '%$filter%)'";
 }
 
 $result = $mysqli->query($sql);
