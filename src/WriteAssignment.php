@@ -3,6 +3,7 @@ require_once 'Database.php';
 require_once 'User.php';
 require_once 'Utils.php';
 $db = new Database();
+$mysqli = $db->getconn();
 
 if (!isset($_SESSION)) {
     session_start();
@@ -44,12 +45,10 @@ if (isset($_POST['questions']))
 	$i = 0;
 	$questions = [];
 	$results = [];
-	$mysqli = new mysqli("localhost", "root", "R0binson", "CSCC01");
 	$result = $mysqli->query("SELECT in_assignment.question_id, location FROM in_assignment LEFT JOIN questions ON in_assignment.question_id=questions.question_id WHERE assignment_id = $assignment_id");
 	while ($row = $result->fetch_row()) {
 		$questions[] = [$row[0], $row[1]];
 	}
-	$mysqli->close();
 }
 $assignment_title = $db->getAssignmentTitle($assignment_id);
 $pagename = "Write $assignment_title";
