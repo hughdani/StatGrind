@@ -4,6 +4,7 @@ require_once 'User.php';
 require_once 'Utils.php';
 
 $db = new Database();
+$mysqli = $db->getconn();
 
 if (!isset($_SESSION)) {
     session_start();
@@ -33,6 +34,7 @@ $lastname = "";
 
 if (isset($_POST["create_account"]))
 	{
+        echo "TEST";
 	$username = $_POST["user_name"];
 	$firstname = $_POST["first_name"];
 	$lastname = $_POST["last_name"];

@@ -77,7 +77,7 @@ if (isset($_POST['question_text']))
 <?php
 $user = $_SESSION['user'];
 $user_id = $user->getUserId();
-$sql = "SELECT DISTINCT questions.question_id, questions.location, questions.tag
+$sql = "SELECT DISTINCT question_id, location, tag
     FROM questions
     WHERE creator_id = $user_id";
 
@@ -93,7 +93,7 @@ $questions = $db->query($sql);
         <form method='post' action='EditQuestion.php'>
         <h3> Question <?= $q['question_id'] ?> </h6>
 
-        <span> (<?= $q['location'] ?>) </span>
+        <span> Tag: <?= $q['tag'] ?> </span>
         <br>
         <input type='submit' value='Edit'>
         <input type='hidden' name='question_id' value=<?= $q['question_id'] ?> >
