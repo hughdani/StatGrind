@@ -40,6 +40,7 @@ foreach ($results as &$value) {
 	$final = $final + $value;
 }
 $final = $final / count($results);
+$final = round($final, 2);
 ?>
 
 <div class="container-fluid">
