@@ -73,6 +73,7 @@ create_site_header($header_text);
             <div class='form-group'>
             <label for="mc_question"> Question:</label>
             <textarea type="submit" class="form-control" rows="5" name="mc_question" id="mc_question" required></textarea>
+            <input type='text' class='form-control' name='question_tag' placeholder='Question Tag' required>
 
                 <h3>Options</h3>
 

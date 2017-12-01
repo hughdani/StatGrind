@@ -14,13 +14,14 @@ if (!isset($_SESSION['user'])) {
     header("Location: error.php?error_status=403");
     exit();
 }
-$mysqli = $db->getconn();
 
 create_head('All Created Questions');
 echo "<body>";
 
 $db = new Database();
+$mysqli = $db->getconn();
 $user = $_SESSION['user'];
+$user_id = $user->getUserId();
 $first_name = $user->getFirstName();
 $account_type = $user->getAccountType();
 $header_text = "All Created Questions";
@@ -54,15 +55,10 @@ if (isset($_POST['question_text']))
 	file_put_contents($location, $qanda); // saves the string in the textarea into the file
 
 	// Insert question into question table
-	$assignment_id = $_POST['assignment_id'];
-	$sql = "INSERT INTO questions (location) VALUES ('$location')";
+    $assignment_id = $_POST['assignment_id'];
+    $tag = $_POST['tag'];
+	$sql = "INSERT INTO questions (location, creator_id, tag) VALUES ('$location', $user_id, '$tag')";
 	$mysqli->query($sql);
-
-	$new_question_id = $mysqli->insert_id;
-
-	$sql = "INSERT INTO in_assignment (assignment_id, question_id) VALUES ($assignment_id, $new_question_id)";
-	$mysqli->query($sql);
-    echo '<script> window.location.replace("/Home.php"); </script>';
 }
 
 
@@ -81,15 +77,13 @@ if (isset($_POST['question_text']))
 <?php
 $user = $_SESSION['user'];
 $user_id = $user->getUserId();
-$sql = "SELECT questions.question_id, questions.location, questions.tag, questions.type
+$sql = "SELECT DISTINCT questions.question_id, questions.location, questions.tag
     FROM questions
-    INNER JOIN in_assignment ON questions.question_id = in_assignment.question_id
-    INNER JOIN assignments ON in_assignment.assignment_id = assignments.assignment_id
-    INNER JOIN teaching_course ON assignments.course_id = teaching_course.course_id
-    WHERE teaching_course.user_id = $user_id";
+    WHERE creator_id = $user_id";
+
 if (isset ($_POST['tag'])) {
     $tag = $_POST['tag'];
-    $sql = $sql . " AND questions.tag = '$tag'";
+    $sql = $sql . " AND (questions.tag LIKE '%$tag%' OR questions.id = $tag)";
 }
 $questions = $db->query($sql);
 ?>

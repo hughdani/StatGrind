@@ -128,7 +128,7 @@ create_site_header($header_text);
     </div>
     <!-- Question Tags -->
     <div class="form-row">
-      <input id="question_tags" name="question_tags" type="text" class="form-control" placeholder="Question Tag(s)">
+      <input id="question_tag" name="question_tag" type="text" class="form-control" placeholder="Question Tag" required>
     </div>
     <div class="form-row">
       <button type="button" class="btn btn-danger" onclick="history.back();"> Back </button>

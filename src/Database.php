@@ -36,9 +36,11 @@ class Database
         $sql = "SELECT * FROM users WHERE username = '$username'";
         $result = $this->query($sql);
         $row = $result->fetch_assoc();
+        $hash = $row['password'];
+
         if ($result->num_rows == 0) {
             return self::LOGIN_DNE;
-        } elseif (strcmp($row['password'], $password) != 0) {
+        } elseif (!password_verify($password, $hash)) {
             return self::LOGIN_FAIL;
         } else {
             return $row;

@@ -17,9 +17,9 @@
 $mysqli = $db->getconn();
 
 $user = $_SESSION['user'];
+$user_id = $user->getUserId();
 create_head('Edit Assignment');
 echo "<body>";
-$user = $_SESSION['user'];
 $first_name = $user->getFirstName();
 $account_type = $user->getAccountType();
 $header_text = "Edit Assignment";
@@ -90,7 +90,8 @@ if (isset($_POST['question_text']))
 
 	// Insert question into question table
 	$assignment_id = $_POST['assignment_id'];
-	$sql = "INSERT INTO questions (location) VALUES ('$location')";
+    $tag = $_POST['question_tag'];
+	$sql = "INSERT INTO questions (location, creator_id, tag) VALUES ('$location', $user_id, '$tag')";
 	$mysqli->query($sql);
 
 	$new_question_id = $mysqli->insert_id;

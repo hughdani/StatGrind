@@ -37,7 +37,7 @@ if (isset($_POST['course_id'])) {
         INNER JOIN account_types ON users.account_type = account_types.account_type
         WHERE users.user_id <> $user_id
         AND account_types.type_description='Instructor'
-        ORDER BY users.last_name, users.first_name";
+        ORDER BY users.username, users.last_name, users.first_name";
     $instructors = $db->query($sql);
     create_forms($instructors, 'teaching_course');
     echo "<h2>TAs</h2>";
@@ -45,7 +45,7 @@ if (isset($_POST['course_id'])) {
         INNER JOIN account_types ON users.account_type = account_types.account_type
         WHERE users.user_id <> $user_id
         AND account_types.type_description='TA'
-        ORDER BY users.last_name, users.first_name";
+        ORDER BY users.username, users.last_name, users.first_name";
     $tas = $db->query($sql);
     create_forms($tas, 'teaching_course');
     // get all Students
@@ -54,7 +54,7 @@ if (isset($_POST['course_id'])) {
         INNER JOIN account_types ON users.account_type = account_types.account_type
         WHERE users.user_id <> $user_id
         AND account_types.type_description='Student'
-        ORDER BY users.last_name, users.first_name";
+        ORDER BY users.username, users.last_name, users.first_name";
     $students = $db->query($sql);
     create_forms($students, 'taking_course');
 }
@@ -75,14 +75,15 @@ function create_forms($data, $table) {
         echo "<form method='post' action=''>";
         while ($row = $data->fetch_assoc()) {
             $u_id = $row['user_id'];
+            $u_uname = $row['username'];
             $u_fname = $row['first_name'];
             $u_lname = $row['last_name'];
             $u_enrol = is_enrolled($u_id, $table) ? "checked" : "";
 ?>
       <br>
-      <b> ID: <?= $u_id ?> </b>
+      <b> Username: <?= "$u_uname" ?> </b>
       <br>
-      <b> Name: <?= $u_lname, $u_fname ?> </b>
+      <b> Name: <?= "$u_lname, $u_fname" ?> </b>
       <br>
       <input type='checkbox' id='ec-<?=$u_id;?>' class='chk-enrol form-check-input' value='<?= "$c_id;$u_id;$table" ?>' <?= $u_enrol ?>>
       <label for='ec-<?=$u_id;?>'> Enrolled </label>

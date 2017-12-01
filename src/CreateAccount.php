@@ -21,6 +21,7 @@ function available($user_name) {
 }
 function register($username, $password, $first_name, $last_name, $account_type) {
     global $mysqli;
+    $password = password_hash($password, PASSWORD_DEFAULT);
     $sql = "INSERT INTO users (username, password, first_name, last_name, account_type) VALUES ('$username', '$password', '$first_name', '$last_name', $account_type)";
     $mysqli->query($sql);
 }
