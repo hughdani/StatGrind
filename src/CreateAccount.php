@@ -3,14 +3,13 @@ require_once 'Database.php';
 require_once 'User.php';
 require_once 'Utils.php';
 
-create_head("Create New Account");
 $db = new Database();
-$mysqli = $db->getconn();
 
 if (!isset($_SESSION)) {
     session_start();
 }
 
+$header_text = $db->getPageTitle(basename(__FILE__));
 create_head('Create Account');
 
 function available($user_name) {
@@ -66,7 +65,7 @@ if (isset($_POST["create_account"]))
 <body>	
 
 <?php 
-create_site_header("Create New Account");
+create_site_header($header_text);
 ?>
 
 <?php if ($err_msg != ""): ?>

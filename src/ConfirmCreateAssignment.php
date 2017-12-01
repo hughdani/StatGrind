@@ -21,7 +21,7 @@ echo "<body>";
 $user = $_SESSION['user'];
 $first_name = $user->getFirstName();
 $account_type = $user->getAccountType();
-$header_text = "Confirm Assignment Creation";
+$header_text = $db->getPageTitle(basename(__FILE__));
 
 
 include("NavigationBar.php");

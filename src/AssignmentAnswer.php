@@ -22,7 +22,7 @@ $db = new Database();
 $user = $_SESSION['user'];
 $first_name = $user->getFirstName();
 $account_type = $user->getAccountType();
-$header_text = "Assignment Answer";
+$header_text = $db->getPageTitle(basename(__FILE__));
 
 
 include("NavigationBar.php");

@@ -75,5 +75,13 @@ class Database
         return $title;
 
     }
+
+    function getPageTitle($filename) {
+        $sql = "SELECT name FROM pages WHERE filename = '$filename'";
+        $result = $this->query($sql)->fetch_assoc();
+        $name = $result['name'];
+        return $name;
+    }
+
 }
 ?>

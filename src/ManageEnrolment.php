@@ -22,7 +22,7 @@ $user = $_SESSION['user'];
 $user_id = $user->getUserId();
 $first_name = $user->getFirstName();
 $account_type = $user->getAccountType();
-$header_text = "Manage Enrolment";
+$header_text = $db->getPageTitle(basename(__FILE__));
 
 include("NavigationBar.php");
 create_site_header($header_text);

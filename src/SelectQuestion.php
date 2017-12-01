@@ -19,7 +19,7 @@ create_head('Select Question');
 $user = $_SESSION['user'];
 $first_name = $user->getFirstName();
 $account_type = $user->getAccountType();
-$header_text = "Select Question";
+$header_text = $db->getPageTitle(basename(__FILE__));
 
 include("NavigationBar.php");
 create_site_header($header_text);

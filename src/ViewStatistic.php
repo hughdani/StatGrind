@@ -22,7 +22,7 @@ echo "<body>";
 $user = $_SESSION['user'];
 $first_name = $user->getFirstName();
 $user_id = $user->getUserId();
-$header_text = "Assignment Statistics";
+$header_text = $db->getPageTitle(basename(__FILE__));
 
     
 require_once("NavigationBar.php");

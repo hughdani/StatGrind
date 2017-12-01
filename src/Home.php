@@ -10,7 +10,7 @@ if (!isset($_SESSION['user'])) {
     header("Location: error.php?error_status=401");
 }
 
-create_head('Home');
+create_head($db->getPageTitle(basename(__FILE__)));
 
 echo "<body>";
 

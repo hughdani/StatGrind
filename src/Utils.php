@@ -106,7 +106,7 @@ function GetAssignment(){
             echo "<div> <b>Question $qNum</b><br>";
             $file = file_get_contents($row['location']);
             $question_text = explode("FORMULA:", $file);
-            echo "<b>ANSWER:</b>" . $question_text[1] . "<br><br><div>";
+            echo "$question_text[0] <br> <b>ANSWER:</b>" . $question_text[1] . "<br><br><div>";
             $qNum = $qNum + 1;
         }
     }

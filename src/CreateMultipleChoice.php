@@ -15,6 +15,7 @@
         exit();
     }
 
+$header_text = $db->getPageTitle(basename(__FILE__));
 create_head('Multiple Choice');
 echo "<body>";
 
@@ -22,7 +23,6 @@ $db = new Database();
 $user = $_SESSION['user'];
 $first_name = $user->getFirstName();
 $account_type = $user->getAccountType();
-$header_text = "Create Multiple Choice Question";
 
 include("NavigationBar.php");
 create_site_header($header_text);

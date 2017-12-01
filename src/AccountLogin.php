@@ -8,6 +8,7 @@ session_unset();
 
 create_head('Log In');
 $db = new Database();
+$header_text = $db->getPageTitle(basename(__FILE__));
 
 if ($_POST['login']) {
     $login = $db->login($_POST['username'], $_POST['password']);
@@ -31,7 +32,7 @@ if ($_POST['login']) {
 ?>
 <body>
 <?php
-create_site_header("Log In");
+create_site_header($header_text);
 ?>
 
 <?php if (isset($_SESSION['error'])): ?>

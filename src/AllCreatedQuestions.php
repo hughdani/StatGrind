@@ -24,7 +24,7 @@ $user = $_SESSION['user'];
 $user_id = $user->getUserId();
 $first_name = $user->getFirstName();
 $account_type = $user->getAccountType();
-$header_text = "All Created Questions";
+$header_text = $db->getPageTitle(basename(__FILE__));
 
 
 include("NavigationBar.php");

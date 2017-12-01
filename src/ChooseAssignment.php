@@ -22,7 +22,7 @@ $user = $_SESSION['user'];
 $first_name = $user->getFirstName();
 $user_id = $user->getUserId();
 $account_type = $user->getAccountType();
-$header_text = "Write Assignment";
+$header_text = $db->getPageTitle(basename(__FILE__));
 
 include("NavigationBar.php");
 create_site_header($header_text);
