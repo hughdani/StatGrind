@@ -56,7 +56,7 @@ if (isset($_POST['question_text']))
 
 	// Insert question into question table
     $assignment_id = $_POST['assignment_id'];
-    $tag = $_POST['tag'];
+    $tag = $_POST['question_tag'];
 	$sql = "INSERT INTO questions (location, creator_id, tag) VALUES ('$location', $user_id, '$tag')";
 	$mysqli->query($sql);
 }
@@ -83,7 +83,7 @@ $sql = "SELECT DISTINCT questions.question_id, questions.location, questions.tag
 
 if (isset ($_POST['tag'])) {
     $tag = $_POST['tag'];
-    $sql = $sql . " AND (questions.tag LIKE '%$tag%' OR questions.id = $tag)";
+    $sql = $sql . " AND (questions.tag LIKE '%$tag%' OR question_id = '$tag')";
 }
 $questions = $db->query($sql);
 ?>
