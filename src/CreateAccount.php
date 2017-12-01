@@ -34,7 +34,6 @@ $lastname = "";
 
 if (isset($_POST["create_account"]))
 	{
-        echo "TEST";
 	$username = $_POST["user_name"];
 	$firstname = $_POST["first_name"];
 	$lastname = $_POST["last_name"];
