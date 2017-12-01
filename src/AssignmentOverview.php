@@ -62,7 +62,7 @@ $sql = "SELECT assignment_id, start_date, end_date
 //Apply search params if any
 if (isset($_POST['search_param'])) {
 	$filter = $_POST['search_param'];
-	$sql = $sql . " AND (tag LIKE '%$filter%' OR title LIKE '%$filter%)'";
+	$sql = $sql . " AND (tag LIKE '%$filter%' OR title LIKE '%$filter%')";
 }
 
 $result = $mysqli->query($sql);
